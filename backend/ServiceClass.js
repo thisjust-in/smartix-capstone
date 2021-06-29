@@ -1,7 +1,6 @@
 const knexFile = require('./knexfile').development;
 const knex = require('knex')(knexFile);
 
-
 class Method {
     constructor(knex) {
         this.knex = knex;
@@ -91,3 +90,5 @@ class Method {
 }
 
 module.exports = Method;
+
+let test = new Method
