@@ -1,23 +1,11 @@
 import "./App.css";
-import Web3 from 'web3'
-
-console.log(localStorage)
-
-async function click(){
-  if(!window.ethereum){
-    window.alert('install metamask')
-  } else {
-
-  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-  const account = accounts[0];
-  console.log(accounts)
-  }
-}
-
+import MetaMaskBtn from "./components/MetaMaskBtn";
 function App() {
-  return (<div className="App">
-    <button onClick={click}>Enable Ethereum</button>
-  </div>);
+  return (
+    <div className="App">
+      <MetaMaskBtn />
+    </div>
+  );
 }
 
 export default App;
