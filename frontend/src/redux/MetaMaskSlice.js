@@ -36,5 +36,5 @@ export const addWalletThunk = (data) => async (dispatch) => {
   }
 };
 
-export const { walletActions } = MetaMaskSlice.actions;
+export const walletActions = MetaMaskSlice.actions;
 export default MetaMaskSlice.reducer;
