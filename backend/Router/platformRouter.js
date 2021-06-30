@@ -8,6 +8,7 @@ class PlatformRouter {
     const router = express.Router();
     router.get("/api/hello", this.hello.bind(this));
     router.post("/api/walletId", this.addWallet.bind(this));
+    router.get("/api/eventhost", this.getEventHost.bind(this));
     return router;
   }
 
@@ -20,6 +21,13 @@ class PlatformRouter {
     // console.log("what is wallet id", walletId);
     await this.Method.storeWalletId(walletId).then(() => {
       console.log("inserted id");
+    });
+    res.end();
+  }
+
+  async getEventHost(req, res) {
+    await this.Method.getEventHost().then((data) => {
+      res.send(data);
     });
     res.end();
   }

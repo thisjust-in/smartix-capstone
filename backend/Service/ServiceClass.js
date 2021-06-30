@@ -22,12 +22,12 @@ class Method {
 
   //users
 
-  async GetUserInfo(id) {
+  async getUserInfo(id) {
     let data = await knex("users").where("id", id);
     return data;
   }
 
-  async EditUserInfo(name, profile_pic, description) {
+  async editUserInfo(name, profile_pic, description) {
     await knex("users")
       .update({
         name: name,
@@ -49,7 +49,7 @@ class Method {
 
   //events
 
-  async GetEventList(
+  async getEventList(
     location,
     event_date_from,
     event_date_to,
@@ -78,7 +78,7 @@ class Method {
     return data;
   }
 
-  async GetEventInfo(id) {
+  async getEventInfo(id) {
     let data = await knex
       .select("events.*", "tokens.*", "tokens.id as tokens_id")
       .from("events")
@@ -87,7 +87,7 @@ class Method {
     return data;
   }
 
-  async CreateEvent(
+  async createEvent(
     name,
     location,
     Event_picture,
@@ -127,15 +127,21 @@ class Method {
   }
 
   //puchase record
-  async PurchaseRecord(users_id) {
+  async purchaseRecord(users_id) {
     let data = await knex("purchase_record").where("users_id", users_id);
     return data;
+  }
+
+  async getEventHost() {
+    let eventHost = await knex("users").select("id", "name");
+    return eventHost;
   }
 }
 
 module.exports = Method;
 
-// const test = new Method(knex);
+const test = new Method(knex);
+// test.getEventHost();
 
 // test.storeWalletId(222);
 // test.GetUserInfo(1);
