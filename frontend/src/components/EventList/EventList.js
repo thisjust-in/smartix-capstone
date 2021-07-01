@@ -1,9 +1,10 @@
 import React from 'react';
 import Header from '../Main-Components/Header';
+import HeaderContent from './HeaderContent'
 import List from './List'
-import { useLocation } from "react-router-dom"
 import { useSelector } from 'react-redux'
 import backgroundimage from '../assets/backgroundimage.jpg'
+
 import avatar from '../assets/image 3.png'
 
 function EventList(){
@@ -18,7 +19,7 @@ function EventList(){
 
     return (
         <div>
-            <Header avatar={profile_pic} backgroundimage={backgroundimage} title={artist} para={type}/>
+            <Header backgroundimage={backgroundimage} content={<HeaderContent avatar={profile_pic} title={artist} para={type}/>} />
             <h2 style={{padding: '3rem'}}>Upcoming Events</h2>
             <List date={date} time={time} location={location} price={price} />
         </div>
