@@ -1,0 +1,47 @@
+.header {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100vw;
+    height: 28rem;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    border-radius: 50%;
+    border: 3px white solid;
+    margin: 3rem;
+}
+
+.column {
+    display: flex;
+    align-items: center;
+}
+
+.noMarginPadding {
+    margin-left: 3rem;
+    padding: 0;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .header {
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 100vw;
+        height: 28rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .noMarginPadding {
+        padding: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+}
