@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useLocation } from "react-router-dom"
 import { Col, Row, Container } from 'reactstrap';
 import styles from './List.module.css'
+import PrimaryBtn from '../Main-Components/PrimaryBtn';
 
 function List(props){
     let location = useLocation();
@@ -23,7 +24,7 @@ function List(props){
             <h5 className={styles.noMarginPadding} style={{color: '#132BFF'}}>{props.price}</h5>
             </Col>
             <Col className={styles.column} md="2"> 
-            <button className={styles.button}>See Tickets</button>
+            <PrimaryBtn text={'See Tickets'}/>
             </Col>
             </Row>
         </Container>

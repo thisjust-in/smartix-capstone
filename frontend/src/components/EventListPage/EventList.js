@@ -4,7 +4,6 @@ import HeaderContent from './HeaderContent'
 import List from './List'
 import { useSelector } from 'react-redux'
 import backgroundimage from '../assets/backgroundimage.jpg'
-
 import avatar from '../assets/image 3.png'
 
 function EventList(){
