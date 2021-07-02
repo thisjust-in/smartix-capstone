@@ -1,7 +1,21 @@
 .button {
-    border-radius: 40px;
-    color: white;
-    background-color: #0094B6;
-    border: none;
-    padding: 1rem 2rem 1rem 2rem;
+  border-radius: 40px;
+  color: white;
+  background-color: #0094b6;
+  border: none;
+  width: 150px;
+  height: 40px;
+  border-radius: 50px;
+  margin: 0.5rem 1rem;
+}
+
+.button:hover {
+  border-radius: 40px;
+  color: white;
+  background-color: #12b1d4;
+  border: none;
+  width: 150px;
+  height: 40px;
+  border-radius: 50px;
+  margin: 0.5rem 1rem;
 }

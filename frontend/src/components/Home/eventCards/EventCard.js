@@ -1,7 +1,7 @@
 import EventCardStyle from "./EventCard.module.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getEventHostThunk } from "../../redux/EventCardSlice";
+import { getEventHostThunk } from "../../../redux/EventCardSlice";
 import { Container, Row, Col } from "react-bootstrap";
 import OneCard from "./OneCard";
 

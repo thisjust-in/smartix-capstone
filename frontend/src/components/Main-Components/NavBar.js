@@ -2,19 +2,24 @@ import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import LoggedInNav from "./LoggedInNav";
 import classes from "./NavBar.module.css";
+import MetaMaskBtn from "./MetaMaskBtn";
+import Web3 from "web3";
 
 export default function NavBar() {
-  const [log, setLog] = useState(true);
-  async function test() {
-    let test = await window.ethereum.selectedAddress;
-    return test;
-  }
+  const [ac, setAC] = useState(null);
+  const [loginBtn, setLoginBtn] = useState(false);
   useEffect(async () => {
-    // let test = await window.ethereum.selectedAddress;
-    let test2 = await test();
-    // setLog(test);
-    console.log("what is log", test2);
-  }, []);
+    window.onload = async function () {
+      let web3 = new Web3(Web3.givenProvider);
+      let data = await web3.eth.getAccounts();
+      // console.log("data", data[0]);
+      setAC(data[0]);
+      if (data[0] !== undefined) {
+        setLoginBtn(true);
+      }
+    };
+  });
+
   return (
     <div className={classes.Container}>
       <div className="container">
@@ -22,6 +27,7 @@ export default function NavBar() {
           <Navbar.Brand href="#home" className="text-dark">
             <strong>Smartix</strong>
           </Navbar.Brand>
+
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
@@ -29,7 +35,8 @@ export default function NavBar() {
                 How It Works
               </Nav.Link>
             </Nav>
-            <Nav>{log ? <LoggedInNav /> : null}</Nav>
+            {loginBtn ? null : <MetaMaskBtn />}
+            <Nav>{ac ? <LoggedInNav /> : null}</Nav>
           </Navbar.Collapse>
         </Navbar>
       </div>
