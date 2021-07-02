@@ -3,6 +3,7 @@ import axios from "redaxios";
 
 const initialState = {
   walletAddress: [],
+  isLoggedIn: false,
 };
 
 export const MetaMaskSlice = createSlice({
@@ -11,6 +12,7 @@ export const MetaMaskSlice = createSlice({
   reducers: {
     addWallet(state, action) {
       state.walletAddress.push(action.payload);
+      state.isLoggedIn = action.payload;
     },
   },
 });
