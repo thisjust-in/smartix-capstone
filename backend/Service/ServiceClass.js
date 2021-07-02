@@ -37,25 +37,14 @@ class Method {
       .where("id", id);
   }
 
-  //   async CreateUser(wallet_id, name, profile_pic) {
-  //     await knex
-  //       .insert({
-  //         wallet_id: wallet_id,
-  //         name: name,
-  //         profile_pic: profile_pic,
-  //       })
-  //       .into("users");
-  //   }
-
   //events
 
-  async getEventList(
-    location,
-    event_date_from,
-    event_date_to,
-    users_id,
-    event_type
-  ) {
+  async getUserID(name){
+    let date = await knex('events').where('name', 'like', name).returning('id')
+  }
+
+  async getEventList(location, event_date_from, event_date_to, name, event_type) {
+    let users_id = await this.getUserID(name)
     let data = await knex
       .select("*")
       .from("events")

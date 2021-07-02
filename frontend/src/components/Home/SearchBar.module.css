@@ -1,0 +1,39 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 1.5rem 0 1.5rem 0;
+}
+
+.button {
+    border: none;
+    background-color: #333333;
+    color: white;
+    border-radius: 4.42969px;
+    padding: 7px 35px;
+    margin-top: 2rem;
+}
+
+
+@media only screen and (max-width: 500px) {
+
+    .column {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding-bottom: 0;
+    }
+
+    .button {
+        border: none;
+        background-color: #333333;
+        color: white;
+        border-radius: 4.42969px;
+        padding: 7px 35px;
+        margin-top: 0;
+        margin-bottom: 1rem;
+    }
+
+}

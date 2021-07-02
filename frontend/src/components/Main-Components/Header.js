@@ -11,7 +11,9 @@ function Header(props) {
     return (
 
         <Container className={styles.header} style={style} fluid={true}>
-            {props.content}
+            <div className={styles.filter}>
+                {props.content}
+            </div>
         </Container>
 
     )

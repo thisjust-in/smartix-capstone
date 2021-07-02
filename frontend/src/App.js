@@ -1,9 +1,9 @@
 import "./App.css";
 import MetaMaskBtn from "./components/MetaMaskBtn";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import EventCardBackground from "./components/eventCards/EventCard";
+import Home from "./components/Home/Home";
 import NotFound from "./components/notFoundPage/NotFoundPage";
-import EventList from "./components/EventList/EventList";
+import EventList from "./components/EventListPage/EventList";
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
                 <MetaMaskBtn />
               </Route>
               <Route exact path="/home">
-                <EventCardBackground />
+                <Home/>
               </Route>
               <Route exact path='/list' >
                 <EventList />
