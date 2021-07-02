@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "redaxios";
 
 const initialState = {
-  eventHost: "",
-  eventCount: 1,
+  eventHost: [],
+  eventCount: [],
   loading: false,
   error: "",
 };
@@ -13,7 +13,22 @@ export const eventCardSlice = createSlice({
   initialState: initialState,
   reducers: {
     getEventHostSuccess(state, action) {
-      state.eventHost = action.payload;
+      let allEvent = action.payload;
+      allEvent.map((event) => {
+        // if (state.eventHost.indexOf(event.username)) {
+        // }
+        state.eventHost.push(event.username);
+      });
+      let countEvent = state.eventHost;
+      let counted = countEvent.reduce((allEvent, event) => {
+        if (event in allEvent) {
+          allEvent[event]++;
+        } else {
+          allEvent[event] = 1;
+        }
+        return allEvent;
+      }, {});
+      state.eventCount = counted;
       state.loading = false;
     },
     getEventHostRequest(state, action) {
@@ -33,7 +48,6 @@ export const getEventHostThunk = () => async (dispatch) => {
   };
   try {
     let response = await getHost();
-    console.log(response.data);
     dispatch(eventActions.getEventHostSuccess(response.data));
   } catch (err) {
     console.log("err", err);
