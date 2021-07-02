@@ -125,16 +125,16 @@ class Method {
   async getEventHost() {
     let eventHost = await this.knex
       .from("users")
-      .innerJoin("events", "events.users_id", "users.id")
+      .innerJoin("event", "event.users_id", "users.id")
       .select()
-      .orderBy("events.id", "desc");
+      .orderBy("event.id", "desc");
     return eventHost;
   }
 }
 
 module.exports = Method;
 
-const test = new Method(knex);
+// const test = new Method(knex);
 // test.getEventHost().then((data) => {
 //   console.log(data);
 // });
