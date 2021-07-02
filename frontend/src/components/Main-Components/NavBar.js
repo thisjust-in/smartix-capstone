@@ -1,7 +1,20 @@
-import React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Navbar, Nav } from "react-bootstrap";
+import LoggedInNav from "./LoggedInNav";
 import classes from "./NavBar.module.css";
+
 export default function NavBar() {
+  const [log, setLog] = useState(true);
+  async function test() {
+    let test = await window.ethereum.selectedAddress;
+    return test;
+  }
+  useEffect(async () => {
+    // let test = await window.ethereum.selectedAddress;
+    let test2 = await test();
+    // setLog(test);
+    console.log("what is log", test2);
+  }, []);
   return (
     <div className={classes.Container}>
       <div className="container">
@@ -16,34 +29,7 @@ export default function NavBar() {
                 How It Works
               </Nav.Link>
             </Nav>
-            <Nav>
-              <Nav.Link href="#deets">
-                <button className={classes.createItem}>Create Event</button>
-              </Nav.Link>
-              <NavDropdown
-                title={
-                  <img
-                    src="https://avatars.githubusercontent.com/u/1309537?v=4"
-                    width="40px"
-                  />
-                }
-                id="collasible-nav-dropdown"
-              >
-                <NavDropdown.Item href="#action/3.1" className="text-dark">
-                  Settings
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.2">
-                  Another action
-                </NavDropdown.Item>
-                <NavDropdown.Item href="#action/3.3">
-                  Something
-                </NavDropdown.Item>
-                <NavDropdown.Divider />
-                <NavDropdown.Item href="#action/3.4">
-                  Separated link
-                </NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
+            <Nav>{log ? <LoggedInNav /> : null}</Nav>
           </Navbar.Collapse>
         </Navbar>
       </div>

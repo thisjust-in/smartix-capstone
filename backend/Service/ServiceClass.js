@@ -121,8 +121,13 @@ class Method {
     return data;
   }
 
+  // for event card, will store into redux named 'eventCard'
   async getEventHost() {
-    let eventHost = await knex("users").select("id", "name");
+    let eventHost = await this.knex
+      .from("users")
+      .innerJoin("events", "events.users_id", "users.id")
+      .select()
+      .orderBy("events.id", "desc");
     return eventHost;
   }
 }
@@ -130,7 +135,9 @@ class Method {
 module.exports = Method;
 
 const test = new Method(knex);
-// test.getEventHost();
+// test.getEventHost().then((data) => {
+//   console.log(data);
+// });
 
 // test.storeWalletId(222);
 // test.GetUserInfo(1);

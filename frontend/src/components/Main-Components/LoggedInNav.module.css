@@ -1,0 +1,23 @@
+.test {
+  display: inherit;
+}
+
+.secondaryButton {
+  background-color: #ce3dd1;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 40px;
+  border-radius: 50px;
+  margin: 0 3rem;
+}
+
+.secondaryButton:hover {
+  background-color: #c910cc;
+  color: white;
+  border: none;
+  width: 150px;
+  height: 40px;
+  border-radius: 50px;
+  transition: ease-in;
+}
