@@ -1,10 +1,10 @@
-exports.seed = function (knex) {
+
+exports.seed = function(knex) {
   // Deletes ALL existing entries
-  return knex("users")
-    .del()
+  return knex('users').del()
     .then(function () {
       // Inserts seed entries
-      return knex("users").insert([
+      return knex('users').insert([
         {
           id: 1,
           wallet_id: "123455",
@@ -12,7 +12,7 @@ exports.seed = function (knex) {
           userProfile_pic: {
             "pc1": "https://static.wikia.nocookie.net/cpop/images/b/b3/Jay_Chou.png/revision/latest?cb=20200407050501",
           },
-          userDescription: " I am Jay Chou",
+          userDescription: "I am Jay Chou",
         },
         {
           id: 2,
