@@ -6,14 +6,9 @@ class PlatformRouter {
   }
   router() {
     const router = express.Router();
-    router.get("/api/hello", this.hello.bind(this));
     router.post("/api/walletId", this.addWallet.bind(this));
     router.get("/api/eventhost", this.getEventHost.bind(this));
     return router;
-  }
-
-  hello(req, res) {
-    res.send("hello dllm");
   }
 
   async addWallet(req, res) {
