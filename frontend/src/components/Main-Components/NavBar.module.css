@@ -1,1 +1,15 @@
+.navContainer {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+}
 
+#brandName {
+  font-size: 2rem;
+  color: white;
+}
+#loginBtn {
+  margin: 10rem 0;
+}
