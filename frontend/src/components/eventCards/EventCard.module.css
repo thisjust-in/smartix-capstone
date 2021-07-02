@@ -1,6 +1,4 @@
-.yo{
-    margin: 0;
-}
+
 
 .background {
     background: url("https://wallpapercave.com/wp/wp3093556.jpg");
@@ -20,7 +18,7 @@
     background-color: rgba(2, 2, 2, 0.479);
     width: 210px;
     height: 70px;
-    position:absolute;
+    position:relative;
     left: 15px;
     top: 110px;
     display: flex;
