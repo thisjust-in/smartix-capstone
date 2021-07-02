@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "redaxios";
 
+
 const initialState = {
   walletAddress: [],
+  isLoggedIn: false,
 };
 
 export const MetaMaskSlice = createSlice({
@@ -11,6 +13,7 @@ export const MetaMaskSlice = createSlice({
   reducers: {
     addWallet(state, action) {
       state.walletAddress.push(action.payload);
+      state.isLoggedIn = action.payload;
     },
   },
 });
@@ -19,7 +22,7 @@ export const addWalletThunk = (data) => async (dispatch) => {
   //   console.log("adding wallet thunk");
   //   console.log("data", data);
   const newWalletAddress = async () => {
-    return axios.post("http://localhost:8080/api/walletId", {
+    await axios.post("http://localhost:8080/api/walletId", {
       wallet_id: data,
     });
   };

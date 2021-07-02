@@ -22,10 +22,6 @@ let platformRouter = new PlatformRouter(method);
 
 app.use("/", platformRouter.router());
 
-app.get("/", (req, res) => {
-  res.send("Hello");
-});
-
 // Serve app
 app.listen(port, () => {
   console.log(`Server running on port: ${port}`);

@@ -2,9 +2,9 @@ exports.up = function (knex) {
   return knex.schema.createTable("users", (table) => {
     table.increments().primary();
     table.string("wallet_id").unique();
-    table.string("name");
-    table.json("profile_pic");
-    table.string("description");
+    table.string("username");
+    table.json("userProfile_pic");
+    table.string("userDescription");
     table.timestamps(false, true);
   });
 };
