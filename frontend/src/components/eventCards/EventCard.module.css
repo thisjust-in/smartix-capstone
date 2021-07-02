@@ -1,14 +1,14 @@
 
 
 .background {
-    background: url("https://wallpapercave.com/wp/wp3093556.jpg");
+    /* background: url("https://wallpapercave.com/wp/wp3093556.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
-    width: 29vw;
-    height: 25vh;
+    width: 350px;
     min-height: 190px;
     border-radius: 15px;
-    /* margin: 5%; */
+    /* margin:15px; */
+    margin: 10px 0px;
 }
 
 .background:hover {

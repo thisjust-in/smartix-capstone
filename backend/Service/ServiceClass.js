@@ -145,10 +145,10 @@ class Method {
 
 module.exports = Method;
 
-const test = new Method(knex);
-test.getEventHost().then((data) => {
-  console.log(data);
-});
+// const test = new Method(knex);
+// test.getEventHost().then((data) => {
+//   console.log(data);
+// });
 
 // test.storeWalletId(222);
 // test.GetUserInfo(1);

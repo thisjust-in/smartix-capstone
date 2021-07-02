@@ -14,17 +14,15 @@ export const eventCardSlice = createSlice({
   reducers: {
     getEventHostSuccess(state, action) {
       let allEvent = action.payload;
-      allEvent.map((event) => {
-        // if (state.eventHost.indexOf(event.username)) {
-        // }
-        state.eventHost.push(event.username);
-      });
-      let countEvent = state.eventHost;
-      let counted = countEvent.reduce((allEvent, event) => {
-        if (event in allEvent) {
-          allEvent[event]++;
+      let counted = allEvent.reduce((allEvent, event) => {
+        if (event.username in allEvent) {
+          allEvent[event.username].count++;
         } else {
-          allEvent[event] = 1;
+          allEvent[event.username] = {
+            count: 1,
+            pic: event.eventPhoto,
+            id: event.id,
+          };
         }
         return allEvent;
       }, {});

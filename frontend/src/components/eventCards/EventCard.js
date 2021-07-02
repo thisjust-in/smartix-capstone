@@ -8,19 +8,22 @@ import OneCard from "./OneCard";
 const EventCardBackground = () => {
   const dispatch = useDispatch();
   const host = useSelector((state) => {
-    // console.log(state.eventCard.eventCount);
     return state.eventCard.eventCount;
   });
-
   useEffect(() => {
     dispatch(getEventHostThunk());
   }, []);
+  console.log(host);
 
-  var cards = [];
-  for (const [key, value] of Object.entries(host)) {
+  let cards = [];
+  for (const [hostName, event] of Object.entries(host)) {
     cards.push(
       <Col md={4}>
-        <OneCard objectKey={key} objectValue={value} />
+        <OneCard
+          hostName={hostName}
+          eventCount={event.count}
+          eventPic={event.pic}
+        />
       </Col>
     );
   }

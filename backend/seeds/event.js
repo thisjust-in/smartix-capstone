@@ -7,7 +7,7 @@ exports.seed = function (knex) {
           eventName: "Jay Chou 2021",
           eventLocation: "Hong Kong AsiaWorld-Expo",
           eventPhoto: {
-            pc1: "https://i.pinimg.com/originals/1f/27/a4/1f27a40bfd45769b24e51321995b39d6.jpg",
+            pc1: "https://mediabank.sportshub.com.sg/s3fs-public/2019-08/sportshubtix%20Event%20Details%20Page%20Banner-770x425%28REV04%29.jpg?TgzNebI1CwLPzAQaZnSl8pK5urKUREcN",
           },
           eventDescription:
             "Best Jay Chou will be making his highly-anticipated return to Singapore for Jay Chou Carnival World Tour!",
@@ -21,7 +21,7 @@ exports.seed = function (knex) {
           eventName: "Coldplay 2021",
           eventLocation: "Disney Hong Kong",
           eventPhoto: {
-            pc1: "https://mediabank.sportshub.com.sg/s3fs-public/2019-08/sportshubtix%20Event%20Details%20Page%20Banner-770x425%28REV04%29.jpg?TgzNebI1CwLPzAQaZnSl8pK5urKUREcN",
+            pc1: "https://i.pinimg.com/originals/1f/27/a4/1f27a40bfd45769b24e51321995b39d6.jpg",
           },
           eventDescription:
             "Now in its eleventh year, the annual iHeartRadio Music Festival is a two-day music festival in Las Vegas that features today's biggest names - across genres and formats.",
@@ -35,7 +35,7 @@ exports.seed = function (knex) {
           eventName: "Coldplay 2009",
           eventLocation: "Disney Hong Kong",
           eventPhoto: {
-            pc1: "https://mediabank.sportshub.com.sg/s3fs-public/2019-08/sportshubtix%20Event%20Details%20Page%20Banner-770x425%28REV04%29.jpg?TgzNebI1CwLPzAQaZnSl8pK5urKUREcN",
+            pc1: "https://i.pinimg.com/originals/1f/27/a4/1f27a40bfd45769b24e51321995b39d6.jpg",
           },
           eventDescription: "Old version",
           eventDate: new Date("12/09/2021"),
