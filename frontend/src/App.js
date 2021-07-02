@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./components/Home/Home";
 import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
-import EventList from "./components/EventList/EventList";
+import EventList from "./components/EventListPage/EventList";
 
 function App() {
   return (
