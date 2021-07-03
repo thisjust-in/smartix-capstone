@@ -1,5 +1,6 @@
 exports.seed = function (knex) {
-  return knex('event').del()
+  return knex("event")
+    .del()
     .then(function () {
       return knex('event').insert([{
         eventName: 'Jay Chou 2021',

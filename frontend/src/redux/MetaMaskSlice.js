@@ -1,10 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "redaxios";
 
-
 const initialState = {
   walletAddress: [],
-  isLoggedIn: false,
+  isLoggedIn: null,
 };
 
 export const MetaMaskSlice = createSlice({
@@ -13,7 +12,9 @@ export const MetaMaskSlice = createSlice({
   reducers: {
     addWallet(state, action) {
       state.walletAddress.push(action.payload);
-      state.isLoggedIn = action.payload;
+    },
+    checkLogin(state, action) {
+      state.isLoggedIn = window.ethereum.selectedAddress;
     },
   },
 });
@@ -35,6 +36,14 @@ export const addWalletThunk = (data) => async (dispatch) => {
     );
   } catch (error) {
     console.log("error", error);
+  }
+};
+
+export const checkLoginThunk = () => async (dispatch) => {
+  try {
+    dispatch(walletActions.checkLogin());
+  } catch (err) {
+    console.log("error", err);
   }
 };
 

@@ -1,13 +1,14 @@
 
 
 .background {
-    background: url("https://wallpapercave.com/wp/wp3093556.jpg");
+    /* background: url("https://wallpapercave.com/wp/wp3093556.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
-    max-width: 380px;
-    max-height: 190px;
+    width: 350px;
     min-height: 190px;
     border-radius: 15px;
+    /* margin:15px; */
+    margin: 10px 0px;
 }
 
 .background:hover {
@@ -37,4 +38,12 @@
     margin:0px;
     color: white;
     margin-left: 20px;
+}
+
+.forEventCard{
+    background-color: teal;
+    height: 100vh;
+    width: 100vw;
+    /* padding: ; */
+    /* display: flex; */
 }
