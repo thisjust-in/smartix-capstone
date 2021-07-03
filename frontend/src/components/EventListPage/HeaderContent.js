@@ -6,7 +6,7 @@ function HeaderContent(props) {
     return (
 
         <div className={styles.wrapper}>
-            {(props.avatar) ? <img className={styles.avatar} src={props.avatar}></img> : null}
+            {(props.avatar) ? <img className={styles.avatar} src={props.avatar} alt='avatar'></img> : null}
             <div>
                 {(props.title) ? <h1 className={styles.noMarginPadding} style={{color: 'white'}}>{props.title}</h1> : <h1 className={styles.noMarginPadding} style={{color: 'white'}}>The World's Best Events</h1>}
                 {(props.para) ? <p className={styles.noMarginPadding} style={{color: 'white'}}>{props.para}</p> : null}

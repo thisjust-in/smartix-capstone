@@ -1,4 +1,3 @@
-import Web3 from "web3";
 import { useDispatch } from "react-redux";
 import { addWalletThunk } from "../redux/MetaMaskSlice";
 
@@ -14,7 +13,6 @@ function MetaMaskBtn() {
         method: "eth_requestAccounts",
       });
       const account = accounts[0];
-      // console.log(account);
       addWallet(account);
     }
   }
