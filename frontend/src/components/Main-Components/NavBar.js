@@ -40,5 +40,6 @@ export default function NavBar() {
           </Navbar.Collapse>
         </Navbar>
       </div>
+      </div>
     );
 }
