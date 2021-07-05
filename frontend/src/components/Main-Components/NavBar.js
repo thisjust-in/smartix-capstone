@@ -12,7 +12,6 @@ export default function NavBar() {
     window.onload = async function () {
       let web3 = new Web3(Web3.givenProvider);
       let data = await web3.eth.getAccounts();
-      // console.log("data", data[0]);
       setAC(data[0]);
       if (data[0] !== undefined) {
         setLoginBtn(true);
@@ -24,7 +23,7 @@ export default function NavBar() {
     <div className={classes.Container}>
       <div className="container">
         <Navbar collapseOnSelect expand="lg">
-          <Navbar.Brand href="#home" className="text-dark">
+          <Navbar.Brand href="/home" className="text-dark">
             <strong>Smartix</strong>
           </Navbar.Brand>
 
