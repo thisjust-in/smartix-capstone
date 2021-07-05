@@ -5,7 +5,7 @@ exports.up = function (knex) {
     table.string("eventLocation");
     table.json("eventPhoto");
     table.string("eventDescription");
-    table.date("eventDate");
+    table.datetime("eventDate");
     table.integer("eventCapacity");
     table.string("eventType");
     table.boolean("isOnline");
@@ -16,5 +16,5 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-  return knex.schema.dropTable("events");
+  return knex.schema.dropTable("event");
 };

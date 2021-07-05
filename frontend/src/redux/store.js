@@ -8,7 +8,7 @@ export default configureStore({
   reducer: {
     wallet: walletReducer,
     eventCard: eventCardReducer,
-    event: eventReducer,
+    eventlist: eventReducer,
     token: tokenReducer,
   },
 });

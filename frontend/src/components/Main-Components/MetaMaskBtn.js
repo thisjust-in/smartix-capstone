@@ -1,4 +1,3 @@
-import Web3 from "web3";
 import { useDispatch } from "react-redux";
 import { addWalletThunk } from "../../redux/MetaMaskSlice";
 import styles from "./PrimaryBtn.module.css";
