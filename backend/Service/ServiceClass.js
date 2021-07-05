@@ -39,32 +39,45 @@ class Method {
 
   //events
 
-  async getUserID(name){
-    let date = await knex('events').where('name', 'like', name).returning('id')
+  async getUserID(name) {
+    if (name) {
+      let ids = []
+      let data = await knex.select('*').from('users').where('username', 'ilike', `%${name}%`)
+      for (let each of data) {
+        ids.push(each.id)
+      }
+      return ids
+    } else {
+      return []
+    }
   }
 
-  async getEventList(location, event_date_from, event_date_to, name, event_type) {
-    let users_id = await this.getUserID(name)
+  async getEventList(location, event_date, query) {
+    let ids = await this.getUserID(query)
     let data = await knex
-      .select("*")
-      .from("events")
+      .select("event.*", 'users.*', 'event.id as event_id','users.id as users_id')
+      .from("event")
+      .innerJoin('users', 'event.users_id', 'users.id')
       .modify((qb) => {
-        location ? qb.where("location", location) : qb.whereNotNull("location");
+        location ? qb.where("eventLocation", 'ilike', `%${location}%`) : qb.whereNotNull("eventLocation");
       })
       .modify((qb) => {
-        event_date_from && event_date_to
-          ? qb.whereBetween("event_date_from", [event_date_from, event_date_to])
-          : qb.whereNotNull("event_date");
+        event_date ? qb.where("eventDate", event_date) : qb.whereNotNull("eventDate");
       })
       .modify((qb) => {
-        users_id ? qb.where("users_id", users_id) : qb.whereNotNull("users_id");
+        query ? qb.whereIn("users_id", ids).orWhere('eventType', 'ilike', `%${query}%`) : qb.whereNotNull("users_id");
       })
-      .modify((qb) => {
-        event_type
-          ? qb.where("event_type", event_type)
-          : qb.whereNotNull("event_type");
-      });
-    return data;
+    return data
+    // .modify((qb) => {
+    //   event_date_from && event_date_to
+    //     ? qb.whereBetween("event_date_from", [event_date_from, event_date_to])
+    //     : qb.whereNotNull("event_date");
+    // })
+    // .modify((qb) => {
+    //   event_type
+    //     ? qb.where("event_type", event_type)
+    //     : qb.whereNotNull("event_type");
+    // });
   }
 
   async getEventInfo(id) {

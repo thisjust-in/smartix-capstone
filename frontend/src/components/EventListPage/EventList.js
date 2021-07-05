@@ -4,23 +4,32 @@ import HeaderContent from './HeaderContent'
 import List from './List'
 import { useSelector } from 'react-redux'
 import backgroundimage from '../assets/backgroundimage.jpg'
-import avatar from '../assets/image 3.png'
+// import avatar from '../assets/image 3.png'
 
 function EventList(){
-    let profile_pic = useSelector((state) => state.event.profile_pic);
-    let artist = useSelector((state) => state.event.artist);
-    let type = useSelector((state) => state.event.event_type);
-    let location = useSelector((state) => state.event.location);
-    let event_date = useSelector((state) => state.event.event_date).toString()
-    let date = event_date.slice(4, 9)
-    let time = event_date.slice(0, 2) + " " + event_date.slice(16, 23)
-    let price = useSelector((state) => state.token.price);
+    let event_list = useSelector((state) => state.eventlist.event_list);
+    let formatlist = event_list.map((each) => {
+        return {...each, eventDate: new Date(each.eventDate).toString()}
+    })
+
+    let distinct = event_list.filter((each)=>{
+        return each.users_id != event_list[0].users_id
+    })
+
+    console.log(distinct)
+
 
     return (
         <div>
-            <Header backgroundimage={backgroundimage} content={<HeaderContent avatar={profile_pic} title={artist} para={type}/>} />
+            <Header backgroundimage={backgroundimage} content={<HeaderContent avatar={distinct[0] ? null : event_list[0].userProfile_pic.pc1.toString()} title={distinct[0] ? null : event_list[0].username} para={distinct[0] ? null : event_list[0].eventType}/>} />
             <h2 style={{padding: '3rem'}}>Upcoming Events</h2>
-            <List date={date} time={time} location={location} price={price} />
+            {
+            formatlist.map((each)=>{
+                return  <List date={each.eventDate.slice(4, 10)} time={each.eventDate.slice(0, 3) + " " + each.eventDate.slice(16, 21)} location={each.eventLocation}  />
+            })
+            }
+
+           
         </div>
     )
 }

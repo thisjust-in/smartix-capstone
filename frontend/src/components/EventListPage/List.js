@@ -1,12 +1,9 @@
 import React from 'react';
-import { useLocation } from "react-router-dom"
 import { Col, Row, Container } from 'reactstrap';
 import styles from './List.module.css'
 import PrimaryBtn from '../Main-Components/PrimaryBtn';
 
 function List(props){
-    let location = useLocation();
-    console.log(location)
 
     return (
         <Container style={{backgroundColor: "#F4F4F4"}}>
