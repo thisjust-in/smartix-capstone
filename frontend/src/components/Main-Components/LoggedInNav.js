@@ -6,7 +6,7 @@ export default function LoggedInNav() {
   const buttonName = "Create event";
   return (
     <div className={classes.test}>
-      <Nav.Link href="#">
+      <Nav.Link href="/create-event">
         <SecondaryButton name={buttonName} />
       </Nav.Link>
       <NavDropdown

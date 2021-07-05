@@ -8,7 +8,6 @@ function Home() {
     <div>
       <Header backgroundimage={backgroundimage} content={<SearchBar />} />
       <div className="mt-5 mb-5">
-        <h6>Upcoming Events</h6>
         <EventCard />
       </div>
     </div>
