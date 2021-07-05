@@ -7,7 +7,7 @@ function List(props){
 
     return (
         <Container style={{backgroundColor: "#F4F4F4"}}>
-            <Row>
+            <Row className={styles.row}>
             <Col className={styles.column} md="2">
             <h5 className={styles.noMarginPadding} style={{color: '#132BFF'}}>{props.date}</h5>
             <p className={styles.noMarginPadding} style={{color: '#AFAFAF'}}>{props.time}</p>
