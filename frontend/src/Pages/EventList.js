@@ -17,7 +17,6 @@ function EventList(){
         users.push(each.users_id)
     }
     let distinct = [...new Set(users)]
-    console.log(distinct)
 
     function avatarRendering (arr) {
         if (arr.length == 1){
