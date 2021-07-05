@@ -1,12 +1,12 @@
 import React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 import { SecondaryButton } from "./SecondaryButton";
 import classes from "./LoggedInNav.module.css";
 export default function LoggedInNav() {
   const buttonName = "Create event";
   return (
     <div className={classes.test}>
-      <Nav.Link href="#">
+      <Nav.Link href="/create-event">
         <SecondaryButton name={buttonName} />
       </Nav.Link>
       <NavDropdown
@@ -14,6 +14,7 @@ export default function LoggedInNav() {
           <img
             src="https://avatars.githubusercontent.com/u/1309537?v=4"
             width="40px"
+            alt='avatars'
           />
         }
         id="collasible-nav-dropdown"

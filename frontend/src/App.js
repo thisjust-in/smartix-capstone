@@ -4,7 +4,7 @@ import Home from "./Pages/Home";
 import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
 import EventList from "./components/EventListPage/EventList";
-
+import CreateEvent from "./Pages/CreateEvent";
 function App() {
   return (
     <Router>
@@ -17,6 +17,9 @@ function App() {
           </Route>
           <Route exact path="/list">
             <EventList />
+          </Route>
+          <Route exact path="/create-event">
+            <CreateEvent />
           </Route>
           <Route path="*">
             <NotFound />
