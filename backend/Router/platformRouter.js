@@ -8,7 +8,7 @@ class PlatformRouter {
     const router = express.Router();
     router.post("/api/walletId", this.addWallet.bind(this));
     router.get("/api/eventhost", this.getEventHost.bind(this));
-    router.post('/api/getlist', this.setEventList.bind(this))
+    router.post("/api/getlist", this.setEventList.bind(this));
     return router;
   }
 
@@ -29,14 +29,13 @@ class PlatformRouter {
   }
 
   async setEventList(req, res) {
-    let location = req.body.location
-    let date = req.body.date
-    let query = req.body.name
-    let data = await this.Method.getEventList(location, date, query)
-    res.send(data)
+    let location = req.body.location;
+    let date = req.body.date;
+    let query = req.body.name;
+    let data = await this.Method.getEventList(location, date, query);
+    res.send(data);
     res.end();
   }
-
 }
 
 module.exports = PlatformRouter;

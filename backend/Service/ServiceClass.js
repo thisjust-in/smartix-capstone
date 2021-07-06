@@ -41,33 +41,49 @@ class Method {
 
   async getUserID(name) {
     if (name) {
-      let ids = []
-      let data = await knex.select('*').from('users').where('username', 'ilike', `%${name}%`)
+      let ids = [];
+      let data = await knex
+        .select("*")
+        .from("users")
+        .where("username", "ilike", `%${name}%`);
       for (let each of data) {
-        ids.push(each.id)
+        ids.push(each.id);
       }
-      return ids
+      return ids;
     } else {
-      return []
+      return [];
     }
   }
 
   async getEventList(location, event_date, query) {
-    let ids = await this.getUserID(query)
+    let ids = await this.getUserID(query);
     let data = await knex
-      .select("event.*", 'users.*', 'event.id as event_id','users.id as users_id')
+      .select(
+        "event.*",
+        "users.*",
+        "event.id as event_id",
+        "users.id as users_id"
+      )
       .from("event")
-      .innerJoin('users', 'event.users_id', 'users.id')
+      .innerJoin("users", "event.users_id", "users.id")
       .modify((qb) => {
-        location ? qb.where("eventLocation", 'ilike', `%${location}%`) : qb.whereNotNull("eventLocation");
+        location
+          ? qb.where("eventLocation", "ilike", `%${location}%`)
+          : qb.whereNotNull("eventLocation");
       })
       .modify((qb) => {
-        event_date ? qb.where("eventDate", event_date) : qb.whereNotNull("eventDate");
+        event_date
+          ? qb.where("eventDate", event_date)
+          : qb.whereNotNull("eventDate");
       })
       .modify((qb) => {
-        query ? qb.whereIn("users_id", ids).orWhere('eventType', 'ilike', `%${query}%`) : qb.whereNotNull("users_id");
-      })
-    return data
+        query
+          ? qb
+              .whereIn("users_id", ids)
+              .orWhere("eventType", "ilike", `%${query}%`)
+          : qb.whereNotNull("users_id");
+      });
+    return data;
     // .modify((qb) => {
     //   event_date_from && event_date_to
     //     ? qb.whereBetween("event_date_from", [event_date_from, event_date_to])
@@ -148,6 +164,9 @@ class Method {
 module.exports = Method;
 
 // const test = new Method(knex);
+// test.getOnlineEvent().then((data) => {
+//   console.log(data);
+// });
 // test.getEventHost().then((data) => {
 //   console.log(data);
 // });
