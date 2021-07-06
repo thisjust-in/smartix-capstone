@@ -7,7 +7,7 @@ import EventList from "./components/EventListPage/EventList";
 import CreateEvent from "./Pages/CreateEvent";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getEventHostThunk } from "./redux/EventCardSlice";
+import { getEventHostThunk, getAllEventThunk } from "./redux/EventCardSlice";
 import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 
 function App() {

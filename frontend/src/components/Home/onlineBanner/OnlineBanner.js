@@ -6,15 +6,16 @@ const OnlineBanner = () => {
   const onlineEvent = useSelector((state) => {
     return state.eventCard.eventHost;
   });
+
   let ranArr = [];
-  if (onlineEvent[0]) {
+  if (onlineEvent.length) {
     for (let i = 0; ranArr.length < 3; i++) {
       let ranNum = Math.floor(Math.random() * onlineEvent.length);
       if (!ranArr.includes(ranNum)) {
         ranArr.push(ranNum);
       }
     }
-    console.log("asdasdasd", onlineEvent[ranArr[0]].eventPhoto.pc1);
+    console.log(onlineEvent[ranArr[0]]);
   }
 
   return (
@@ -33,12 +34,22 @@ const OnlineBanner = () => {
               <div>Loading</div>
             )}
             <Carousel.Caption>
-              <h3>First slide label</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              <div className={OnlineBannerCss.information}>
+                {onlineEvent[ranArr[0]] ? (
+                  <h3>{onlineEvent[ranArr[0]].eventName}</h3>
+                ) : (
+                  <div>Loading</div>
+                )}
+                {onlineEvent[ranArr[0]] ? (
+                  <p>{onlineEvent[ranArr[0]].eventDescription}</p>
+                ) : (
+                  <div>Loading</div>
+                )}
+              </div>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
-            {onlineEvent[ranArr[0]] ? (
+            {onlineEvent[ranArr[1]] ? (
               <img
                 className="d-block w-100"
                 id={OnlineBannerCss.theImage}
@@ -50,8 +61,18 @@ const OnlineBanner = () => {
             )}
 
             <Carousel.Caption>
-              <h3>Second slide label</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              <div className={OnlineBannerCss.information}>
+                {onlineEvent[ranArr[1]] ? (
+                  <h3>{onlineEvent[ranArr[1]].eventName}</h3>
+                ) : (
+                  <div>Loading</div>
+                )}
+                {onlineEvent[ranArr[1]] ? (
+                  <p>{onlineEvent[ranArr[1]].eventDescription}</p>
+                ) : (
+                  <div>Loading</div>
+                )}
+              </div>
             </Carousel.Caption>
           </Carousel.Item>
           <Carousel.Item>
@@ -67,10 +88,18 @@ const OnlineBanner = () => {
             )}
 
             <Carousel.Caption>
-              <h3>Third slide label</h3>
-              <p>
-                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-              </p>
+              <div className={OnlineBannerCss.information}>
+                {onlineEvent[ranArr[2]] ? (
+                  <h3>{onlineEvent[ranArr[2]].eventName}</h3>
+                ) : (
+                  <div>Loading</div>
+                )}
+                {onlineEvent[ranArr[2]] ? (
+                  <p>{onlineEvent[ranArr[2]].eventDescription}</p>
+                ) : (
+                  <div>Loading</div>
+                )}
+              </div>
             </Carousel.Caption>
           </Carousel.Item>
         </Carousel>{" "}
