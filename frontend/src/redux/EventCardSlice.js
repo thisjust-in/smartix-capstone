@@ -5,6 +5,7 @@ const initialState = {
   eventHost: [],
   eventCount: [],
   loading: false,
+  allEvent: [],
   error: "",
 };
 
@@ -12,6 +13,9 @@ export const eventCardSlice = createSlice({
   name: "eventCard",
   initialState: initialState,
   reducers: {
+    getEvents(state, action) {
+      state.allEvent.push(action.payload);
+    },
     getEventHostSuccess(state, action) {
       let allEvent = action.payload;
       let counted = allEvent.reduce((allEvent, event) => {
@@ -38,6 +42,18 @@ export const eventCardSlice = createSlice({
     },
   },
 });
+
+export const getAllEventThunk = () => async (dispatch) => {
+  const getAllEvents = async () => {
+    return axios.get("http://localhost:8080/api/eventHost");
+  };
+  try {
+    let response = await getAllEvents();
+    dispatch(eventActions.getEvents(response.data));
+  } catch (error) {
+    console.log(error, "err");
+  }
+};
 
 export const getEventHostThunk = () => async (dispatch) => {
   dispatch(eventActions.getEventHostRequest());

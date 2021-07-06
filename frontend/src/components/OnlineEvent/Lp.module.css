@@ -1,0 +1,24 @@
+.container {
+  text-align: left;
+  margin: 10rem 0;
+}
+
+#title {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.img {
+  width: 52vw;
+}
+
+/* mobile form layout  */
+@media only screen and (max-width: 600px) {
+  .container {
+    text-align: left;
+    margin: 2rem 0;
+  }
+  .img {
+    width: 90%;
+  }
+}

@@ -5,6 +5,7 @@ import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
 import EventList from "./Pages/EventList";
 import CreateEvent from "./Pages/CreateEvent";
+import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 
 function App() {
 
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route exact path="/create-event">
             <CreateEvent />
+          </Route>
+          <Route exact path="/online-events">
+            <OnlineEvents />
           </Route>
           <Route path="*">
             <NotFound />
