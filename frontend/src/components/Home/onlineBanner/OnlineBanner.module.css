@@ -1,0 +1,29 @@
+.displayFlex{
+    display: flex;
+    justify-content: center;
+    border-radius: 50px;
+    margin: 10px;
+    /* background-color: teal; */
+}
+
+.background{
+    width: 1050px;
+    max-height: 65vh;
+    border-radius: 20px;
+
+}
+
+#theImage{
+    /* width:100px; */
+    max-height: 40vh;
+    border-radius: 25px;
+    object-fit: no-repeat;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.information{
+    background-color: rgba(2, 2, 2, 0.719);
+    padding: 0px 20px;
+    border-radius: 15px; 
+}

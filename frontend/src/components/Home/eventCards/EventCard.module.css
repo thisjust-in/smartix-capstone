@@ -4,11 +4,12 @@
     /* background: url("https://wallpapercave.com/wp/wp3093556.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
-    width: 350px;
-    min-height: 190px;
+    width: 300px;
+    min-height: 170px;
     border-radius: 15px;
     /* margin:15px; */
     margin: 10px 0px;
+    cursor: pointer;
 }
 
 .background:hover {
@@ -17,11 +18,11 @@
 
 .information{
     background-color: rgba(2, 2, 2, 0.479);
-    width: 210px;
+    width: 200px;
     height: 70px;
     position:relative;
     left: 15px;
-    top: 110px;
+    top: 90px;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -41,9 +42,19 @@
 }
 
 .forEventCard{
-    background-color: teal;
+    /* background-color: teal; */
     height: 100vh;
     width: 100vw;
     /* padding: ; */
     /* display: flex; */
+}
+
+#row{
+    /* padding: 0px 20px; */
+    margin: 0px 20px;
+}
+
+#col{
+    margin: 0px;
+    padding: 0px 5px;
 }
