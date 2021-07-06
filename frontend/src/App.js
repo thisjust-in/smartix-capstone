@@ -5,7 +5,9 @@ import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
 import EventList from "./Pages/EventList";
 import CreateEvent from "./Pages/CreateEvent";
+
 function App() {
+
   return (
     <Router>
       <div className="App">
@@ -28,6 +30,7 @@ function App() {
       </div>
     </Router>
   );
+  
 }
 
 export default App;

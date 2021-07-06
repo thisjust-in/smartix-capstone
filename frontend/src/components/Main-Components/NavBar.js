@@ -3,14 +3,14 @@ import { Navbar, Nav } from "react-bootstrap";
 import LoggedInNav from "./LoggedInNav";
 import classes from "./NavBar.module.css";
 import MetaMaskBtn from "./MetaMaskBtn";
-import Web3 from "web3";
+import web3 from "../../web3";
 
 export default function NavBar() {
   const [ac, setAC] = useState(null);
   const [loginBtn, setLoginBtn] = useState(false);
   useEffect(async () => {
     window.onload = async function () {
-      let web3 = new Web3(Web3.givenProvider);
+      // let web3 = new Web3(Web3.givenProvider);
       let data = await web3.eth.getAccounts();
       setAC(data[0]);
       if (data[0] !== undefined) {

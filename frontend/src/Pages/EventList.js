@@ -4,7 +4,6 @@ import HeaderContent from '../components/EventListPage/HeaderContent'
 import List from '../components/EventListPage/List'
 import { useSelector } from 'react-redux'
 import backgroundimage from '../components/assets/backgroundimage.jpg'
-import { Switch } from 'react-router-dom';
 
 function EventList(){
     let event_list = useSelector((state) => state.eventlist.event_list);
@@ -19,7 +18,7 @@ function EventList(){
     let distinct = [...new Set(users)]
 
     function avatarRendering (arr) {
-        if (arr.length == 1){
+        if (arr.length === 1){
             return event_list[0].userProfile_pic.pc1.toString()
         } else {
             return null
@@ -27,7 +26,7 @@ function EventList(){
     }
 
     function titleRendering (arr) {
-        if (arr.length == 1){
+        if (arr.length === 1){
             return event_list[0].username
         } else {
             return null
@@ -35,7 +34,7 @@ function EventList(){
     }
 
     function typeRendering (arr) {
-        if (arr.length == 1){
+        if (arr.length === 1){
             return event_list[0].eventType
         } else {
             return null
