@@ -165,6 +165,9 @@ class Method {
 module.exports = Method;
 
 // const test = new Method(knex);
+// test.getOnlineEvent().then((data) => {
+//   console.log(data);
+// });
 // test.getEventHost().then((data) => {
 //   console.log(data);
 // });

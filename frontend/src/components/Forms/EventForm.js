@@ -9,7 +9,8 @@ export const EventForm = () => {
   const [eventType, setEventType] = useState("hello");
   const [eventCapacity, setEventCapacity] = useState("");
   const [isOnline, setIsOnline] = useState(false);
-  const [filename, setFileName] = useState("No files selected");
+  const [filename, setFileName] = useState("No file selected");
+  const [preview, setPreview] = useState(null);
   const [inputBox, setInputBox] = useState(0);
   let formItem = [];
 
@@ -32,6 +33,13 @@ export const EventForm = () => {
     );
   }
 
+  // handle image upload to show preview
+  const handleFileChange = (event) => {
+    let info = event.target.files[0];
+    setFileName(info.name);
+    setPreview(URL.createObjectURL(event.target.files[0]));
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log("submit");
@@ -48,18 +56,24 @@ export const EventForm = () => {
               <h6 id={classes.formInfo}>
                 <center>JPG,PNG,GIF, Max 10mb</center>
               </h6>
+              <p>
+                <center>{filename}</center>
+              </p>
               <input
                 required
                 id="file"
                 type="file"
-                onChange={(event) => setFileName(event.target.files[0].name)}
+                onChange={(event) => handleFileChange(event)}
               />
               <label className={classes.fileInput} for="file">
                 Upload Photo
               </label>
-              <p>
-                <center>{filename}</center>
-              </p>
+              <img
+                className="mt-5"
+                id={classes.previewImg}
+                src={preview}
+                width="400px"
+              />
             </div>
           </Form.Group>
           <Form.Group controlId="formBasicEventName">

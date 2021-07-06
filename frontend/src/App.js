@@ -8,6 +8,8 @@ import CreateEvent from "./Pages/CreateEvent";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getEventHostThunk } from "./redux/EventCardSlice";
+import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,6 +29,9 @@ function App() {
           </Route>
           <Route exact path="/create-event">
             <CreateEvent />
+          </Route>
+          <Route exact path="/online-events">
+            <OnlineEvents />
           </Route>
           <Route path="*">
             <NotFound />
