@@ -1,28 +1,22 @@
-import EventCardStyle from "./EventCard.module.css";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { getEventHostThunk } from "../../../redux/EventCardSlice";
+import { useSelector } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import OneCard from "./OneCard";
+import EventCardCSS from "./EventCard.module.css";
 
 const EventCardBackground = () => {
-  const dispatch = useDispatch();
   const host = useSelector((state) => {
     return state.eventCard.eventCount;
   });
-  useEffect(() => {
-    dispatch(getEventHostThunk());
-  }, []);
-  console.log(host);
 
   let cards = [];
   for (const [hostName, event] of Object.entries(host)) {
     cards.push(
-      <Col md={4}>
+      <Col md={4} id={EventCardCSS.col}>
         <OneCard
           hostName={hostName}
           eventCount={event.count}
           eventPic={event.pic}
+          key={event.id}
         />
       </Col>
     );
@@ -32,7 +26,7 @@ const EventCardBackground = () => {
     <div>
       <div>
         <Container>
-          <Row>{cards}</Row>
+          <Row id={EventCardCSS.row}>{cards}</Row>
         </Container>
       </div>
     </div>

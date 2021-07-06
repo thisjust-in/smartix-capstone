@@ -14,6 +14,7 @@ export const eventCardSlice = createSlice({
   reducers: {
     getEventHostSuccess(state, action) {
       let allEvent = action.payload;
+      state.eventHost = allEvent;
       let counted = allEvent.reduce((allEvent, event) => {
         if (event.username in allEvent) {
           allEvent[event.username].count++;

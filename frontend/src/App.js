@@ -5,7 +5,14 @@ import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
 import EventList from "./components/EventListPage/EventList";
 import CreateEvent from "./Pages/CreateEvent";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getEventHostThunk } from "./redux/EventCardSlice";
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getEventHostThunk());
+  }, []);
   return (
     <Router>
       <div className="App">
