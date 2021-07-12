@@ -9,15 +9,19 @@ class Method {
     this.knex = knex;
   }
 
-  storeWalletId(wallet_id) {
+  async storeWalletId(wallet_id) {
     console.log(wallet_id);
-    return knex("users")
-      .insert({
-        wallet_id: wallet_id,
-      })
-      .then(() => {
-        console.log("wallet id", wallet_id);
-      });
+    let exisitingUser = await knex("users").where("wallet_id", wallet_id);
+    console.log("exisitingUser", exisitingUser);
+    if (!exisitingUser[0]) {
+      knex("users")
+        .insert({
+          wallet_id: wallet_id,
+        })
+        .then(() => {
+          console.log("wallet id", wallet_id);
+        });
+    }
   }
 
   //users
@@ -164,6 +168,7 @@ class Method {
 module.exports = Method;
 
 // const test = new Method(knex);
+// test.storeWalletId(999);
 // test.getOnlineEvent().then((data) => {
 //   console.log(data);
 // });
@@ -171,5 +176,4 @@ module.exports = Method;
 //   console.log(data);
 // });
 
-// test.storeWalletId(222);
 // test.GetUserInfo(1);

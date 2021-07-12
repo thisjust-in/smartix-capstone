@@ -30,8 +30,8 @@ export default function NavBar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="/online-events" className="text-dark">
-                All Events
+              <Nav.Link href="/online-events" className={classes.tabs}>
+                Events
               </Nav.Link>
             </Nav>
             {loginBtn ? null : <MetaMaskBtn />}
