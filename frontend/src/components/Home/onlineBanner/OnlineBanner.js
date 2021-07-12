@@ -9,7 +9,7 @@ const OnlineBanner = () => {
 
   let ranArr = [];
   if (onlineEvent.length) {
-    for (let i = 0; ranArr.length < 3; i++) {
+    for (let i = 0; ranArr.length < onlineEvent.length || 3; i++) {
       let ranNum = Math.floor(Math.random() * onlineEvent.length);
       if (!ranArr.includes(ranNum)) {
         ranArr.push(ranNum);
