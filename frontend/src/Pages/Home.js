@@ -8,7 +8,7 @@ function Home() {
   return (
     <div>
       <Header backgroundimage={backgroundimage} content={<SearchBar />} />
-      {/* <OnlineBanner /> */}
+      <OnlineBanner />
       <div className="mt-5 mb-5">
         <EventCard />
       </div>
