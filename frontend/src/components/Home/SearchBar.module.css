@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    /* justify-content: center; */
-    padding: 1.5rem 0 1.5rem 0;
+    padding: 1.5rem;
     position: relative;
 
 }
@@ -16,10 +15,6 @@
     padding: 7px 35px;
     margin-top: 2rem;
 }
-
-
-
-
 
 @media only screen and (max-width: 500px) {
 

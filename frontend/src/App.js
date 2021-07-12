@@ -3,11 +3,19 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Pages/Home";
 import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
-import EventList from "./components/EventListPage/EventList";
+import EventList from "./Pages/EventList";
 import CreateEvent from "./Pages/CreateEvent";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getEventHostThunk, getAllEventThunk } from "./redux/EventCardSlice";
 import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
+import SocketIo from "./components/socketio/SocketIo";
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getEventHostThunk());
+  }, []);
   return (
     <Router>
       <div className="App">
@@ -26,6 +34,9 @@ function App() {
           <Route exact path="/online-events">
             <OnlineEvents />
           </Route>
+          <Route exact path="/socket">
+            <SocketIo />
+          </Route>
           <Route path="*">
             <NotFound />
           </Route>
@@ -33,6 +44,7 @@ function App() {
       </div>
     </Router>
   );
+  
 }
 
 export default App;

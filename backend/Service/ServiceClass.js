@@ -160,7 +160,8 @@ class Method {
       .from("users")
       .innerJoin("event", "event.users_id", "users.id")
       .select()
-      .orderBy("event.id", "desc");
+      .orderBy("event.id", "desc")
+      .where("eventDate", ">=", new Date());
     return eventHost;
   }
 }
