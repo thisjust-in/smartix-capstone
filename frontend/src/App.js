@@ -5,10 +5,16 @@ import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
 import EventList from "./Pages/EventList";
 import CreateEvent from "./Pages/CreateEvent";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getEventHostThunk, getAllEventThunk } from "./redux/EventCardSlice";
 import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 
 function App() {
-
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getEventHostThunk());
+  }, []);
   return (
     <Router>
       <div className="App">
