@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Pages/Home";
 import NotFound from "./components/notFoundPage/NotFoundPage";
 import NavBar from "./components/Main-Components/NavBar";
-import EventList from "./components/EventListPage/EventList";
+import EventList from "./Pages/EventList";
 import CreateEvent from "./Pages/CreateEvent";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -44,6 +44,7 @@ function App() {
       </div>
     </Router>
   );
+  
 }
 
 export default App;
