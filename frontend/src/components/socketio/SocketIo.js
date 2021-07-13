@@ -4,13 +4,14 @@ import Peer from "simple-peer";
 import io from "socket.io-client";
 
 const socket = io.connect("http://127.0.0.1:8080");
+let rtcPeerConnections = {};
+let user;
 function SocketIo() {
   const [username, setUsername] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
   const broadcasterVideo = useRef();
-  let user;
-  let rtcPeerConnections = {};
+  const userVideo = useRef();
 
   const iceServers = {
     iceServers: [
@@ -30,7 +31,7 @@ function SocketIo() {
         room: roomNumber,
         name: username,
       };
-
+      console.log("broadcasterVideo", broadcasterVideo);
       navigator.mediaDevices
         .getUserMedia(streamConstraints)
         .then(function (stream) {
@@ -57,28 +58,90 @@ function SocketIo() {
   };
 
   useEffect(() => {
-    socket.on("new viewer", function (viewer) {
+    socket.on("new viewer", async function (viewer) {
       console.log("new user comes in!", viewer);
-      // rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
-      // console.log(broadcasterVideo);
-      // const stream = broadcasterVideo.current.accessKey;
-      // console.log("stream", stream);
-      // stream.getTracks();
-      // .forEach((track) => {
-      //   rtcPeerConnections[viewer.id].addTrack(track, stream);
-      // });
+      rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
 
-      // rtcPeerConnections[viewer.id].onicecandidate = (event) => {
-      //   if (event.candidate) {
-      //     console.log("sending ice candidate");
-      //     socket.emit("candidate", viewer.id, {
-      //       type: "candidate",
-      //       label: event.candidate.sdpMLineIndex,
-      //       id: event.candidate.sdpMid,
-      //       candidate: event.candidate.candidate,
-      //     });
-      //   }
-      // };
+      const stream = broadcasterVideo.current.srcObject;
+      await stream.getTracks().forEach((track) => {
+        return rtcPeerConnections[viewer.id].addTrack(track, stream);
+      });
+      rtcPeerConnections[viewer.id].onicecandidate = (event) => {
+        if (event.candidate) {
+          console.log("sending ice candidate");
+          socket.emit("candidate", viewer.id, {
+            type: "candidate",
+            label: event.candidate.sdpMLineIndex,
+            id: event.candidate.sdpMid,
+            candidate: event.candidate.candidate,
+          });
+        }
+      };
+
+      rtcPeerConnections[viewer.id]
+        .createOffer()
+        .then((sessionDescription) => {
+          rtcPeerConnections[viewer.id].setLocalDescription(sessionDescription);
+          socket.emit("offer", viewer.id, {
+            type: "offer",
+            sdp: sessionDescription,
+            broadcaster: user,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+
+    socket.on("candidate", function (id, event) {
+      let candidate = new RTCIceCandidate({
+        sdpMLineIndex: event.label,
+        candidate: event.candidate,
+      });
+      rtcPeerConnections[id].addIceCandidate(candidate);
+    });
+
+    socket.on("offer", function (broadcaster, sdp) {
+      rtcPeerConnections[broadcaster.id] = new RTCPeerConnection(iceServers);
+
+      rtcPeerConnections[broadcaster.id].setRemoteDescription(sdp);
+
+      rtcPeerConnections[broadcaster.id]
+        .createAnswer()
+        .then((sessionDescription) => {
+          rtcPeerConnections[broadcaster.id].setLocalDescription(
+            sessionDescription
+          );
+          socket.emit("answer", {
+            type: "answer",
+            sdp: sessionDescription,
+            room: user.room,
+          });
+        });
+
+      console.log(broadcasterVideo);
+      rtcPeerConnections[broadcaster.id].ontrack = (event) => {
+        userVideo.current.srcObject = event.streams[0];
+      };
+
+      rtcPeerConnections[broadcaster.id].onicecandidate = (event) => {
+        if (event.candidate) {
+          console.log("sending ice candidate");
+          socket.emit("candidate", broadcaster.id, {
+            type: "candidate",
+            label: event.candidate.sdpMLineIndex,
+            id: event.candidate.sdpMid,
+            candidate: event.candidate.candidate,
+          });
+        }
+      };
+    });
+
+    socket.on("answer", function (viewerId, event) {
+      rtcPeerConnections[viewerId].setRemoteDescription(
+        new RTCSessionDescription(event)
+      );
+      // console.log("what is this now", rtcPeerConnections);
     });
   }, []);
 
@@ -111,6 +174,7 @@ function SocketIo() {
       <button onClick={joinAsBroadcaster}>Join as Broadcaster</button>
       <button onClick={joinAsViewer}>Join as Viewer</button>
       {stream && <video autoPlay ref={broadcasterVideo}></video>}
+      {<video autoPlay ref={userVideo}></video>}
     </div>
   );
 }
