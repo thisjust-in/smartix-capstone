@@ -56,10 +56,31 @@ function SocketIo() {
     }
   };
 
-  socket.on("new viewer", function (viewer) {
-    console.log("new user comes in!", viewer);
-    // rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
-  });
+  useEffect(() => {
+    socket.on("new viewer", function (viewer) {
+      console.log("new user comes in!", viewer);
+      // rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
+      // console.log(broadcasterVideo);
+      // const stream = broadcasterVideo.current.accessKey;
+      // console.log("stream", stream);
+      // stream.getTracks();
+      // .forEach((track) => {
+      //   rtcPeerConnections[viewer.id].addTrack(track, stream);
+      // });
+
+      // rtcPeerConnections[viewer.id].onicecandidate = (event) => {
+      //   if (event.candidate) {
+      //     console.log("sending ice candidate");
+      //     socket.emit("candidate", viewer.id, {
+      //       type: "candidate",
+      //       label: event.candidate.sdpMLineIndex,
+      //       id: event.candidate.sdpMid,
+      //       candidate: event.candidate.candidate,
+      //     });
+      //   }
+      // };
+    });
+  }, []);
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -67,7 +88,6 @@ function SocketIo() {
 
   const handleRoomNumber = (e) => {
     setRoomNumber(e.target.value);
-    // console.log(e.target);
   };
 
   return (
