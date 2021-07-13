@@ -5019,7 +5019,7 @@
     "pbkdf2" "^3.0.9"
     "randombytes" "^2.0.1"
 
-"bitcore-lib@^8.22.2", "bitcore-lib@^8.25.10":
+"bitcore-lib@^8.20.1", "bitcore-lib@^8.22.2":
   "integrity" "sha512-MyHpSg7aFRHe359RA/gdkaQAal3NswYZTLEuu0tGX1RGWXAYN9i/24fsjPqVKj+z0ua+gzAT7aQs0KiKXWCgKA=="
   "resolved" "https://registry.npmjs.org/bitcore-lib/-/bitcore-lib-8.25.10.tgz"
   "version" "8.25.10"
