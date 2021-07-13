@@ -9,7 +9,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { getEventHostThunk, getAllEventThunk } from "./redux/EventCardSlice";
 import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
-import SocketIo from "./components/socketio/SocketIo";
+// import SocketIo from "./components/socketio/SocketIo";
+import Test from "./Pages/testPage"
 
 function App() {
   const dispatch = useDispatch();
@@ -34,8 +35,11 @@ function App() {
           <Route exact path="/online-events">
             <OnlineEvents />
           </Route>
-          <Route exact path="/socket">
+          {/* <Route exact path="/socket">
             <SocketIo />
+          </Route> */}
+          <Route exact path="/test">
+            <Test />
           </Route>
           <Route path="*">
             <NotFound />
