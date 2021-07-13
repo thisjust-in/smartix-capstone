@@ -4,34 +4,10 @@ import classes from "./EventForm.module.css";
 export const EventForm = () => {
   const [eventname, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [eventLocation, setEventLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventType, setEventType] = useState("hello");
-  const [eventCapacity, setEventCapacity] = useState("");
-  const [isOnline, setIsOnline] = useState(false);
   const [filename, setFileName] = useState("No file selected");
   const [preview, setPreview] = useState(null);
-  const [inputBox, setInputBox] = useState(0);
-  let formItem = [];
-
-  for (let i = 0; i < inputBox; i++) {
-    formItem.push(
-      <Row className="g-2">
-        <Col md>
-          <Form.Label className={classes.label}>Token name</Form.Label>
-          <Form.Control type="text" placeholder="First class" />
-        </Col>
-        <Col md>
-          <Form.Label className={classes.label}>Token Quantity</Form.Label>
-          <Form.Control type="number" placeholder="100" />
-        </Col>
-        <Col md>
-          <Form.Label className={classes.label}>Token Price</Form.Label>
-          <Form.Control type="number" placeholder="0.5 Eth" />
-        </Col>
-      </Row>
-    );
-  }
 
   // handle image upload to show preview
   const handleFileChange = (event) => {
@@ -107,69 +83,23 @@ export const EventForm = () => {
                 <option value="none" selected disabled hidden>
                   Select an Option
                 </option>
-                <option value="concert">Music Concert</option>
-                <option value="musical">Musical</option>
+                <option value="concert">Entertainment</option>
+                <option value="musical">Cooking</option>
                 <option value="seminar">Seminar</option>
                 <option value="fitness">Fitness</option>
                 <option value="educational">Educational</option>
+                <option value="educational">Well-being</option>
                 <option value="hobbies">Hobbies</option>
               </select>
             </Form.Group>
           </Form.Group>
-          <Form.Group controlId="formBasicLocation">
-            <Form.Label className={classes.label}>Location</Form.Label>
+          <Form.Group controlId="formBasicDate">
+            <Form.Label className={classes.label}>Event Date</Form.Label>
             <Form.Control
               required
-              type="text"
-              placeholder="Location"
-              value={eventLocation}
-            />
-          </Form.Group>
-          <Row>
-            <Col>
-              <Form.Group controlId="formBasicDate">
-                <Form.Label className={classes.label}>Event Date</Form.Label>
-                <Form.Control
-                  required
-                  type="date"
-                  value={eventDate}
-                  onChange={(event) => setEventDate(event.target.value)}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="formBasicEventCapacity">
-                <Form.Label className={classes.label}>
-                  Event Capacity
-                </Form.Label>
-                <Form.Control
-                  required
-                  type="number"
-                  min="0"
-                  value={eventCapacity}
-                  placeholder="Event Capacity"
-                  onChange={(event) => setEventCapacity(event.target.value)}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Form.Group controlId="formBasicEventName">
-            <Form.Label className={classes.label}>Token Tier</Form.Label>
-            <Form.Control
-              required
-              type="number"
-              min="0"
-              placeholder="Token tier"
-              onChange={(event) => setInputBox(event.target.value)}
-            />
-            {formItem}
-          </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check
-              type="checkbox"
-              label="Online"
-              value={isOnline}
-              onChange={(event) => setIsOnline(true)}
+              type="date"
+              value={eventDate}
+              onChange={(event) => setEventDate(event.target.value)}
             />
           </Form.Group>
           <button variant="primary" type="submit" className={classes.submitBtn}>
