@@ -1,10 +1,17 @@
 import web3 from './web3'
 
-
-
-const address = '0xD8c13fB8e161637655eFB3ED0aD953407Df0802b';
+const address = '0xD791380Bf5dA22D581cef1C00eB33B6889D91d9f';
 
 const abi = [
+  {
+    anonymous: false,
+    inputs: [ [Object] ],
+    name: 'GetAddress',
+    type: 'event',
+    constant: undefined,
+    payable: undefined,
+    signature: '0x1c9c12d8b251bfca7ce704f0d48351acc9fad7fe1534ad6c6c45af4f861f2fe8'
+  },
   {
     inputs: [ [Object], [Object] ],
     name: 'Mint',
@@ -106,7 +113,5 @@ const abi = [
     signature: '0x3011e16a'
   }
 ]
-
-
 
 export default new web3.eth.Contract(abi, address)

@@ -43,6 +43,7 @@ contract CreateEvent {
     Event[] public contracts;
     uint256 public eventID;
     mapping(address => address payable) public eventLog; //{address(event) : address(host)}
+    event GetAddress (address _eventaddress);
 
     
     function getContractCount() public view returns (uint contractCount) {
@@ -54,6 +55,7 @@ contract CreateEvent {
         contracts.push(e);
         eventLog[address(e)] = payable(msg.sender);
         eventID++;
+        emit GetAddress (address(e));
     }
       
     function Mint(address _eventaddress, uint256 _amount) public {

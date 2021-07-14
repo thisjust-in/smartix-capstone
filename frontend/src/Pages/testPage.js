@@ -1,31 +1,29 @@
 import React from "react";
 import EventContract from "../EventContract";
-import { useEffect } from "react";
 import web3 from "../web3";
 
-function Test() {
-  let ContractCount;
-  // useEffect(async () => {
-  //   const accounts = await web3.eth.getAccounts();
-  //   ContractCount = await EventContract.methods
-  //     .getContractCount()
-  //     .send({ from: accounts[0] });
-  // }, []);
 
-  async function click() {
-    const accounts = await web3.eth.getAccounts();
-    let createEvent = await EventContract.methods
-      .newEvent()
-      .send({ from: accounts[0] });
-    console.log(createEvent, "123");
+
+function Test() {
+
+    async function click() {
+    let accounts = await web3.eth.getAccounts();
+    await EventContract.methods.newEvent().send({from: accounts[0]})
+    await EventContract.getPastEvents("allEvents", {fromBlock: 'latest', toBlock: 'latest'}, (err, events)=> {
+        console.log(events[0].raw.data)
+        let addressarray = events[0].raw.data.split('')
+        addressarray.splice(2,24)
+        console.log(addressarray.join(''))
+    })
+
   }
 
   return (
     <div>
-      <button onClick={click}>Create Contract</button>
-      <p>{ContractCount} ttt</p>
+     <button onClick={click}>Create Contract</button>
     </div>
   );
+
 }
 
 export default Test;

@@ -24,8 +24,6 @@ const deploy = async () => {
         })
         console.log(contractAddress.options.address)
         console.log(abi)
-        //0x91079e71DFC318b7dF17229991d6245b585014e5 (without gas)
-        //0x23936F08CbC1c0d5FBf40978dBb37F97c62A8d80
-        //0xD8c13fB8e161637655eFB3ED0aD953407Df0802b (latest without gas)
+        
 };
 deploy();
