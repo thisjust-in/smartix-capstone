@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Peer from "simple-peer";
 import io from "socket.io-client";
 
-const socket = io.connect("http://127.0.0.1:8080");
+const socket = io.connect("http://192.168.1.18:8080");
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
