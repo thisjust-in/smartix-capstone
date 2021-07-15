@@ -2,7 +2,6 @@
 pragma solidity >=0.4.16 <0.9.0;
 
 contract Event {
-    
     address public host;
     uint256 public TicketId;
     mapping(uint256 => uint256) public TixPrice; //tixID: price
@@ -13,7 +12,6 @@ contract Event {
         host = owner;
         TicketId = 0;
     }
-    
 
     function mint(address caller, uint256 amount) public  {
         require(caller == host);
@@ -43,8 +41,8 @@ contract CreateEvent {
     Event[] public contracts;
     uint256 public eventID;
     mapping(address => address payable) public eventLog; //{address(event) : address(host)}
+    event GetAddress (address _eventaddress);
 
-    
     function getContractCount() public view returns (uint contractCount) {
         return contracts.length;
     }
@@ -54,6 +52,7 @@ contract CreateEvent {
         contracts.push(e);
         eventLog[address(e)] = payable(msg.sender);
         eventID++;
+        emit GetAddress (address(e));
     }
       
     function Mint(address _eventaddress, uint256 _amount) public {

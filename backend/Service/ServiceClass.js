@@ -84,24 +84,14 @@ class Method {
           : qb.whereNotNull("users_id");
       });
     return data;
-    // .modify((qb) => {
-    //   event_date_from && event_date_to
-    //     ? qb.whereBetween("event_date_from", [event_date_from, event_date_to])
-    //     : qb.whereNotNull("event_date");
-    // })
-    // .modify((qb) => {
-    //   event_type
-    //     ? qb.where("event_type", event_type)
-    //     : qb.whereNotNull("event_type");
-    // });
   }
 
   async getEventInfo(id) {
     let data = await knex
-      .select("events.*", "tokens.*", "tokens.id as tokens_id")
-      .from("events")
-      .innerJoin("tokens", "tokens.events_id", "events.id")
-      .where("events.id", id);
+      .select("event.*", "tokens.*", "tokens.id as tokens_id")
+      .from("event")
+      .innerJoin("tokens", "tokens.event_id", "event.id")
+      .where("event.id", id);
     return data;
   }
 
@@ -163,14 +153,3 @@ class Method {
 }
 
 module.exports = Method;
-
-// const test = new Method(knex);
-// test.getOnlineEvent().then((data) => {
-//   console.log(data);
-// });
-// test.getEventHost().then((data) => {
-//   console.log(data);
-// });
-
-// test.storeWalletId(222);
-// test.GetUserInfo(1);

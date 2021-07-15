@@ -9,12 +9,12 @@ class PlatformRouter {
     router.post("/api/walletId", this.addWallet.bind(this));
     router.get("/api/eventhost", this.getEventHost.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
+    router.get("/event/:id", this.getEventInfo.bind(this))
     return router;
   }
 
   async addWallet(req, res) {
     let walletId = req.body.wallet_id;
-    // console.log("what is wallet id", walletId);
     await this.Method.storeWalletId(walletId).then(() => {
       console.log("inserted id");
     });
@@ -36,6 +36,14 @@ class PlatformRouter {
     res.send(data);
     res.end();
   }
+
+  async getEventInfo(req, res) {
+    let id = req.params.id
+    let data = await this.Method.getEventInfo(id)
+    console.log(data)
+    res.send(data)
+  }
+
 }
 
 module.exports = PlatformRouter;
