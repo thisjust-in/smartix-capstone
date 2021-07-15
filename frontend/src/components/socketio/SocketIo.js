@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
-import Peer from "simple-peer";
 import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:8080");
@@ -19,7 +17,10 @@ function SocketIo() {
       { urls: "stun:stun.l.google.com:19302" },
     ],
   };
-  const streamConstraints = { audio: false, video: { height: 480 } };
+  const streamConstraints = {
+    audio: false,
+    video: { width: 1920, height: 1080 },
+  };
 
   // let socket = io();
 
