@@ -7,10 +7,11 @@ import EventList from "./Pages/EventList";
 import CreateEvent from "./Pages/CreateEvent";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getEventHostThunk, getAllEventThunk } from "./redux/EventCardSlice";
+import { getEventHostThunk } from "./redux/EventCardSlice";
 import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 import SocketIo from "./components/socketio/SocketIo";
 import Test from "./Pages/testPage";
+import EventDetails from "./Pages/EventDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route exact path="/test">
             <Test />
+          </Route>
+          <Route exact path="/event/:id">
+            <EventDetails />
           </Route>
           <Route path="*">
             <NotFound />
