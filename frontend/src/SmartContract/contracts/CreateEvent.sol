@@ -2,6 +2,7 @@
 pragma solidity >=0.4.16 <0.9.0;
 
 contract Event {
+    
     address public host;
     uint256 public TicketId;
     mapping(uint256 => uint256) public TixPrice; //tixID: price
@@ -25,14 +26,13 @@ contract Event {
         TixPrice[_ticketId] = _price*10**18 ;
     }
     
-    function contractBalance (address caller) public view returns (uint256) {
-        require(caller == host);
-        return address(this).balance;
-    }
-    
     function buyTicket (address caller, uint256 _ticketId, uint256 _qty) public payable {
         TixHolder[host][_ticketId] -= _qty;
         TixHolder[caller][_ticketId] += _qty;
+    }
+    
+    function tixTypeCount() public view returns (uint) {
+        return TicketId;
     }
     
 }
@@ -43,6 +43,7 @@ contract CreateEvent {
     mapping(address => address payable) public eventLog; //{address(event) : address(host)}
     event GetAddress (address _eventaddress);
 
+    
     function getContractCount() public view returns (uint contractCount) {
         return contracts.length;
     }
@@ -58,8 +59,17 @@ contract CreateEvent {
     function Mint(address _eventaddress, uint256 _amount) public {
         Event(_eventaddress).mint(msg.sender, _amount);
     }
+    
+    function GetTixTypeCount(address _eventaddress) public view returns (uint) {
+        return Event(_eventaddress).tixTypeCount();
+    }
+
+    
+    function QtyPerTixType(address _eventaddress, uint256 _tixID) public view returns (uint256) {
+        return Event(_eventaddress).TixQty(_tixID);
+    }
         
-    function TixQty(address _eventaddress, address _owner, uint256 _tixID) public view returns (uint256) {
+    function TixQtyPerUser(address _eventaddress, address _owner, uint256 _tixID) public view returns (uint256) {
         return Event(_eventaddress).TixHolder(_owner, _tixID);
     }
     
@@ -73,7 +83,7 @@ contract CreateEvent {
     
     function buyTicket(address _eventaddress,uint256 _tixID, uint256 _qty) public payable {
         require(msg.sender.balance >= TixPrice(_eventaddress, _tixID));
-        require(_qty <= TixQty(_eventaddress, eventLog[_eventaddress], _tixID));
+        require(_qty <= TixQtyPerUser(_eventaddress, eventLog[_eventaddress], _tixID));
         eventLog[_eventaddress].transfer(TixPrice(_eventaddress, _tixID)*_qty);
         Event(_eventaddress).buyTicket(msg.sender, _tixID, _qty);
     }

@@ -17,7 +17,8 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEventHostThunk());
-  }, []);
+  }, [dispatch]);
+  
   return (
     <Router>
       <div className="App">

@@ -8,7 +8,8 @@ import web3 from "../../web3";
 export default function NavBar() {
   const [ac, setAC] = useState(null);
   const [loginBtn, setLoginBtn] = useState(false);
-  useEffect(async () => {
+  useEffect(() => {
+    async function fetch() {
     window.onload = async function () {
       let data = await web3.eth.getAccounts();
       console.log(data)
@@ -17,6 +18,8 @@ export default function NavBar() {
         setLoginBtn(true);
       }
     };
+  }
+  fetch()
   });
 
   return (

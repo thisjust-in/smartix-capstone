@@ -11,7 +11,7 @@ exports.seed = function (knex) {
           },
           eventDescription:
             "Best Jay Chou will be making his highly-anticipated return to Singapore for Jay Chou Carnival World Tour!",
-          eventDate: new Date("July 19, 2021 08:30:00"),
+          eventDate: new Date("July 19, 2022 08:30:00"),
           eventCapacity: 5000,
           eventType: "Musical Event",
           isOnline: false,
@@ -25,7 +25,7 @@ exports.seed = function (knex) {
           },
           eventDescription:
             "Now in its eleventh year, the annual iHeartRadio Music Festival is a two-day music festival in Las Vegas that features today's biggest names - across genres and formats.",
-          eventDate: new Date("August 19, 2021 19:00:00"),
+          eventDate: new Date("August 19, 2022 19:00:00"),
           eventCapacity: 7000,
           eventType: "Consert",
           isOnline: false,
@@ -39,7 +39,7 @@ exports.seed = function (knex) {
           },
           eventDescription:
             "Now in its eleventh year, the annual iHeartRadio Music Festival is a two-day music festival in Las Vegas that features today's biggest names - across genres and formats.",
-          eventDate: new Date("July 2, 2021 19:00:00"),
+          eventDate: new Date("July 2, 2022 19:00:00"),
           eventCapacity: 7000,
           eventType: "Consert",
           isOnline: false,
@@ -53,7 +53,7 @@ exports.seed = function (knex) {
           },
           eventDescription:
             "Now in its eleventh year, the annual iHeartRadio Music Festival is a two-day music festival in Las Vegas that features today's biggest names - across genres and formats.",
-          eventDate: new Date("July 2, 2021 19:00:00"),
+          eventDate: new Date("July 2, 2022 19:00:00"),
           eventCapacity: 7000,
           eventType: "Consert",
           isOnline: false,

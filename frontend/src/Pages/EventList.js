@@ -10,8 +10,6 @@ function EventList(){
         return {...each, eventDate: new Date(each.eventDate).toString()}
     })
 
-    console.log(formatlist)
-
     let users = []
     for (let each of event_list) {
         users.push(each.users_id)

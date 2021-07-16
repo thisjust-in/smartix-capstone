@@ -40,7 +40,6 @@ class PlatformRouter {
   async getEventInfo(req, res) {
     let id = req.params.id
     let data = await this.Method.getEventInfo(id)
-    console.log(data)
     res.send(data)
   }
 
