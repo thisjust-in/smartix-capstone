@@ -41,8 +41,8 @@ function EventDetails(){
             <Row className={styles.row}>
             <Col md="6">
             <SeatsioSeatingChart 
-            workspaceKey="886377b9-1e1a-4780-93b3-7d0b480bbad8"
-            event="<yourEventKey>"
+            workspaceKey="ba650b33-08ea-4845-9c03-8f74fe31c6ce"
+            event="90c253f1-a1d7-496b-82ed-a4c5e0100180"
             id="<theChartDivID>"
             region="na"/>
             </Col>

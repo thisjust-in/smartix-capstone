@@ -1,41 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
+
+import Peer from "simple-peer";
 import io from "socket.io-client";
 
-const socket = io.connect("http://192.168.1.18:8080");
+const socket = io.connect("http://172.20.10.2:8080");
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
   const [username, setUsername] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
-  const [asViewer, setAsViewer] = useState(false);
   const broadcasterVideo = useRef();
   const userVideo = useRef();
 
   const iceServers = {
     iceServers: [
-      { urls: "stun:stun.services.mozilla.comcl" },
-      { urls: "stun:stun1.l.google.com:19302" },
+      { urls: "stun:stun.services.mozilla.com" },
+      { urls: "stun:stun.l.google.com:19302" },
     ],
   };
-  const streamConstraints = {
-    audio: false,
-    video: { width: 1920, height: 1080 },
-  };
+  const streamConstraints = { audio: false, video: { height: 480 } };
 
   // let socket = io();
 
   const joinAsBroadcaster = () => {
     if (roomNumber === "" || username === "") {
-      alert("Please input a room number and a name");
+      alert("Please type a room number and a name");
     } else {
       user = {
         room: roomNumber,
         name: username,
       };
+      console.log("broadcasterVideo", broadcasterVideo);
       navigator.mediaDevices
         .getUserMedia(streamConstraints)
         .then(function (stream) {
+          // console.log(myVideo);
           setStream(stream);
           broadcasterVideo.current.srcObject = stream;
           socket.emit("register as broadcaster", user.room);
@@ -45,7 +45,6 @@ function SocketIo() {
 
   const joinAsViewer = () => {
     console.log("clicked");
-    setAsViewer(true);
     if (roomNumber === "" || username === "") {
       alert("Please type a room number and a name");
     } else {
@@ -144,7 +143,7 @@ function SocketIo() {
       );
       // console.log("what is this now", rtcPeerConnections);
     });
-  });
+  }, []);
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -174,12 +173,8 @@ function SocketIo() {
       />
       <button onClick={joinAsBroadcaster}>Join as Broadcaster</button>
       <button onClick={joinAsViewer}>Join as Viewer</button>
-      {stream && (
-        <video width="960" height="640" autoPlay ref={broadcasterVideo}></video>
-      )}
-      {asViewer && (
-        <video width="960" height="640" autoPlay ref={userVideo}></video>
-      )}
+      {stream && <video autoPlay ref={broadcasterVideo}></video>}
+      {<video autoPlay ref={userVideo}></video>}
     </div>
   );
 }
