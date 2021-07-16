@@ -14,8 +14,8 @@ function SocketIo() {
 
   const iceServers = {
     iceServers: [
-      { urls: "stun:stun.services.mozilla.com" },
-      { urls: "stun:stun.l.google.com:19302" },
+      { urls: "stun:stun.services.mozilla.comcl" },
+      { urls: "stun:stun1.l.google.com:19302" },
     ],
   };
   const streamConstraints = {
@@ -38,7 +38,7 @@ function SocketIo() {
         .then(function (stream) {
           setStream(stream);
           broadcasterVideo.current.srcObject = stream;
-          socket.emit("broadcaster", user.room);
+          socket.emit("register as broadcaster", user.room);
         });
     }
   };
@@ -53,7 +53,7 @@ function SocketIo() {
         room: roomNumber,
         name: username,
       };
-      socket.emit("viewer", user);
+      socket.emit("register as viewer", user);
       // console.log("can i get here");
     }
   };
