@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:8080");
+const socket = io.connect("http://192.168.1.18:8080");
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
@@ -19,7 +19,7 @@ function SocketIo() {
     ],
   };
   const streamConstraints = {
-    audio: true,
+    audio: false,
     video: { width: 1920, height: 1080 },
   };
 
@@ -175,10 +175,10 @@ function SocketIo() {
       <button onClick={joinAsBroadcaster}>Join as Broadcaster</button>
       <button onClick={joinAsViewer}>Join as Viewer</button>
       {stream && (
-        <video width="960" height="640" controls ref={broadcasterVideo}></video>
+        <video width="960" height="640" autoPlay ref={broadcasterVideo}></video>
       )}
       {asViewer && (
-        <video width="960" height="640" controls ref={userVideo}></video>
+        <video width="960" height="640" autoPlay ref={userVideo}></video>
       )}
     </div>
   );

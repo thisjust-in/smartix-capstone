@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import axios from "redaxios";
 import styles from "./EventDetails.module.css"
 import { Col, Row, Container } from 'reactstrap';
+import { SeatsioSeatingChart } from '@seatsio/seatsio-react'
 
 function EventDetails(){
 
@@ -39,7 +40,11 @@ function EventDetails(){
             <div>
             <Row className={styles.row}>
             <Col md="6">
-            <div id="chart"></div>
+            <SeatsioSeatingChart 
+            workspaceKey="<886377b9-1e1a-4780-93b3-7d0b480bbad8>"
+            event="<yourEventKey>"
+            id="<theChartDivID>"
+            region="na"/>
             </Col>
             <Col md="6">
                 YO
