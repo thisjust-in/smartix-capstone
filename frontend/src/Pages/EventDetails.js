@@ -18,16 +18,11 @@ function EventDetails(){
             setEventinfo(response.data[0])
         }
         fetch()
-
-        const script = document.createElement('script');
-        script.src = "../seatsio";
-        script.async = true;
-        document.body.appendChild(script);
-        return () => {
-            document.body.removeChild(script);
-        }
-
     }, [])
+
+    function click(e) {
+        console.log(e)
+    }
 
     return (
         <div>
@@ -43,8 +38,11 @@ function EventDetails(){
             <SeatsioSeatingChart 
             workspaceKey="ba650b33-08ea-4845-9c03-8f74fe31c6ce"
             event="90c253f1-a1d7-496b-82ed-a4c5e0100180"
-            id="<theChartDivID>"
-            region="na"/>
+            region="na"
+            onObjectSelected={function(object){
+                console.dir(object);
+            }}
+            />
             </Col>
             <Col md="6">
                 YO
