@@ -8,15 +8,18 @@ function socket(io) {
   io.on("connection", function (socket) {
     console.log("a user connected");
 
-    socket.on("broadcaster", function (room) {
+    socket.on("register as broadcaster", function (room) {
+      console.log("hello");
       broadcasters[room] = socket.id;
       socket.join(room);
     });
 
-    socket.on("viewer", function (user) {
+    socket.on("register as viewer", function (user) {
+      console.log("register as viewer for room", user.room);
       socket.join(user.room);
+
       user.id = socket.id;
-      // console.log(user.room, broadcasters[user.room]);
+      console.log(user.room, broadcasters[user.room]);
       // send to that particular room (broadcasters[user.room])
       // then emit: call the "new viewer" in frontend
       socket.to(broadcasters[user.room]).emit("new viewer", user);
