@@ -8,17 +8,12 @@ function socket(io) {
   io.on("connection", function (socket) {
     console.log("a user connected");
 
-    socket.on("register as broadcaster", function (room) {
-      console.log("register as broadcaster for room", room);
-
+    socket.on("broadcaster", function (room) {
       broadcasters[room] = socket.id;
-      console.log("broadcasters", broadcasters);
       socket.join(room);
     });
 
-    socket.on("register as viewer", function (user) {
-      console.log("register as viewer for room", user.room);
-
+    socket.on("viewer", function (user) {
       socket.join(user.room);
       user.id = socket.id;
       // console.log(user.room, broadcasters[user.room]);

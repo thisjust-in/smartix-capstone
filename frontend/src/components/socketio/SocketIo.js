@@ -8,6 +8,7 @@ function SocketIo() {
   const [username, setUsername] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
+  const [asViewer, setAsViewer] = useState(false);
   const broadcasterVideo = useRef();
   const userVideo = useRef();
 
@@ -17,32 +18,34 @@ function SocketIo() {
       { urls: "stun:stun.l.google.com:19302" },
     ],
   };
-  const streamConstraints = { audio: false, video: { height: 480 } };
+  const streamConstraints = {
+    audio: true,
+    video: { width: 1920, height: 1080 },
+  };
 
   // let socket = io();
 
   const joinAsBroadcaster = () => {
     if (roomNumber === "" || username === "") {
-      alert("Please type a room number and a name");
+      alert("Please input a room number and a name");
     } else {
       user = {
         room: roomNumber,
         name: username,
       };
-      console.log("broadcasterVideo", broadcasterVideo);
       navigator.mediaDevices
         .getUserMedia(streamConstraints)
         .then(function (stream) {
-          // console.log(myVideo);
           setStream(stream);
           broadcasterVideo.current.srcObject = stream;
-          socket.emit("register as broadcaster", user.room);
+          socket.emit("broadcaster", user.room);
         });
     }
   };
 
   const joinAsViewer = () => {
     console.log("clicked");
+    setAsViewer(true);
     if (roomNumber === "" || username === "") {
       alert("Please type a room number and a name");
     } else {
@@ -50,7 +53,7 @@ function SocketIo() {
         room: roomNumber,
         name: username,
       };
-      socket.emit("register as viewer", user);
+      socket.emit("viewer", user);
       // console.log("can i get here");
     }
   };
@@ -171,8 +174,12 @@ function SocketIo() {
       />
       <button onClick={joinAsBroadcaster}>Join as Broadcaster</button>
       <button onClick={joinAsViewer}>Join as Viewer</button>
-      {stream && <video autoPlay ref={broadcasterVideo}></video>}
-      {<video autoPlay ref={userVideo}></video>}
+      {stream && (
+        <video width="960" height="640" controls ref={broadcasterVideo}></video>
+      )}
+      {asViewer && (
+        <video width="960" height="640" controls ref={userVideo}></video>
+      )}
     </div>
   );
 }
