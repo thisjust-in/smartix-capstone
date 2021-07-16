@@ -12,26 +12,16 @@ class PlatformRouter {
     router.get("/api/eventhost", this.getEventHost.bind(this));
     router.post("/api/findId", this.getUserfromAddress.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
+    router.get("/event/:id", this.getEventInfo.bind(this))
     return router;
   }
 
   async addWallet(req, res) {
-    try {
-      let walletId = req.body.wallet_id;
-      console.log("what is wallet id", walletId);
-      await this.Method.storeWalletId(walletId).then(() => {
-        console.log("inserted id");
-      });
-      res.end();
-    } catch (error) {
-      console.log(error, "erro");
-    }
-  }
-
-  async getUserfromAddress(req, res) {
-    let address = req.body.id[0].toString().toLowerCase();
-    let userId = await this.Method.getUserfromAddress(address);
-    res.send(userId.toString());
+    let walletId = req.body.wallet_id;
+    await this.Method.storeWalletId(walletId).then(() => {
+      console.log("inserted id");
+    });
+    res.end();
   }
 
   async getEventHost(req, res) {
@@ -92,6 +82,13 @@ class PlatformRouter {
     res.send(data);
     res.end();
   }
+
+  async getEventInfo(req, res) {
+    let id = req.params.id
+    let data = await this.Method.getEventInfo(id)
+    res.send(data)
+  }
+
 }
 
 module.exports = PlatformRouter;

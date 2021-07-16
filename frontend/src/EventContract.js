@@ -1,6 +1,6 @@
 import web3 from './web3'
 
-const address = '0xD791380Bf5dA22D581cef1C00eB33B6889D91d9f';
+const address = '0x8dDaA6059892E8136516895A04b3169Cc6Bc06AC';
 
 const abi = [
   {
@@ -11,6 +11,16 @@ const abi = [
     constant: undefined,
     payable: undefined,
     signature: '0x1c9c12d8b251bfca7ce704f0d48351acc9fad7fe1534ad6c6c45af4f861f2fe8'
+  },
+  {
+    inputs: [ [Object] ],
+    name: 'GetTixTypeCount',
+    outputs: [ [Object] ],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
+    payable: undefined,
+    signature: '0x48fafbc7'
   },
   {
     inputs: [ [Object], [Object] ],
@@ -24,6 +34,16 @@ const abi = [
   },
   {
     inputs: [ [Object], [Object] ],
+    name: 'QtyPerTixType',
+    outputs: [ [Object] ],
+    stateMutability: 'view',
+    type: 'function',
+    constant: true,
+    payable: undefined,
+    signature: '0x23c09c24'
+  },
+  {
+    inputs: [ [Object], [Object] ],
     name: 'TixPrice',
     outputs: [ [Object] ],
     stateMutability: 'view',
@@ -34,13 +54,13 @@ const abi = [
   },
   {
     inputs: [ [Object], [Object], [Object] ],
-    name: 'TixQty',
+    name: 'TixQtyPerUser',
     outputs: [ [Object] ],
     stateMutability: 'view',
     type: 'function',
     constant: true,
     payable: undefined,
-    signature: '0x2632af9c'
+    signature: '0xe17926da'
   },
   {
     inputs: [ [Object], [Object], [Object] ],

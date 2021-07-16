@@ -94,24 +94,10 @@ class Method {
           : qb.whereNotNull("users_id");
       });
     return data;
-    // .modify((qb) => {
-    //   event_date_from && event_date_to
-    //     ? qb.whereBetween("event_date_from", [event_date_from, event_date_to])
-    //     : qb.whereNotNull("event_date");
-    // })
-    // .modify((qb) => {
-    //   event_type
-    //     ? qb.where("event_type", event_type)
-    //     : qb.whereNotNull("event_type");
-    // });
   }
 
   async getEventInfo(id) {
-    let data = await knex
-      .select("events.*", "tokens.*", "tokens.id as tokens_id")
-      .from("events")
-      .innerJoin("tokens", "tokens.events_id", "events.id")
-      .where("events.id", id);
+    let data = await knex.select("*").from("event").where("event.id", id);
     return data;
   }
 
@@ -162,12 +148,6 @@ class Method {
     //   .into("tokens");
   }
 
-  //puchase record
-  async purchaseRecord(users_id) {
-    let data = await knex("purchase_record").where("users_id", users_id);
-    return data;
-  }
-
   // for event card, will store into redux named 'eventCard'
   async getEventHost() {
     let eventHost = await this.knex
@@ -182,7 +162,7 @@ class Method {
 
 module.exports = Method;
 
-const test = new Method(knex);
+// const test = new Method(knex);
 // test
 //   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
 //   .then((data) => {

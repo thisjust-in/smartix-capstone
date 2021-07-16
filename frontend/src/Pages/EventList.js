@@ -3,7 +3,6 @@ import Header from '../components/Main-Components/Header';
 import HeaderContent from '../components/EventListPage/HeaderContent'
 import List from '../components/EventListPage/List'
 import { useSelector } from 'react-redux'
-import backgroundimage from '../components/assets/backgroundimage.jpg'
 
 function EventList(){
     let event_list = useSelector((state) => state.eventlist.event_list);
@@ -43,11 +42,11 @@ function EventList(){
 
     return (
         <div>
-            <Header backgroundimage={backgroundimage} content={<HeaderContent avatar={avatarRendering(distinct)} title={titleRendering(distinct)} para={typeRendering(distinct)}/>} />
+            <Header backgroundimage={'https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg'} content={<HeaderContent avatar={avatarRendering(distinct)} title={titleRendering(distinct)} para={typeRendering(distinct)}/>} />
             <h2 style={{padding: '3rem'}}>Upcoming Events</h2>
             {
             formatlist.map((each)=>{
-                return  <List date={each.eventDate.slice(4, 10)} time={each.eventDate.slice(0, 3) + " " + each.eventDate.slice(16, 21)} location={each.eventLocation}  />
+                return  <List date={each.eventDate.slice(4, 10)} time={each.eventDate.slice(0, 3) + " " + each.eventDate.slice(16, 21)} name={each.eventName} location={each.eventLocation}  id={each.event_id}/>
             })
             }
 

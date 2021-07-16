@@ -13,7 +13,6 @@ contract Event {
         host = owner;
         TicketId = 0;
     }
-    
 
     function mint(address caller, uint256 amount) public  {
         require(caller == host);
@@ -27,14 +26,13 @@ contract Event {
         TixPrice[_ticketId] = _price*10**18 ;
     }
     
-    function contractBalance (address caller) public view returns (uint256) {
-        require(caller == host);
-        return address(this).balance;
-    }
-    
     function buyTicket (address caller, uint256 _ticketId, uint256 _qty) public payable {
         TixHolder[host][_ticketId] -= _qty;
         TixHolder[caller][_ticketId] += _qty;
+    }
+    
+    function tixTypeCount() public view returns (uint) {
+        return TicketId;
     }
     
 }
@@ -61,8 +59,17 @@ contract CreateEvent {
     function Mint(address _eventaddress, uint256 _amount) public {
         Event(_eventaddress).mint(msg.sender, _amount);
     }
+    
+    function GetTixTypeCount(address _eventaddress) public view returns (uint) {
+        return Event(_eventaddress).tixTypeCount();
+    }
+
+    
+    function QtyPerTixType(address _eventaddress, uint256 _tixID) public view returns (uint256) {
+        return Event(_eventaddress).TixQty(_tixID);
+    }
         
-    function TixQty(address _eventaddress, address _owner, uint256 _tixID) public view returns (uint256) {
+    function TixQtyPerUser(address _eventaddress, address _owner, uint256 _tixID) public view returns (uint256) {
         return Event(_eventaddress).TixHolder(_owner, _tixID);
     }
     
@@ -76,7 +83,7 @@ contract CreateEvent {
     
     function buyTicket(address _eventaddress,uint256 _tixID, uint256 _qty) public payable {
         require(msg.sender.balance >= TixPrice(_eventaddress, _tixID));
-        require(_qty <= TixQty(_eventaddress, eventLog[_eventaddress], _tixID));
+        require(_qty <= TixQtyPerUser(_eventaddress, eventLog[_eventaddress], _tixID));
         eventLog[_eventaddress].transfer(TixPrice(_eventaddress, _tixID)*_qty);
         Event(_eventaddress).buyTicket(msg.sender, _tixID, _qty);
     }
