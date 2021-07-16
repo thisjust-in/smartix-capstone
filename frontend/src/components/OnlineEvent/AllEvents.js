@@ -12,7 +12,7 @@ export default function AllEvents() {
 
   useEffect(() => {
     dispatch(getAllEventThunk());
-  }, []);
+  }, [dispatch]);
 
   let onlineEvents = [];
   let offlineEvents = [];

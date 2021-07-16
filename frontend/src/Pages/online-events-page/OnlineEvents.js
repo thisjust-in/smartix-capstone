@@ -1,5 +1,4 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
 import LpHeading from "../../components/OnlineEvent/LpHeading";
 import LpImage from "../../components/OnlineEvent/LpImage";
 import { Container, Row, Col } from "react-bootstrap";

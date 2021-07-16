@@ -4,7 +4,7 @@ import classes from "./EventForm.module.css";
 export const EventForm = () => {
   const [eventname, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [eventLocation, setEventLocation] = useState("");
+  const [eventLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventType, setEventType] = useState("hello");
   const [eventCapacity, setEventCapacity] = useState("");
@@ -73,6 +73,7 @@ export const EventForm = () => {
                 id={classes.previewImg}
                 src={preview}
                 width="400px"
+                alt="alt"
               />
             </div>
           </Form.Group>

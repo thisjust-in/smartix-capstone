@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-
-import Peer from "simple-peer";
 import io from "socket.io-client";
 
 const socket = io.connect("http://localhost:8080");
@@ -143,7 +141,7 @@ function SocketIo() {
       );
       // console.log("what is this now", rtcPeerConnections);
     });
-  }, []);
+  });
 
   const handleUsername = (e) => {
     setUsername(e.target.value);

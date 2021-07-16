@@ -87,11 +87,7 @@ class Method {
   }
 
   async getEventInfo(id) {
-    let data = await knex
-      .select("event.*", "tokens.*", "tokens.id as tokens_id")
-      .from("event")
-      .innerJoin("tokens", "tokens.event_id", "event.id")
-      .where("event.id", id);
+    let data = await knex.select("*").from("event").where("event.id", id);
     return data;
   }
 
@@ -132,12 +128,6 @@ class Method {
         events_id: events_id,
       })
       .into("tokens");
-  }
-
-  //puchase record
-  async purchaseRecord(users_id) {
-    let data = await knex("purchase_record").where("users_id", users_id);
-    return data;
   }
 
   // for event card, will store into redux named 'eventCard'
