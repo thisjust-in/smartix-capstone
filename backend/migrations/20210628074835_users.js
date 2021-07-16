@@ -1,7 +1,7 @@
 exports.up = function (knex) {
   return knex.schema.createTable("users", (table) => {
     table.increments().primary();
-    table.string("wallet_id").unique();
+    table.string("wallet_id");
     table.string("username");
     table.json("userProfile_pic");
     table.string("userDescription");

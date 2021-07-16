@@ -11,7 +11,7 @@ export default function NavBar() {
   useEffect(async () => {
     window.onload = async function () {
       let data = await web3.eth.getAccounts();
-      console.log(data)
+      // console.log(data)
       setAC(data[0]);
       if (data[0] !== undefined) {
         setLoginBtn(true);
