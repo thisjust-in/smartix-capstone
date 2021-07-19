@@ -6,7 +6,6 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex("users").insert([
         {
-          id: 1,
           wallet_id: "123455",
           username: "Jay Chou",
           userProfile_pic: {
@@ -15,7 +14,6 @@ exports.seed = function (knex) {
           userDescription: "I am Jay Chou",
         },
         {
-          id: 2,
           wallet_id: "246810",
           username: "Coldplay",
           userProfile_pic: {
@@ -24,7 +22,6 @@ exports.seed = function (knex) {
           userDescription: "We are Coldplay",
         },
         {
-          id: 3,
           wallet_id: "sdffsdf3342432432423",
           username: "The Point",
           userProfile_pic: {
