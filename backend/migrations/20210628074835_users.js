@@ -5,6 +5,8 @@ exports.up = function (knex) {
     table.string("username");
     table.json("userProfile_pic");
     table.string("userDescription");
+    table.json("purchaseHistory");
+    table.foreign("event_id").references("event.id");
     table.timestamps(false, true);
   });
 };
