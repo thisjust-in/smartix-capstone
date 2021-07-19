@@ -6,10 +6,18 @@ import axios from "redaxios";
 import styles from "./EventDetails.module.css"
 import { Col, Row, Container } from 'reactstrap';
 import { SeatsioSeatingChart } from '@seatsio/seatsio-react'
+import PrimaryBtn from "../components/Main-Components/PrimaryBtn"
+import web3 from "../web3";
+import EventContract from '../EventContract';
+
+
 
 function EventDetails(){
 
     const [eventinfo, setEventinfo] = useState("")
+    const [tix, setTix] = useState([])
+
+    let address = "0xF80779bD8Fa8b3f9Dcc01A5A927dd83b261dfF48"
 
     useEffect(() => {
         async function fetch(){
@@ -18,16 +26,40 @@ function EventDetails(){
             setEventinfo(response.data[0])
         }
         fetch()
-
-        const script = document.createElement('script');
-        script.src = "../seatsio";
-        script.async = true;
-        document.body.appendChild(script);
-        return () => {
-            document.body.removeChild(script);
-        }
-
     }, [])
+
+
+    async function select(e) {
+        
+        let location = e.id
+        let tixID = e.category.label
+        let accounts = await web3.eth.getAccounts();
+        let host = await EventContract.methods.eventLog(address).call()
+        let qty = await EventContract.methods.TixQtyPerUser(address, host, tixID).call()
+        let wei = await EventContract.methods.TixPrice(address, tixID).call()
+        let ether = web3.utils.fromWei(wei, 'ether')
+
+        setTix(tix => [...tix, {
+            location: location,
+            category: tixID,
+            qty: qty,
+            price: ether
+        }]) 
+    }
+
+    function deselect(e) {
+        setTix((tix) => {
+           return tix.filter((data)=> {
+                return data.location !== e.id
+            })
+        })
+    }
+
+    async function checkout() {
+        let accounts = await web3.eth.getAccounts();
+        let wei = web3.utils.toWei('2', 'ether');
+        await EventContract.methods.buyTicket(address, tix[0].category, tix.length).send({from: accounts[0], value: wei})
+    }
 
     return (
         <div>
@@ -38,16 +70,46 @@ function EventDetails(){
                 <h4>{new Date(eventinfo.eventDate).toString().slice(0, 3) + ", " + new Date(eventinfo.eventDate).toString().slice(4, 15) + ", " + new Date(eventinfo.eventDate).toString().slice(16, 21) + ". " + eventinfo.eventLocation}</h4>
             </div>
             <div>
-            <Row className={styles.row}>
-            <Col md="6">
+            <Row>
+            <Col lg="6">
             <SeatsioSeatingChart 
-            workspaceKey="ba650b33-08ea-4845-9c03-8f74fe31c6ce"
-            event="90c253f1-a1d7-496b-82ed-a4c5e0100180"
-            id="<theChartDivID>"
-            region="na"/>
+                workspaceKey="ba650b33-08ea-4845-9c03-8f74fe31c6ce"
+                event="24a04996-c2ff-4b11-94e3-3958bba5840e"
+                region="na"
+                onObjectSelected={select}
+                onObjectDeselected={deselect}
+            />
             </Col>
-            <Col md="6">
-                YO
+            <Col lg="6">
+            <Container>
+            <Row className={styles.titlerow}>
+                <Col xs="4" className={styles.col}>
+                    <h5>Location</h5>
+                </Col>
+                <Col xs="4">
+                    <h5>Availiable</h5>
+                </Col>
+                <Col xs="4" className={styles.col2}>
+                    <h5>Price</h5>
+                </Col>
+            </Row>
+                {tix.map((data)=>{
+                    return (
+                        <Row className={styles.row}>
+                        <Col xs="4" className={styles.col}>
+                            <h6>{data.location}</h6>
+                        </Col>
+                        <Col xs="4">
+                            <h6>{data.qty}</h6>
+                        </Col>
+                        <Col xs="4" className={styles.col2}>
+                            <h6>{data.price}</h6>
+                        </Col>
+                        </Row>
+                    )
+                })}
+            </Container>
+            <PrimaryBtn text={"Checkout"} click={checkout}/>
             </Col>
             </Row>
             </div>
