@@ -29,7 +29,6 @@ export const checkWalletIDThunk = () => async (dispatch) => {
       })
       .then((response) => {
         dispatch(checkUserActions.setUserId(response.data));
-        // console.log("this is response", response.data);
       });
   }
   check();

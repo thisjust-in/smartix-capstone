@@ -13,7 +13,7 @@ import { timeFromInt } from "time-number";
 export const EventForm = () => {
   const [eventname, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [eventLocation] = useState("");
+  const [eventLocation, setEventLocation] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [eventType, setEventType] = useState("");
   const [isOnline, setIsOnline] = useState(false);

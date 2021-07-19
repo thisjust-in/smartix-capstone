@@ -12,7 +12,7 @@ class PlatformRouter {
     router.get("/api/eventhost", this.getEventHost.bind(this));
     router.post("/api/findId", this.getUserfromAddress.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
-    router.get("/event/:id", this.getEventInfo.bind(this))
+    router.get("/event/:id", this.getEventInfo.bind(this));
     return router;
   }
 
@@ -22,6 +22,13 @@ class PlatformRouter {
       console.log("inserted id");
     });
     res.end();
+  }
+
+  async getUserfromAddress(req, res) {
+    let user_id = req.body.id[0];
+    let formatAddress = user_id.toString().toLowerCase();
+    let userID = await this.Method.getUserfromAddress(formatAddress);
+    res.send(userID.toString());
   }
 
   async getEventHost(req, res) {
@@ -84,11 +91,10 @@ class PlatformRouter {
   }
 
   async getEventInfo(req, res) {
-    let id = req.params.id
-    let data = await this.Method.getEventInfo(id)
-    res.send(data)
+    let id = req.params.id;
+    let data = await this.Method.getEventInfo(id);
+    res.send(data);
   }
-
 }
 
 module.exports = PlatformRouter;
