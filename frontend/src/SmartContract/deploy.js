@@ -23,7 +23,6 @@ const deploy = async () => {
             from: accounts[0]
         })
         console.log(contractAddress.options.address)
-        console.log(abi)
         
 };
 deploy();

@@ -4,6 +4,22 @@
   margin: 5rem 0;
 }
 
+.titlerow {
+  margin: 1.5rem 0;
+  border-bottom: #000000 solid 1px;
+}
+
 .row {
   margin: 1.5rem 0;
+  background-color: white;
+  padding: 1rem;
+  border-left: #30498B 10px solid;
+}
+
+.col {
+  text-align: left;
+}
+
+.col2 {
+  text-align: right;
 }

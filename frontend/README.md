@@ -1,1 +1,1 @@
-smartix project
+smartix

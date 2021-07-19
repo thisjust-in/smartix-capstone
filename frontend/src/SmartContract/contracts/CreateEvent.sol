@@ -21,6 +21,18 @@ contract Event {
         TicketId++;
     }
     
+    function getHost () external view returns (address) {
+        return host;
+    }
+    
+    function getTixPrice (uint256 _ticketId) external view returns (uint256) {
+       return (TixPrice[_ticketId]);
+    }
+    
+    function getTixQty (address _host, uint256 _ticketId) external view returns (uint256) {
+        return TixHolder[_host][_ticketId];
+    }
+    
     function setPrice(address caller, uint256 _ticketId, uint256 _price) public  {
         require(caller == host);
         TixPrice[_ticketId] = _price*10**18 ;
