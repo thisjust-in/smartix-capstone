@@ -130,7 +130,6 @@ export const EventForm = () => {
                 id={classes.previewImg}
                 src={preview}
                 width="400px"
-                alt="alt"
               />
             </div>
           </Form.Group>
