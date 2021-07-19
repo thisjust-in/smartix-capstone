@@ -2,10 +2,13 @@ exports.up = function (knex) {
   return knex.schema.createTable("event", (table) => {
     table.increments().primary();
     table.string("eventName");
+    table.string("contractAddress");
     table.string("eventLocation");
     table.json("eventPhoto");
     table.string("eventDescription");
     table.datetime("eventDate");
+    table.string("startTime");
+    table.string("endTime");
     table.integer("eventCapacity");
     table.string("eventType");
     table.boolean("isOnline");

@@ -13,3 +13,15 @@
 #loginBtn {
   margin: 10rem 0;
 }
+
+.tabs {
+  color: rgb(14, 14, 14) !important;
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+}
+
+.tabs:hover {
+  color: rgb(14, 14, 14) !important;
+  border-bottom: 3px solid #000;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}

@@ -9,15 +9,19 @@ class Method {
     this.knex = knex;
   }
 
-  storeWalletId(wallet_id) {
+  async storeWalletId(wallet_id) {
     console.log(wallet_id);
-    return knex("users")
-      .insert({
-        wallet_id: wallet_id,
-      })
-      .then(() => {
-        console.log("wallet id", wallet_id);
-      });
+    let exisitingUser = await knex("users").where("wallet_id", wallet_id);
+    // console.log("exisitingUser", exisitingUser);
+    if (!exisitingUser[0]) {
+      knex("users")
+        .insert({
+          wallet_id: wallet_id,
+        })
+        .then(() => {
+          console.log("wallet id", wallet_id);
+        });
+    }
   }
 
   //users
@@ -25,6 +29,12 @@ class Method {
   async getUserInfo(id) {
     let data = await knex("users").where("id", id);
     return data;
+  }
+
+  async getUserfromAddress(id) {
+    let data = await this.knex.select("*").from("users").where("wallet_id", id);
+    let userID = data[0].id;
+    return userID;
   }
 
   async editUserInfo(name, profile_pic, description) {
@@ -92,42 +102,50 @@ class Method {
   }
 
   async createEvent(
-    name,
-    location,
-    Event_picture,
-    description,
-    event_date,
-    capacity,
-    event_type,
+    eventName,
+    contractAddress,
+    eventLocation,
+    eventPhoto,
+    eventDescription,
+    eventDate,
+    startTime,
+    endTime,
+    eventCapacity,
+    eventType,
     isOnline,
-    users_id,
-    token_name,
-    price,
-    quantity
+    users_id
   ) {
-    let events_id = await knex
-      .insert({
-        name: name,
-        location: location,
-        Event_picture: Event_picture,
-        description: description,
-        event_date: event_date,
-        capacity: capacity,
-        event_type: event_type,
-        isOnline: isOnline,
-        users_id: users_id,
+    console.log("inserting now from service class");
+    let newEvent = {
+      eventName: eventName,
+      eventLocation: eventLocation,
+      contractAddress: contractAddress,
+      eventPhoto: eventPhoto,
+      eventDescription: eventDescription,
+      eventDate: eventDate,
+      startTime: startTime,
+      endTime: endTime,
+      eventCapacity: eventCapacity,
+      eventType: eventType,
+      isOnline: isOnline,
+      users_id: users_id,
+    };
+    let insertEvent = await knex("event")
+      .insert(newEvent)
+      .then(() => {
+        console.log("inserted new Event");
       })
-      .into("events")
-      .returning("id");
-
-    await knex
-      .insert({
-        token_name: token_name,
-        price: price,
-        quantity: quantity,
-        events_id: events_id,
-      })
-      .into("tokens");
+      .catch((error) => {
+        console.log("error", error);
+      });
+    // await knex
+    //   .insert({
+    //     token_name: token_name,
+    //     price: price,
+    //     quantity: quantity,
+    //     events_id: events_id,
+    //   })
+    //   .into("tokens");
   }
 
   // for event card, will store into redux named 'eventCard'
@@ -143,3 +161,35 @@ class Method {
 }
 
 module.exports = Method;
+
+// const test = new Method(knex);
+// test
+//   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
+//   .then((data) => {
+//     console.log(data);
+//   });
+// test.createEvent(
+//   "eventName",
+//   "0xd7d440f0287163fd4e0b4239bf4f601771b83450",
+//   "HK",
+//   {
+//     pc1: "https://i.pinimg.com/originals/1f/27/a4/1f27a40bfd45769b24e51321995b39d6.jpg",
+//   },
+//   "cool event world",
+//   "2021-07-19",
+//   "23:00",
+//   "23:30",
+//   100,
+//   "concert",
+//   true,
+//   1
+// );
+// test.storeWalletId(999);
+// test.getOnlineEvent().then((data) => {
+//   console.log(data);
+// });
+// test.getEventHost().then((data) => {
+//   console.log(data);
+// });
+
+// test.GetUserInfo(1);
