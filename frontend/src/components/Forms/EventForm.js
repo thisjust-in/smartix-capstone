@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { checkWalletIDThunk } from "../../redux/CheckUserSlice";
 import { Form, Row, Col } from "react-bootstrap";
 import classes from "./EventForm.module.css";
@@ -11,6 +12,7 @@ import TimePicker from "react-bootstrap-time-picker";
 import { timeFromInt } from "time-number";
 
 export const EventForm = () => {
+  const history = useHistory();
   const [eventname, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [eventLocation, setEventLocation] = useState("");
@@ -103,6 +105,7 @@ export const EventForm = () => {
       console.error("AHHHHHHHH!!");
     };
     console.log("submit");
+    
   };
   return (
     <div>
