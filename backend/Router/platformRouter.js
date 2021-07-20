@@ -52,16 +52,16 @@ class PlatformRouter {
       let eventName = data.eventDetails.eventname;
       let eventLocation = data.eventDetails.eventLocation;
       let eventPhoto = jsonFormat;
+      let venue = data.eventDetails.venue;
       let eventDate = data.eventDetails.eventDate;
       let startTime = data.eventDetails.startTime;
       let endTime = data.eventDetails.endTime;
       let eventDescription = data.eventDetails.eventDescription;
       let contractAddress = data.eventDetails.contractAddress;
-      let eventCapacity = 0;
+      let eventCapacity = 1000;
       let eventType = data.eventDetails.eventType;
       let isOnline = data.eventDetails.isOnline;
       let user_id = data.eventDetails.userId;
-      // console.log(data);
       await this.Method.createEvent(
         eventName,
         contractAddress,
@@ -72,6 +72,7 @@ class PlatformRouter {
         startTime,
         endTime,
         eventCapacity,
+        venue,
         eventType,
         isOnline,
         user_id

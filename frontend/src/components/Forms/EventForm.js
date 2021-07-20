@@ -24,34 +24,46 @@ export const EventForm = () => {
   const [preview, setPreview] = useState(null);
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("0");
+  const [venue, setVenue] = useState();
   let currentUserId;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkWalletIDThunk());
   }, []);
 
-  if (isOnline) {
-    console.log("hello");
+  let eventSelector = null;
+  if (!isOnline) {
+    eventSelector = (
+      <select
+        id={classes.eventType}
+        value={venue}
+        onChange={(event) => setVenue(event.target.value)}
+      >
+        <option value="none" selected="selected">
+          Select an Option
+        </option>
+        <option value="Hong Kong Coliseum">Hong Kong Coliseum</option>
+        <option value="AsiaWorld-Expo">AsiaWorld-Expo</option>
+      </select>
+    );
   }
 
   const user_id = useSelector((state) => {
     return state.users.userID;
   });
+
   if (user_id) {
-    // console.log("user_ID", user_id);
     currentUserId = user_id;
   }
 
   // handle time input changes
   const handleTimeChange = (event) => {
     let time = event;
-    console.log(timeFromInt(time));
     setEndTime(timeFromInt(time));
   };
 
   const handleStartTime = (event) => {
     let time = event;
-    console.log(timeFromInt(time));
     setStartTime(timeFromInt(time));
   };
   // handle image upload to show preview
@@ -85,7 +97,7 @@ export const EventForm = () => {
             addressarray.splice(2, 24);
             contractAddress = addressarray.join("");
             if (contractAddress) {
-              history.push("/");
+              history.push("/event/settings");
             }
           }
         );
@@ -99,6 +111,7 @@ export const EventForm = () => {
           startTime: startTime,
           endTime: endTime,
           eventLocation: eventLocation,
+          venue: venue,
           eventType: eventType,
           isOnline: isOnline,
           userId: currentUserId,
@@ -174,7 +187,7 @@ export const EventForm = () => {
                 value={eventType}
                 onChange={(event) => setEventType(event.target.value)}
               >
-                <option value="none" selected disabled hidden>
+                <option value="none" selected="selected">
                   Select an Option
                 </option>
                 <option value="concert">Entertainment</option>
@@ -240,12 +253,13 @@ export const EventForm = () => {
               </Form.Group>
             </Col>
           </Row>
+          <Form.Group controlId="formBasicCheckbox">{eventSelector}</Form.Group>
           <Form.Group controlId="formBasicCheckbox">
             <Form.Check
               type="checkbox"
               label="Online"
               value={isOnline}
-              onChange={() => setIsOnline(true)}
+              onChange={() => setIsOnline(!isOnline)}
             />
           </Form.Group>
           <button variant="primary" type="submit" className={classes.submitBtn}>
