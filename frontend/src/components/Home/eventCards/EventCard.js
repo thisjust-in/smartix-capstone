@@ -5,6 +5,7 @@ import EventCardCSS from "./EventCard.module.css";
 
 const EventCardBackground = () => {
   const host = useSelector((state) => {
+    console.log("state", state);
     return state.eventCard.eventCount;
   });
 

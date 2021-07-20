@@ -37,7 +37,7 @@ const OnlineBanner = () => {
                 <img
                   className="d-block w-100"
                   id={OnlineBannerCss.theImage}
-                  src={onlineEvent[ranArr[0]].eventPhoto.pc1}
+                  src={onlineEvent[ranArr[0]].eventPhoto}
                   alt="First slide"
                 />
               ) : (
@@ -65,7 +65,7 @@ const OnlineBanner = () => {
                 <img
                   className="d-block w-100"
                   id={OnlineBannerCss.theImage}
-                  src={onlineEvent[ranArr[1]].eventPhoto.pc1}
+                  src={onlineEvent[ranArr[1]].eventPhoto}
                   alt="First slide"
                 />
               ) : (
@@ -94,7 +94,7 @@ const OnlineBanner = () => {
                 <img
                   className="d-block w-100"
                   id={OnlineBannerCss.theImage}
-                  src={onlineEvent[ranArr[2]].eventPhoto.pc1}
+                  src={onlineEvent[ranArr[2]].eventPhoto}
                   alt="First slide"
                 />
               ) : (
