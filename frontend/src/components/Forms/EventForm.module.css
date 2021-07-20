@@ -79,13 +79,13 @@ input[type="file"] {
 
 .submitBtn {
   margin: 2rem 0;
-  color: white;
+  color: #050505;
   font-weight: 700;
-  border: none;
+  border: 1px solid #050505;
   border-radius: 50px;
   width: 100%;
   height: 45px;
-  background-color: #2d2d2d;
+  background-color: transparent;
 }
 
 .submitBtn:hover {
@@ -97,6 +97,7 @@ input[type="file"] {
   width: 100%;
   height: 45px;
   background-color: #050505;
+  transition: 0.2s all;
 }
 
 /* mobile form layout  */

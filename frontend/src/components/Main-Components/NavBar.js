@@ -12,7 +12,7 @@ export default function NavBar() {
     async function fetch() {
     window.onload = async function () {
       let data = await web3.eth.getAccounts();
-      console.log(data)
+      // console.log(data)
       setAC(data[0]);
       if (data[0] !== undefined) {
         setLoginBtn(true);
@@ -33,8 +33,8 @@ export default function NavBar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="/online-events" className="text-dark">
-                All Events
+              <Nav.Link href="/online-events" className={classes.tabs}>
+                Events
               </Nav.Link>
             </Nav>
             {loginBtn ? null : <MetaMaskBtn />}
