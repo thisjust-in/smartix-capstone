@@ -160,11 +160,20 @@ class Method {
       .where("eventDate", ">=", new Date());
     return eventHost;
   }
+
+  async findContractAddress(id) {
+    let contractAddress = await this.knex
+      .select("*")
+      .from("event")
+      .where("users_id", id)
+    return contractAddress[0].contractAddress;
+  }
 }
 
 module.exports = Method;
 
 // const test = new Method(knex);
+// test.findContractAddress(4);
 // test
 //   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
 //   .then((data) => {

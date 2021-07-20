@@ -7,7 +7,7 @@ import classes from "./EventSettings.module.css";
 import axios from "redaxios";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { checkWalletIDThunk } from "../../redux/CheckUserSlice";
+import { getContractAddress } from "../../redux/CheckUserSlice";
 // import { useHistory } from "react-router-dom";
 
 export const EventSettings = () => {
@@ -17,10 +17,10 @@ export const EventSettings = () => {
   //   console.log(EventContract);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(checkWalletIDThunk());
+    dispatch(getContractAddress());
   }, []);
 
-  const user_id = useSelector((state) => {
+  const contractAddress = useSelector((state) => {
     console.log(state);
   });
 
