@@ -11,13 +11,16 @@ import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 import SocketIo from "./components/socketio/SocketIo";
 import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
+import YourEvents from "./components/settingPage/YourEvents";
 import EventFormTwo from "./Pages/EventFormTwo";
+import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEventHostThunk());
-  }, [dispatch]);
+    dispatch(checkWalletIDThunk());
+  }, []);
 
   return (
     <Router>
@@ -48,6 +51,9 @@ function App() {
           </Route>
           <Route exact path="/event/:id">
             <EventDetails />
+          </Route>
+          <Route exact path="/yourevent">
+            <YourEvents />
           </Route>
           <Route path="*">
             <NotFound />

@@ -5,7 +5,7 @@ const OneCard = ({ hostName, eventCount, eventPic }) => {
     <div
       className={EventCardStyle.background}
       style={{
-        backgroundImage: `url(${eventPic.pc1})`,
+        backgroundImage: `url(${eventPic})`,
       }}
     >
       <div className={EventCardStyle.information}>
