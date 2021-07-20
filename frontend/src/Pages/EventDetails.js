@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import axios from "redaxios";
 import styles from "./EventDetails.module.css"
 import { Col, Row, Container } from 'reactstrap';
-import { SeatsioSeatingChart } from '@seatsio/seatsio-react'
+import { SeatsioSeatingChart} from '@seatsio/seatsio-react'
 import PrimaryBtn from "../components/Main-Components/PrimaryBtn"
 import web3 from "../web3";
 import EventContract from '../EventContract';
@@ -78,6 +78,7 @@ function EventDetails(){
                 region="na"
                 onObjectSelected={select}
                 onObjectDeselected={deselect}
+  
             />
             </Col>
             <Col lg="6">

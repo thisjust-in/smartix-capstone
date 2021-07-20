@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import { checkWalletIDThunk } from "../../redux/CheckUserSlice";
 import { Form, Row, Col } from "react-bootstrap";
 import classes from "./EventForm.module.css";
@@ -10,6 +9,7 @@ import EventContract from "../../EventContract";
 import web3 from "../../web3";
 import TimePicker from "react-bootstrap-time-picker";
 import { timeFromInt } from "time-number";
+import { useHistory } from "react-router-dom";
 
 export const EventForm = () => {
   const history = useHistory();
@@ -29,6 +29,10 @@ export const EventForm = () => {
   useEffect(() => {
     dispatch(checkWalletIDThunk());
   }, []);
+
+  if (isOnline) {
+    console.log("hello");
+  }
 
   const user_id = useSelector((state) => {
     return state.users.userID;
@@ -66,47 +70,53 @@ export const EventForm = () => {
     // console.log(currentUserId);
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
-    reader.onloadend = async () => {
-      let contractAddress;
-      let accounts = await web3.eth.getAccounts();
-      await EventContract.methods.newEvent().send({ from: accounts[0] });
-      await EventContract.getPastEvents(
-        "allEvents",
-        { fromBlock: "latest", toBlock: "latest" },
-        (err, events) => {
-          let info = events[0].raw.data;
-          console.log(info);
-          let addressarray = info.split("");
-          addressarray.splice(2, 24);
-          contractAddress = addressarray.join("");
-          console.log(contractAddress);
-        }
-      );
-      eventPhoto = await reader.result;
-      eventDetails = {
-        eventname: eventname,
-        eventPhoto: eventPhoto,
-        contractAddress: contractAddress,
-        eventDescription: eventDescription,
-        eventDate: eventDate,
-        startTime: startTime,
-        endTime: endTime,
-        eventLocation: eventLocation,
-        eventType: eventType,
-        isOnline: isOnline,
-        userId: currentUserId,
+    async function submitform() {
+      reader.onloadend = async () => {
+        let contractAddress;
+        let accounts = await web3.eth.getAccounts();
+        await EventContract.methods.newEvent().send({ from: accounts[0] });
+        await EventContract.getPastEvents(
+          "allEvents",
+          { fromBlock: "latest", toBlock: "latest" },
+          (err, events) => {
+            let info = events[0].raw.data;
+            console.log(info);
+            let addressarray = info.split("");
+            addressarray.splice(2, 24);
+            contractAddress = addressarray.join("");
+            if (contractAddress) {
+              history.push("/");
+            }
+          }
+        );
+        eventPhoto = await reader.result;
+        eventDetails = {
+          eventname: eventname,
+          eventPhoto: eventPhoto,
+          contractAddress: contractAddress,
+          eventDescription: eventDescription,
+          eventDate: eventDate,
+          startTime: startTime,
+          endTime: endTime,
+          eventLocation: eventLocation,
+          eventType: eventType,
+          isOnline: isOnline,
+          userId: currentUserId,
+        };
+        // then post data to backend route with axios
+        await axios.post("http://localhost:8080/api/create-event", {
+          eventDetails: eventDetails,
+        });
       };
-      // then post data to backend route with axios
-      await axios.post("http://localhost:8080/api/create-event", {
-        eventDetails: eventDetails,
-      });
-    };
-    reader.onerror = () => {
-      console.error("AHHHHHHHH!!");
-    };
+      reader.onerror = () => {
+        console.error("AHHHHHHHH!!");
+      };
+    }
+    await submitform();
+
     console.log("submit");
-    
   };
+
   return (
     <div>
       <div className={classes.formcontainer}>
