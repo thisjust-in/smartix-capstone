@@ -111,6 +111,7 @@ class Method {
     startTime,
     endTime,
     eventCapacity,
+    venue,
     eventType,
     isOnline,
     users_id
@@ -126,6 +127,7 @@ class Method {
       startTime: startTime,
       endTime: endTime,
       eventCapacity: eventCapacity,
+      venue: venue,
       eventType: eventType,
       isOnline: isOnline,
       users_id: users_id,

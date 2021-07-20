@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Pages/Home";
 import NotFound from "./components/notFoundPage/NotFoundPage";
@@ -13,6 +12,7 @@ import SocketIo from "./components/socketio/SocketIo";
 import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
 import YourEvents from "./components/settingPage/YourEvents";
+import EventFormTwo from "./Pages/EventFormTwo";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +43,9 @@ function App() {
           </Route>
           <Route exact path="/test">
             <Test />
+          </Route>
+          <Route exact path="/event/settings">
+            <EventFormTwo />
           </Route>
           <Route exact path="/event/:id">
             <EventDetails />
