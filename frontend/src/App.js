@@ -13,12 +13,14 @@ import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
 import YourEvents from "./components/settingPage/YourEvents";
 import EventFormTwo from "./Pages/EventFormTwo";
+import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEventHostThunk());
-  }, [dispatch]);
+    dispatch(checkWalletIDThunk());
+  }, []);
 
   return (
     <Router>
