@@ -33,8 +33,9 @@ class PlatformRouter {
   }
 
   async getContractAddress(req, res) {
-    let user_Id = req.body;
-    console.log("kjbefbw", user_Id);
+    let user_Id = req.body.id;
+    let contractAddress = await this.Method.findContractAddress(user_Id);
+    res.send(contractAddress);
   }
 
   async getEventHost(req, res) {

@@ -166,8 +166,11 @@ class Method {
       .select("*")
       .from("event")
       .where("users_id", id)
-    return contractAddress[0].contractAddress;
+      .orderBy("event.id", "desc");
+    console.log("wdew", contractAddress[0]);
+    return contractAddress[0];
   }
+
 }
 
 module.exports = Method;
