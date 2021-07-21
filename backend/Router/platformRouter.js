@@ -1,5 +1,7 @@
 const express = require("express");
-const { cloudinary } = require("../Cloudinary/cloudinary");
+const {
+  cloudinary
+} = require("../Cloudinary/cloudinary");
 
 class PlatformRouter {
   constructor(Method) {
@@ -14,6 +16,7 @@ class PlatformRouter {
     router.post("/api/findContractAddress", this.getContractAddress.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
+    router.post('/purchase', this.purchase.bind(this))
     return router;
   }
 
@@ -103,6 +106,14 @@ class PlatformRouter {
     let data = await this.Method.getEventInfo(id);
     res.send(data);
   }
+
+  async purchase(req, res) {
+    let TixDetails = JSON.stringify(req.body.TixDetails)
+    let wallet_id = req.body.wallet_id
+    let contractAddress = req.body.contractAddress
+    await this.Method.purchaseRecord(TixDetails, wallet_id, contractAddress)
+  }
+
 }
 
 module.exports = PlatformRouter;

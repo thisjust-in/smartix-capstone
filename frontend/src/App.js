@@ -11,6 +11,8 @@ import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 import SocketIo from "./components/socketio/SocketIo";
 import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
+import Footer from "./components/Footer/Footer";
+import Confirmation from "./Pages/Confirmation";
 import YourEvents from "./components/settingPage/YourEvents";
 import EventFormTwo from "./Pages/EventFormTwo";
 import { checkWalletIDThunk } from "./redux/CheckUserSlice";
@@ -27,8 +29,7 @@ function App() {
       <div className="App">
         <NavBar />
         <Switch>
-          <Route exact path="/"></Route>
-          <Route exact path="/home">
+          <Route exact path="/">
             <Home />
           </Route>
           <Route exact path="/list">
@@ -52,6 +53,9 @@ function App() {
           <Route exact path="/event/:id">
             <EventDetails />
           </Route>
+          <Route exact path="/confirmation">
+            <Confirmation />
+          </Route>
           <Route exact path="/yourevent">
             <YourEvents />
           </Route>
@@ -59,6 +63,7 @@ function App() {
             <NotFound />
           </Route>
         </Switch>
+        <Footer/>
       </div>
     </Router>
   );
