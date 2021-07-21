@@ -78,20 +78,23 @@ class Method {
       .innerJoin("users", "event.users_id", "users.id")
       .modify((qb) => {
         location
-          ? qb.where("eventLocation", "ilike", `%${location}%`)
-          : qb.whereNotNull("eventLocation");
+          ?
+          qb.where("eventLocation", "ilike", `%${location}%`) :
+          qb.whereNotNull("eventLocation");
       })
       .modify((qb) => {
         event_date
-          ? qb.where("eventDate", event_date)
-          : qb.whereNotNull("eventDate");
+          ?
+          qb.where("eventDate", event_date) :
+          qb.whereNotNull("eventDate");
       })
       .modify((qb) => {
         query
-          ? qb
-              .whereIn("users_id", ids)
-              .orWhere("eventType", "ilike", `%${query}%`)
-          : qb.whereNotNull("users_id");
+          ?
+          qb
+          .whereIn("users_id", ids)
+          .orWhere("eventType", "ilike", `%${query}%`) :
+          qb.whereNotNull("users_id");
       });
     return data;
   }
@@ -138,14 +141,6 @@ class Method {
       .catch((error) => {
         console.log("error", error);
       });
-    // await knex
-    //   .insert({
-    //     token_name: token_name,
-    //     price: price,
-    //     quantity: quantity,
-    //     events_id: events_id,
-    //   })
-    //   .into("tokens");
   }
 
   // for event card, will store into redux named 'eventCard'
@@ -158,12 +153,26 @@ class Method {
       .where("eventDate", ">=", new Date());
     return eventHost;
   }
+
+  //Purchase
+  async purchaseRecord(TixDetails, wallet_id, contractAddress) {
+    let users_id = await knex.select('id').from('users').where('wallet_id', wallet_id.toLowerCase())
+    let event_id = await knex.select('id').from('event').where('contractAddress', contractAddress.toLowerCase())
+    await knex('purchase_record').insert({
+      TixDetails: TixDetails,
+      users_id: users_id[0].id,
+      event_id: event_id[0].id
+    })
+  }
 }
 
 module.exports = Method;
 
 // const test = new Method(knex);
-// test
+// test.getEventHost().then((data)=>{
+//   console.log(new Date())
+//   console.log(data)
+// })
 //   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
 //   .then((data) => {
 //     console.log(data);

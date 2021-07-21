@@ -26,7 +26,7 @@ export default function NavBar() {
     <div className={classes.Container}>
       <div className="container">
         <Navbar collapseOnSelect expand="lg">
-          <Navbar.Brand href="/home" className="text-dark">
+          <Navbar.Brand href="/" className="text-dark">
             <strong>Smartix</strong>
           </Navbar.Brand>
 
