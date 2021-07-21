@@ -181,15 +181,10 @@ class Method {
 module.exports = Method;
 
 // const test = new Method(knex);
-<<<<<<< HEAD
 // test.getEventHost().then((data)=>{
 //   console.log(new Date())
 //   console.log(data)
 // })
-=======
-// test.findContractAddress(4);
-// test
->>>>>>> 9e9fbdbe6649dabc034eec14acacdef584ded0c7
 //   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
 //   .then((data) => {
 //     console.log(data);
