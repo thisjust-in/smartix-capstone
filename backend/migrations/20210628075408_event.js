@@ -10,6 +10,7 @@ exports.up = function (knex) {
     table.string("startTime");
     table.string("endTime");
     table.integer("eventCapacity");
+    table.string("venue");
     table.string("eventType");
     table.boolean("isOnline");
     table.integer("users_id").unsigned();

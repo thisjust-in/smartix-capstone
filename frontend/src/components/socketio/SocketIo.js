@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
+import SocketIoCss from "./SocketIo.module.css";
 
 const socket = io.connect("http://172.20.10.2:8080");
 let rtcPeerConnections = {};
@@ -171,8 +172,10 @@ function SocketIo() {
       />
       <button onClick={joinAsBroadcaster}>Join as Broadcaster</button>
       <button onClick={joinAsViewer}>Join as Viewer</button>
-      {stream && <video autoPlay ref={broadcasterVideo}></video>}
-      {<video autoPlay ref={userVideo}></video>}
+      {stream && (
+        <video controls id={SocketIoCss.video} ref={broadcasterVideo}></video>
+      )}
+      {<video id={SocketIoCss.video} controls ref={userVideo}></video>}
     </div>
   );
 }

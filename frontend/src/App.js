@@ -1,4 +1,3 @@
-import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "./Pages/Home";
 import NotFound from "./components/notFoundPage/NotFoundPage";
@@ -14,13 +13,17 @@ import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
 import Footer from "./components/Footer/Footer";
 import Confirmation from "./Pages/Confirmation";
+import YourEvents from "./components/settingPage/YourEvents";
+import EventFormTwo from "./Pages/EventFormTwo";
+import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEventHostThunk());
-  }, [dispatch]);
-  
+    dispatch(checkWalletIDThunk());
+  }, []);
+
   return (
     <Router>
       <div className="App">
@@ -44,11 +47,17 @@ function App() {
           <Route exact path="/test">
             <Test />
           </Route>
+          <Route exact path="/event/settings">
+            <EventFormTwo />
+          </Route>
           <Route exact path="/event/:id">
             <EventDetails />
           </Route>
           <Route exact path="/confirmation">
             <Confirmation />
+          </Route>
+          <Route exact path="/yourevent">
+            <YourEvents />
           </Route>
           <Route path="*">
             <NotFound />
