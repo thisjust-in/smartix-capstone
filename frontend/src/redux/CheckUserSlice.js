@@ -7,6 +7,7 @@ export const usersSlice = createSlice({
   initialState: {
     wallet_id: [],
     userID: [],
+    contractAddress: [],
   },
   reducers: {
     getWalletId(state, action) {

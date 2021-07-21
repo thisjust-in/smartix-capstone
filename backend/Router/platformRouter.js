@@ -11,6 +11,7 @@ class PlatformRouter {
     router.post("/api/create-event", this.createEvent.bind(this));
     router.get("/api/eventhost", this.getEventHost.bind(this));
     router.post("/api/findId", this.getUserfromAddress.bind(this));
+    router.post("/api/findContractAddress", this.getContractAddress.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
     return router;
@@ -29,6 +30,12 @@ class PlatformRouter {
     let formatAddress = user_id.toString().toLowerCase();
     let userID = await this.Method.getUserfromAddress(formatAddress);
     res.send(userID.toString());
+  }
+
+  async getContractAddress(req, res) {
+    let user_Id = req.body.id;
+    let contractAddress = await this.Method.findContractAddress(user_Id);
+    res.send(contractAddress);
   }
 
   async getEventHost(req, res) {
