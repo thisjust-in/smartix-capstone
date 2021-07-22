@@ -29,15 +29,22 @@ class PlatformRouter {
   }
 
   async getUserfromAddress(req, res) {
-    let user_id = req.body.id[0];
-    let formatAddress = user_id.toString().toLowerCase();
+    let formatAddress = req.body.id[0].toLowerCase();
+    console.log("address", formatAddress);
     let userID = await this.Method.getUserfromAddress(formatAddress);
-    res.send(userID.toString());
+    if (userID) {
+      console.log("1", userID)
+      res.send(userID.toString());
+    } else {
+      let id = await this.Method.storeWalletId(formatAddress)
+      res.send(id[0].toString());
+    }
   }
 
   async getContractAddress(req, res) {
     let user_Id = req.body.id;
     let contractAddress = await this.Method.findContractAddress(user_Id);
+    console.log(contractAddress)
     res.send(contractAddress);
   }
 

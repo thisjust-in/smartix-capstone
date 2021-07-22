@@ -11,16 +11,13 @@ class Method {
 
   async storeWalletId(wallet_id) {
     console.log(wallet_id);
-    let exisitingUser = await knex("users").where("wallet_id", wallet_id);
-    // console.log("exisitingUser", exisitingUser);
+    let exisitingUser = await knex("users").where("wallet_id", wallet_id)
     if (!exisitingUser[0]) {
-      knex("users")
+      return knex("users")
+      .returning("id")
         .insert({
           wallet_id: wallet_id,
         })
-        .then(() => {
-          console.log("wallet id", wallet_id);
-        });
     }
   }
 
@@ -33,8 +30,10 @@ class Method {
 
   async getUserfromAddress(id) {
     let data = await this.knex.select("*").from("users").where("wallet_id", id);
-    let userID = data[0].id;
-    return userID;
+    console.log("asdas", data)
+    if(data[0]) {
+      return data[0].id;
+    }
   }
 
   async editUserInfo(name, profile_pic, description) {
@@ -135,6 +134,7 @@ class Method {
       isOnline: isOnline,
       users_id: users_id,
     };
+    console.log("diu",newEvent)
     let insertEvent = await knex("event")
       .insert(newEvent)
       .then(() => {

@@ -4,7 +4,7 @@ exports.up = function (knex) {
     table.string("eventName");
     table.string("contractAddress");
     table.string("eventLocation");
-    table.json("eventPhoto");
+    table.string("eventPhoto");
     table.string("eventDescription");
     table.datetime("eventDate");
     table.string("startTime");
