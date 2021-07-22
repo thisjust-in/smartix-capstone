@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
 import { useParams } from "react-router-dom";
 
-const socket = io.connect("http://localhost:8080");
+const socket = io.connect("http://172.20.10.2:8080");
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {

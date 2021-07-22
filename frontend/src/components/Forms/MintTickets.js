@@ -1,74 +1,68 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form } from "react-bootstrap";
-import image from "../assets/Asset-1.jpg";
+import image from "../assets/Asset-2.png";
 import web3 from "../../web3";
 import EventContract from "../../EventContract";
 import classes from "./EventSettings.module.css";
 import axios from "redaxios";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-export const EventSettings = () => {
+export const MintTickets = () => {
   const history = useHistory();
-  const [tixPrice, setTixPrice] = useState();
-  const [ethPrice, setEthPrice] = useState();
-  const [priceInHKD, setPriceInHKD] = useState(0);
-
+  const [eventLocation, setEventLocation] = useState("");
+  const [eventCapacity, setEventCapacity] = useState(2000);
   const currentUserId = useSelector((state) => {
     return state.users.userID;
   });
 
-  const fetchData = async () => {
-    const res = await axios.get(
-      `https://api.cryptonator.com/api/ticker/eth-usd`
-    );
-    setEthPrice(res.data.ticker.price);
-  };
-
   useEffect(async () => {
-    await fetchData();
-  }, []);
-
-  // calculate Eth to HKD
-  const handlePriceChange = async (event) => {
-    const hkdPrice = await Math.ceil(event.target.value * ethPrice * 7.77);
-    setPriceInHKD(hkdPrice);
-    setTixPrice(event.target.value);
-  };
-
-  const submitPrice = async (event) => {
-    event.preventDefault();
-    let currentAddress = [];
-    // let venue = 2000;
     await axios
       .post("http://localhost:8080/api/findContractAddress", {
         id: currentUserId,
       })
       .then((response) => {
-        console.log(response);
-        // if (response.data.venue == "AsiaWorld-Expo") {
-        //   venue = 560;
-        // } else if (response.data.venue === "Hong Kong Coliseum") {
-        //   venue = 562;
-        // } else {
-        //   venue = 2000;
-        // }
-        // console.log(venue);
+        if (response.data.venue == null) {
+          setEventLocation("Online Event");
+          setEventCapacity(2000);
+        } else if (response.data.venue === "Hong Kong Coliseum") {
+          setEventLocation(response.data.venue);
+          setEventCapacity(562);
+        } else {
+          setEventCapacity(897);
+        }
+      });
+  }, []);
+
+  const submitPrice = async (event) => {
+    event.preventDefault();
+    let currentAddress = [];
+    let venue = 2000;
+    await axios
+      .post("http://localhost:8080/api/findContractAddress", {
+        id: currentUserId,
+      })
+      .then((response) => {
+        // console.log(response);
+        console.log(venue);
         currentAddress.push(response.data.contractAddress);
+        if (response.data.venue == "AsiaWorld-Expo") {
+          venue = 560;
+        } else if (response.data.venue === "Hong Kong Coliseum") {
+          venue = 562;
+        } else {
+          venue = 2000;
+        }
       });
     console.log(currentUserId);
     console.log(currentAddress);
     let accounts = await web3.eth.getAccounts();
-    console.log(EventContract.methods);
-    console.log(tixPrice);
-    // await EventContract.methods
-    //   .Mint(currentAddress[0], tixPrice)
-    //   .send({ from: accounts[0] });
+    console.log(web3.eth);
+    // console.log(EventContract.methods);
     await EventContract.methods
-      .setPrice(currentAddress[0], 0, tixPrice)
+      .Mint(currentAddress[0], venue)
       .send({ from: accounts[0] });
-    history.push("/home");
+    history.push("/event/settings");
   };
 
   return (
@@ -76,14 +70,14 @@ export const EventSettings = () => {
       <Container>
         <Row>
           <Col>
-            <img src={image} alt="Image" width="500px" />
+            <img src={image} alt="Image" width="100%" />
           </Col>
           <Col>
             <div className={classes.formContainer}>
               <h6>
-                <strong>(Step 3) Set Event Ticket Price</strong>
+                <strong>(Step 2) Create Event Tickets</strong>
                 <div id={classes.priceConverter}>
-                  <p>Price in HKD${priceInHKD}</p>
+                  <p>Event Location: {eventLocation}</p>
                 </div>
               </h6>
               <Form onSubmit={submitPrice} className={classes.form}>
@@ -91,12 +85,11 @@ export const EventSettings = () => {
                   className="mb-3"
                   controlId="exampleForm.ControlInput1"
                 >
-                  <Form.Label>Ticket Price in Eth</Form.Label>
+                  <Form.Label>Event Capacity</Form.Label>
                   <Form.Control
                     type="Number"
-                    value={tixPrice}
-                    placeholder="Set Ticket Price"
-                    onChange={handlePriceChange}
+                    placeholder={eventCapacity}
+                    disabled
                   />
                 </Form.Group>
                 {currentUserId ? (
@@ -105,7 +98,7 @@ export const EventSettings = () => {
                     type="submit"
                     className={classes.submitBtn}
                   >
-                    Set Price
+                    Create Ticket
                   </button>
                 ) : null}
               </Form>
