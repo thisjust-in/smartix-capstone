@@ -42,7 +42,7 @@ function App() {
           <Route exact path="/online-events">
             <OnlineEvents />
           </Route>
-          <Route exact path="/socket">
+          <Route exact path="/socket/:id">
             <SocketIo />
           </Route>
           <Route exact path="/test">

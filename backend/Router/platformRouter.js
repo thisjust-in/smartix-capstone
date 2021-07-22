@@ -1,7 +1,5 @@
 const express = require("express");
-const {
-  cloudinary
-} = require("../Cloudinary/cloudinary");
+const { cloudinary } = require("../Cloudinary/cloudinary");
 
 class PlatformRouter {
   constructor(Method) {
@@ -16,7 +14,7 @@ class PlatformRouter {
     router.post("/api/findContractAddress", this.getContractAddress.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
-    router.post('/purchase', this.purchase.bind(this))
+    router.post("/purchase", this.purchase.bind(this));
     return router;
   }
 
@@ -36,7 +34,7 @@ class PlatformRouter {
       res.send(userID.toString());
       res.end()
     } else {
-      let id = await this.Method.storeWalletId(formatAddress)
+      let id = await this.Method.storeWalletId(formatAddress);
       res.send(id[0].toString());
       res.end()
     }
@@ -124,7 +122,6 @@ class PlatformRouter {
     await this.Method.purchaseRecord(TixDetails, wallet_id, contractAddress)
     res.end();
   }
-
 }
 
 module.exports = PlatformRouter;

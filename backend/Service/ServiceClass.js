@@ -10,13 +10,12 @@ class Method {
   }
 
   async storeWalletId(wallet_id) {
-    let exisitingUser = await knex("users").where("wallet_id", wallet_id)
+    console.log(wallet_id);
+    let exisitingUser = await knex("users").where("wallet_id", wallet_id);
     if (!exisitingUser[0]) {
-      return knex("users")
-      .returning("id")
-        .insert({
-          wallet_id: wallet_id,
-        })
+      return knex("users").returning("id").insert({
+        wallet_id: wallet_id,
+      });
     }
   }
 
@@ -76,23 +75,20 @@ class Method {
       .innerJoin("users", "event.users_id", "users.id")
       .modify((qb) => {
         location
-          ?
-          qb.where("eventLocation", "ilike", `%${location}%`) :
-          qb.whereNotNull("eventLocation");
+          ? qb.where("eventLocation", "ilike", `%${location}%`)
+          : qb.whereNotNull("eventLocation");
       })
       .modify((qb) => {
         event_date
-          ?
-          qb.where("eventDate", event_date) :
-          qb.whereNotNull("eventDate");
+          ? qb.where("eventDate", event_date)
+          : qb.whereNotNull("eventDate");
       })
       .modify((qb) => {
         query
-          ?
-          qb
-          .whereIn("users_id", ids)
-          .orWhere("eventType", "ilike", `%${query}%`) :
-          qb.whereNotNull("users_id");
+          ? qb
+              .whereIn("users_id", ids)
+              .orWhere("eventType", "ilike", `%${query}%`)
+          : qb.whereNotNull("users_id");
       });
     return data;
   }
@@ -122,7 +118,7 @@ class Method {
       eventName: eventName,
       eventLocation: eventLocation,
       contractAddress: contractAddress,
-      eventPhoto: eventPhoto,
+      eventPhoto: eventPhoto.slice(1, -1),
       eventDescription: eventDescription,
       eventDate: eventDate,
       startTime: startTime,
@@ -133,7 +129,6 @@ class Method {
       isOnline: isOnline,
       users_id: users_id,
     };
-    console.log("diu",newEvent)
     let insertEvent = await knex("event")
       .insert(newEvent)
       .then(() => {
@@ -157,13 +152,19 @@ class Method {
 
   //Purchase
   async purchaseRecord(TixDetails, wallet_id, contractAddress) {
-    let users_id = await knex.select('id').from('users').where('wallet_id', wallet_id.toLowerCase())
-    let event_id = await knex.select('id').from('event').where('contractAddress', contractAddress.toLowerCase())
-    await knex('purchase_record').insert({
+    let users_id = await knex
+      .select("id")
+      .from("users")
+      .where("wallet_id", wallet_id.toLowerCase());
+    let event_id = await knex
+      .select("id")
+      .from("event")
+      .where("contractAddress", contractAddress.toLowerCase());
+    await knex("purchase_record").insert({
       TixDetails: TixDetails,
       users_id: users_id[0].id,
-      event_id: event_id[0].id
-    })
+      event_id: event_id[0].id,
+    });
   }
   async findContractAddress(id) {
     let contractAddress = await this.knex
@@ -173,7 +174,6 @@ class Method {
       .orderBy("event.id", "desc");
     return contractAddress[0];
   }
-
 }
 
 module.exports = Method;
