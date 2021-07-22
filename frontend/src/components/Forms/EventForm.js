@@ -10,8 +10,10 @@ import web3 from "../../web3";
 import TimePicker from "react-bootstrap-time-picker";
 import { timeFromInt } from "time-number";
 import { useHistory } from "react-router-dom";
+import { SeatsioClient, Region } from 'seatsio'
 
 export const EventForm = () => {
+  const client = new SeatsioClient(Region.NA(), '886377b9-1e1a-4780-93b3-7d0b480bbad8')
   const history = useHistory();
   const [eventname, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
@@ -30,6 +32,8 @@ export const EventForm = () => {
   useEffect(() => {
     dispatch(checkWalletIDThunk());
   }, []);
+
+   console.log(isOnline)
 
   let eventSelector = null;
   if (!isOnline) {
@@ -79,7 +83,6 @@ export const EventForm = () => {
     // sort image upload
     let eventPhoto;
     let eventDetails;
-    // console.log(currentUserId);
     const reader = new FileReader();
     reader.readAsDataURL(selectedFile);
     async function submitform() {
@@ -96,38 +99,45 @@ export const EventForm = () => {
             let addressarray = info.split("");
             addressarray.splice(2, 24);
             contractAddress = addressarray.join("");
-            if (contractAddress) {
-              history.push("/event/mint");
-            }
           }
         );
-        eventPhoto = await reader.result;
+        eventPhoto = reader.result;
+        if (!isOnline){
+          let chartKey
+          if (venue == "Hong Kong Coliseum") {
+            chartKey = "53a822ab-a787-79e7-7e60-18e4faacfc59"
+          } else if (venue == "AsiaWorld-Expo") {
+            chartKey = "bdb97c1e-aa07-3742-3e07-09e99ee94a05"
+          }
+          await client.events.create(chartKey, contractAddress);
+        }
+
+
         eventDetails = {
           eventname: eventname,
-          eventPhoto: eventPhoto,
           contractAddress: contractAddress,
+          eventLocation: eventLocation,
+          eventPhoto: eventPhoto,
           eventDescription: eventDescription,
           eventDate: eventDate,
           startTime: startTime,
           endTime: endTime,
-          eventLocation: eventLocation,
           venue: venue,
           eventType: eventType,
           isOnline: isOnline,
           userId: currentUserId,
         };
         // then post data to backend route with axios
-        await axios.post("http://localhost:8080/api/create-event", {
-          eventDetails: eventDetails,
-        });
+        await axios.post("http://localhost:8080/api/create-event", { eventDetails: eventDetails })
+        history.push("/event/mint");
       };
       reader.onerror = () => {
         console.error("AHHHHHHHH!!");
       };
+
+   
     }
     await submitform();
-
-    console.log("submit");
   };
 
   return (

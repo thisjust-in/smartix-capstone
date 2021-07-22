@@ -17,6 +17,8 @@ function EventDetails(){
     const client = new SeatsioClient(Region.NA(), '886377b9-1e1a-4780-93b3-7d0b480bbad8')
     const [eventinfo, setEventinfo] = useState("")
     const [tix, setTix] = useState([])
+    console.log(eventinfo)
+    
 
     async function fetch(){
         let event_id = window.location.pathname.split('/')[2]
@@ -66,12 +68,12 @@ function EventDetails(){
             contractAddress: eventinfo.contractAddress
         }
         await axios.post('http://localhost:8080/purchase', data)
-
+        console.log("")
         let tixArray = []
         for(let each of tix) {
             tixArray.push(each.location)
         }
-        await client.events.book('24a04996-c2ff-4b11-94e3-3958bba5840e', tixArray)
+        await client.events.book(eventinfo.contractAddress, tixArray)
         history.push('/confirmation')
     }
 
@@ -88,7 +90,7 @@ function EventDetails(){
             <Col lg="6">
             {eventinfo.contractAddress ? <SeatsioSeatingChart 
                 workspaceKey="ba650b33-08ea-4845-9c03-8f74fe31c6ce"
-                event="24a04996-c2ff-4b11-94e3-3958bba5840e"
+                event={eventinfo.contractAddress}
                 region="na"
                 onObjectSelected={select}
                 onObjectDeselected={deselect}
