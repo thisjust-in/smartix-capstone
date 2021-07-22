@@ -5,63 +5,57 @@ import web3 from "../../web3";
 import EventContract from "../../EventContract";
 import classes from "./EventSettings.module.css";
 import axios from "redaxios";
-import { useSelector } from "react-redux";
+import { useSelector, useStore } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export const MintTickets = () => {
   const history = useHistory();
-  const [eventLocation, setEventLocation] = useState("");
-  const [eventCapacity, setEventCapacity] = useState(2000);
-  const currentUserId = useSelector((state) => {
-    return state.users.userID;
-  });
+  const [event, setEvent] = useState("")
+  const [eventCapacity, setEventCapacity] = useState("");
+  const user = useSelector((state) => state.users)
+
+  console.log(user.userID)
 
   useEffect(async () => {
-    await axios
-      .post("http://localhost:8080/api/findContractAddress", {
-        id: currentUserId,
-      })
-      .then((response) => {
-        if (response.data.venue == null) {
-          setEventLocation("Online Event");
-          setEventCapacity(2000);
-        } else if (response.data.venue === "Hong Kong Coliseum") {
-          setEventLocation(response.data.venue);
+    if (typeof user.userID !== "object"){
+      
+      let eventDetails = await axios.post("http://localhost:8080/api/findContractAddress", {id: user.userID})
+      setEvent(eventDetails.data)
+      if (eventDetails.data.isOnline == false) {
+        if (eventDetails.data.venue === "Hong Kong Coliseum") {
           setEventCapacity(562);
-        } else {
+        } else if (eventDetails.data.venue === "AsiaWorld-Expo") {
           setEventCapacity(897);
         }
-      });
-  }, []);
+      } else {
+        setEventCapacity(2000);
+      }
 
-  const submitPrice = async (event) => {
-    event.preventDefault();
-    let currentAddress = [];
-    let venue = 2000;
-    await axios
-      .post("http://localhost:8080/api/findContractAddress", {
-        id: currentUserId,
-      })
-      .then((response) => {
-        // console.log(response);
-        console.log(venue);
-        currentAddress.push(response.data.contractAddress);
-        if (response.data.venue == "AsiaWorld-Expo") {
-          venue = 560;
-        } else if (response.data.venue === "Hong Kong Coliseum") {
-          venue = 562;
+    }
+
+  }, [user.userID]);
+
+  const submitPrice = async (e) => {
+    e.preventDefault();
+    let user_address = await web3.eth.getAccounts()
+
+        if (event.venue == "AsiaWorld-Expo") {
+          console.log("Expo")
+          await EventContract.methods
+          .Mint(event.contractAddress, 897)
+          .send({ from: user_address[0] });
+        } else if (event.venue === "Hong Kong Coliseum") {
+          console.log("Coliseum")
+          await EventContract.methods
+          .Mint(event.contractAddress, 562)
+          .send({ from: user_address[0] });
         } else {
-          venue = 2000;
+          console.log("online")
+          await EventContract.methods
+          .Mint(event.contractAddress, 2000)
+          .send({ from: user_address[0] });
         }
-      });
-    console.log(currentUserId);
-    console.log(currentAddress);
-    let accounts = await web3.eth.getAccounts();
-    console.log(web3.eth);
-    // console.log(EventContract.methods);
-    await EventContract.methods
-      .Mint(currentAddress[0], venue)
-      .send({ from: accounts[0] });
+
     history.push("/event/settings");
   };
 
@@ -77,7 +71,9 @@ export const MintTickets = () => {
               <h6>
                 <strong>(Step 2) Create Event Tickets</strong>
                 <div id={classes.priceConverter}>
-                  <p>Event Location: {eventLocation}</p>
+                  {
+                    event.isOnline ? <p>Event Location: Online</p> : <p>Event Location: {event.venue}</p>
+                  }
                 </div>
               </h6>
               <Form onSubmit={submitPrice} className={classes.form}>
@@ -92,7 +88,7 @@ export const MintTickets = () => {
                     disabled
                   />
                 </Form.Group>
-                {currentUserId ? (
+                { typeof user.userID !== "object" ? (
                   <button
                     variant="primary"
                     type="submit"

@@ -10,7 +10,6 @@ class Method {
   }
 
   async storeWalletId(wallet_id) {
-    console.log(wallet_id);
     let exisitingUser = await knex("users").where("wallet_id", wallet_id)
     if (!exisitingUser[0]) {
       return knex("users")
@@ -28,9 +27,9 @@ class Method {
     return data;
   }
 
-  async getUserfromAddress(id) {
-    let data = await this.knex.select("*").from("users").where("wallet_id", id);
-    console.log("asdas", data)
+  async getUserfromAddress(address) {
+    let data = await this.knex.select("*").from("users").where("wallet_id", address);
+    console.log(data)
     if(data[0]) {
       return data[0].id;
     }
@@ -172,7 +171,6 @@ class Method {
       .from("event")
       .where("users_id", id)
       .orderBy("event.id", "desc");
-    console.log("wdew", contractAddress[0]);
     return contractAddress[0];
   }
 
@@ -181,6 +179,9 @@ class Method {
 module.exports = Method;
 
 // const test = new Method(knex);
+// test.findContractAddress(4)
+
+
 // test.getEventHost().then((data)=>{
 //   console.log(new Date())
 //   console.log(data)
