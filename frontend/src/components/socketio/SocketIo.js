@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
+import { useParams } from "react-router-dom";
 
 const socket = io.connect("http://localhost:8080");
 let rtcPeerConnections = {};
@@ -151,6 +152,10 @@ function SocketIo() {
   const handleRoomNumber = (e) => {
     setRoomNumber(e.target.value);
   };
+
+  const { id } = useParams();
+
+  console.log(id);
 
   return (
     <div>
