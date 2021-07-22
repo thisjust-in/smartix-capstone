@@ -25,7 +25,6 @@ const OnlineBanner = () => {
       }
     }
   }
-  // console.log("onlone asdasdasd", onlineEvent[0].eventPhoto);
   return (
     <div className={OnlineBannerCss.displayFlex}>
       <div className={OnlineBannerCss.background}>

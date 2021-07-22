@@ -28,7 +28,6 @@ class Method {
 
   async getUserfromAddress(id) {
     let data = await this.knex.select("*").from("users").where("wallet_id", id);
-    console.log("asdas", data);
     if (data[0]) {
       return data[0].id;
     }
@@ -129,7 +128,6 @@ class Method {
       isOnline: isOnline,
       users_id: users_id,
     };
-    console.log("diu", newEvent);
     let insertEvent = await knex("event")
       .insert(newEvent)
       .then(() => {
@@ -173,7 +171,6 @@ class Method {
       .from("event")
       .where("users_id", id)
       .orderBy("event.id", "desc");
-    console.log("wdew", contractAddress[0]);
     return contractAddress[0];
   }
 }

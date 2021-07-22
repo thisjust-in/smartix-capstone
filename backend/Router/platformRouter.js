@@ -31,7 +31,6 @@ class PlatformRouter {
     console.log("address", formatAddress);
     let userID = await this.Method.getUserfromAddress(formatAddress);
     if (userID) {
-      console.log("1", userID);
       res.send(userID.toString());
     } else {
       let id = await this.Method.storeWalletId(formatAddress);
@@ -42,7 +41,6 @@ class PlatformRouter {
   async getContractAddress(req, res) {
     let user_Id = req.body.id;
     let contractAddress = await this.Method.findContractAddress(user_Id);
-    console.log(contractAddress);
     res.send(contractAddress);
   }
 
