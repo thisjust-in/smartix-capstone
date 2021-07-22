@@ -1,7 +1,5 @@
 const express = require("express");
-const {
-  cloudinary
-} = require("../Cloudinary/cloudinary");
+const { cloudinary } = require("../Cloudinary/cloudinary");
 
 class PlatformRouter {
   constructor(Method) {
@@ -16,7 +14,7 @@ class PlatformRouter {
     router.post("/api/findContractAddress", this.getContractAddress.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
-    router.post('/purchase', this.purchase.bind(this))
+    router.post("/purchase", this.purchase.bind(this));
     return router;
   }
 
@@ -33,10 +31,9 @@ class PlatformRouter {
     console.log("address", formatAddress);
     let userID = await this.Method.getUserfromAddress(formatAddress);
     if (userID) {
-      console.log("1", userID)
       res.send(userID.toString());
     } else {
-      let id = await this.Method.storeWalletId(formatAddress)
+      let id = await this.Method.storeWalletId(formatAddress);
       res.send(id[0].toString());
     }
   }
@@ -44,7 +41,6 @@ class PlatformRouter {
   async getContractAddress(req, res) {
     let user_Id = req.body.id;
     let contractAddress = await this.Method.findContractAddress(user_Id);
-    console.log(contractAddress)
     res.send(contractAddress);
   }
 
@@ -115,12 +111,11 @@ class PlatformRouter {
   }
 
   async purchase(req, res) {
-    let TixDetails = JSON.stringify(req.body.TixDetails)
-    let wallet_id = req.body.wallet_id
-    let contractAddress = req.body.contractAddress
-    await this.Method.purchaseRecord(TixDetails, wallet_id, contractAddress)
+    let TixDetails = JSON.stringify(req.body.TixDetails);
+    let wallet_id = req.body.wallet_id;
+    let contractAddress = req.body.contractAddress;
+    await this.Method.purchaseRecord(TixDetails, wallet_id, contractAddress);
   }
-
 }
 
 module.exports = PlatformRouter;

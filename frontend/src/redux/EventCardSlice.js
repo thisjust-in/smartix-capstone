@@ -20,17 +20,19 @@ export const eventCardSlice = createSlice({
       let allEvent = action.payload;
       state.eventHost = allEvent;
       let counted = allEvent.reduce((allEvent, event) => {
-        if (event.username in allEvent) {
-          allEvent[event.username].count++;
+        if (event.users_id in allEvent) {
+          allEvent[event.users_id].count++;
         } else {
-          allEvent[event.username] = {
+          allEvent[event.users_id] = {
             count: 1,
             pic: event.eventPhoto,
             id: event.id,
           };
         }
+
         return allEvent;
       }, {});
+      console.log("asdadasd", counted);
       state.eventCount = counted;
       state.loading = false;
     },
