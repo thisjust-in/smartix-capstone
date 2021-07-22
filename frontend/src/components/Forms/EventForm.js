@@ -97,7 +97,7 @@ export const EventForm = () => {
             addressarray.splice(2, 24);
             contractAddress = addressarray.join("");
             if (contractAddress) {
-              history.push("/event/settings");
+              history.push("/event/mint");
             }
           }
         );
