@@ -1,13 +1,12 @@
 import { Card, Button, Row, Col, Badge } from "react-bootstrap";
 import classes from "./Cards.module.css";
-import { secondaryButton } from "../Main-Components/SecondaryButton";
 const Cards = (props) => {
   let data = props.events;
+  console.log(data);
   return (
     <Row>
       {data &&
         data.map((events, index) => {
-          console.log("eeh", events);
           return (
             <Col>
               <div className={classes.cardWrapper} key={index}>
@@ -26,7 +25,6 @@ const Cards = (props) => {
                         </Badge>
                       </div>
                     </div>
-
                     <Card.Text>{events.eventDescription}</Card.Text>
                     <p>{events.venue}</p>
                   </Card.Body>

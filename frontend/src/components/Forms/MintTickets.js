@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 export const MintTickets = () => {
   const history = useHistory();
-  const [eventLocation, setEventLocation] = useState("");
+  const [eventLocation, setEventLocation] = useState("online");
   const [eventCapacity, setEventCapacity] = useState(2000);
   const currentUserId = useSelector((state) => {
     return state.users.userID;
@@ -22,13 +22,14 @@ export const MintTickets = () => {
         id: currentUserId,
       })
       .then((response) => {
-        if (response.data.venue == null) {
-          setEventLocation("Online Event");
-          setEventCapacity(2000);
-        } else if (response.data.venue === "Hong Kong Coliseum") {
+        console.log(response.data);
+        if (response.data.venue === "Hong Kong Coliseum") {
+          console.log("HK");
           setEventLocation(response.data.venue);
           setEventCapacity(562);
-        } else {
+        } else if (response.data.venue === "AsiaWorld-Expo") {
+          console.log("Asia");
+          setEventLocation(response.data.venue);
           setEventCapacity(897);
         }
       });
@@ -46,23 +47,16 @@ export const MintTickets = () => {
         // console.log(response);
         console.log(venue);
         currentAddress.push(response.data.contractAddress);
-        if (response.data.venue == "AsiaWorld-Expo") {
-          venue = 560;
-        } else if (response.data.venue === "Hong Kong Coliseum") {
-          venue = 562;
-        } else {
-          venue = 2000;
-        }
+        // console.log(eventCapacity);
+        console.log("iii", response.data.venue);
       });
     console.log(currentUserId);
     console.log(currentAddress);
     let accounts = await web3.eth.getAccounts();
-    console.log(web3.eth);
-    // console.log(EventContract.methods);
-    await EventContract.methods
-      .Mint(currentAddress[0], venue)
-      .send({ from: accounts[0] });
-    history.push("/event/settings");
+    // await EventContract.methods
+    //   .Mint(currentAddress[0], eventCapacity)
+    //   .send({ from: accounts[0] });
+    // history.push("/event/settings");
   };
 
   return (

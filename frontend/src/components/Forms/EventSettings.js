@@ -40,31 +40,17 @@ export const EventSettings = () => {
   const submitPrice = async (event) => {
     event.preventDefault();
     let currentAddress = [];
-    // let venue = 2000;
     await axios
       .post("http://localhost:8080/api/findContractAddress", {
         id: currentUserId,
       })
       .then((response) => {
-        console.log(response);
-        // if (response.data.venue == "AsiaWorld-Expo") {
-        //   venue = 560;
-        // } else if (response.data.venue === "Hong Kong Coliseum") {
-        //   venue = 562;
-        // } else {
-        //   venue = 2000;
-        // }
-        // console.log(venue);
         currentAddress.push(response.data.contractAddress);
       });
     console.log(currentUserId);
     console.log(currentAddress);
     let accounts = await web3.eth.getAccounts();
-    console.log(EventContract.methods);
     console.log(tixPrice);
-    // await EventContract.methods
-    //   .Mint(currentAddress[0], tixPrice)
-    //   .send({ from: accounts[0] });
     await EventContract.methods
       .setPrice(currentAddress[0], 0, tixPrice)
       .send({ from: accounts[0] });
