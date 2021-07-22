@@ -13,6 +13,7 @@ import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
 import YourEvents from "./components/settingPage/YourEvents";
 import EventFormTwo from "./Pages/EventFormTwo";
+import EventMint from "./Pages/EventMint";
 import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 
 function App() {
@@ -45,6 +46,9 @@ function App() {
           </Route>
           <Route exact path="/test">
             <Test />
+          </Route>
+          <Route exact path="/event/mint">
+            <EventMint />
           </Route>
           <Route exact path="/event/settings">
             <EventFormTwo />
