@@ -53,10 +53,10 @@ export const MintTickets = () => {
     console.log(currentUserId);
     console.log(currentAddress);
     let accounts = await web3.eth.getAccounts();
-    // await EventContract.methods
-    //   .Mint(currentAddress[0], eventCapacity)
-    //   .send({ from: accounts[0] });
-    // history.push("/event/settings");
+    await EventContract.methods
+      .Mint(currentAddress[0], eventCapacity)
+      .send({ from: accounts[0] });
+    history.push("/event/settings");
   };
 
   return (
