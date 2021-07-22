@@ -20,17 +20,20 @@ export const usersSlice = createSlice({
 });
 
 export const checkWalletIDThunk = () => async (dispatch) => {
-  let data;
   async function check() {
-    data = await web3.eth.getAccounts();
+    let data = await web3.eth.getAccounts();
+    if (data[0]) {
     dispatch(checkUserActions.getWalletId(data));
-    axios
-      .post("http://localhost:8080/api/findId", {
-        id: data,
-      })
-      .then((response) => {
-        dispatch(checkUserActions.setUserId(response.data));
-      });
+      
+
+
+      axios.post("http://localhost:8080/api/findId", {
+          id: data
+        })
+        .then((response) => {
+          dispatch(checkUserActions.setUserId(response.data));
+        });
+    }
   }
   check();
 };

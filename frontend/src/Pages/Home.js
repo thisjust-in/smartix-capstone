@@ -6,7 +6,7 @@ import OnlineBanner from "../components/Home/onlineBanner/OnlineBanner";
 function Home() {
   return (
     <div>
-      <Header backgroundimage={'https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg'} content={<SearchBar />} />
+      <Header backgroundimage={'https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg'} content={<SearchBar/>} />
       <OnlineBanner />
       <div className="mt-5 mb-5">
         <EventCard />

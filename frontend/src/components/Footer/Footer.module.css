@@ -19,4 +19,6 @@
 .rights {
     width: 100%;
     border-top: #2D2D2D solid 1px;
+    display: flex;
+    justify-content: center;
 }
