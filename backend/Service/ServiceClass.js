@@ -118,7 +118,7 @@ class Method {
       eventName: eventName,
       eventLocation: eventLocation,
       contractAddress: contractAddress,
-      eventPhoto: eventPhoto,
+      eventPhoto: eventPhoto.slice(1, -1),
       eventDescription: eventDescription,
       eventDate: eventDate,
       startTime: startTime,
@@ -129,7 +129,6 @@ class Method {
       isOnline: isOnline,
       users_id: users_id,
     };
-    console.log("diu", newEvent);
     let insertEvent = await knex("event")
       .insert(newEvent)
       .then(() => {
@@ -173,15 +172,14 @@ class Method {
       .from("event")
       .where("users_id", id)
       .orderBy("event.id", "desc");
-    console.log("wdew", contractAddress[0]);
     return contractAddress[0];
   }
 }
 
 module.exports = Method;
 
-const test = new Method(knex);
-test.getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450");
+// const test = new Method(knex);
+// test.getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450");
 // test.getEventHost().then((data)=>{
 //   console.log(new Date())
 //   console.log(data)

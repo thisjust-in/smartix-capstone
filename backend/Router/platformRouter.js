@@ -1,7 +1,5 @@
 const express = require("express");
-const {
-  cloudinary
-} = require("../Cloudinary/cloudinary");
+const { cloudinary } = require("../Cloudinary/cloudinary");
 
 class PlatformRouter {
   constructor(Method) {
@@ -16,12 +14,13 @@ class PlatformRouter {
     router.post("/api/findContractAddress", this.getContractAddress.bind(this));
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
-    router.post('/purchase', this.purchase.bind(this))
+    router.post("/purchase", this.purchase.bind(this));
     return router;
   }
 
   async addWallet(req, res) {
     let walletId = req.body.wallet_id;
+    console.log(walletId)
     await this.Method.storeWalletId(walletId).then(() => {
       console.log("inserted id");
     });
@@ -30,22 +29,22 @@ class PlatformRouter {
 
   async getUserfromAddress(req, res) {
     let formatAddress = req.body.id[0].toLowerCase();
-    console.log("address", formatAddress);
     let userID = await this.Method.getUserfromAddress(formatAddress);
     if (userID) {
-      console.log("1", userID)
       res.send(userID.toString());
+      res.end()
     } else {
-      let id = await this.Method.storeWalletId(formatAddress)
+      let id = await this.Method.storeWalletId(formatAddress);
       res.send(id[0].toString());
+      res.end()
     }
   }
 
   async getContractAddress(req, res) {
-    let user_Id = req.body.id;
+    let user_Id = req.body.id
     let contractAddress = await this.Method.findContractAddress(user_Id);
-    console.log(contractAddress)
     res.send(contractAddress);
+    res.end()
   }
 
   async getEventHost(req, res) {
@@ -79,6 +78,7 @@ class PlatformRouter {
       let eventType = data.eventDetails.eventType;
       let isOnline = data.eventDetails.isOnline;
       let user_id = data.eventDetails.userId;
+      console.log(isOnline)
       await this.Method.createEvent(
         eventName,
         contractAddress,
@@ -94,6 +94,7 @@ class PlatformRouter {
         isOnline,
         user_id
       );
+      res.end()
     } catch (error) {
       console.log("error", error);
     }
@@ -119,8 +120,8 @@ class PlatformRouter {
     let wallet_id = req.body.wallet_id
     let contractAddress = req.body.contractAddress
     await this.Method.purchaseRecord(TixDetails, wallet_id, contractAddress)
+    res.end();
   }
-
 }
 
 module.exports = PlatformRouter;

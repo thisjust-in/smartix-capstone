@@ -54,7 +54,7 @@ export const EventSettings = () => {
     await EventContract.methods
       .setPrice(currentAddress[0], 0, tixPrice)
       .send({ from: accounts[0] });
-    history.push("/home");
+    history.push("/");
   };
 
   return (
