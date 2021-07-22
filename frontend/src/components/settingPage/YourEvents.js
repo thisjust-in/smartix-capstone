@@ -8,6 +8,7 @@ const YourEvents = () => {
   const userID = useSelector((state) => {
     return state.users.userID;
   });
+
   const allEvent = useSelector((state) => {
     if (typeof userID === "number") {
       let theEvents = state.eventCard.eventHost.filter((event) => {
