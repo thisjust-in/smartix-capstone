@@ -174,11 +174,24 @@ class Method {
       .orderBy("event.id", "desc");
     return contractAddress[0];
   }
+
+  async setEmailAddress(id, email) {
+    try {
+      let result = await knex("users").where("id", id).update({ email: email });
+      return result;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 }
 
 module.exports = Method;
 
 // const test = new Method(knex);
+// test.findContractAddress(4).then((data) => {
+//   console.log(data);
+// });
+// test.setEmailAddress(4, "ju@mail.com");
 // test.getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450");
 // test.getEventHost().then((data)=>{
 //   console.log(new Date())

@@ -24,9 +24,6 @@ export const checkWalletIDThunk = () => async (dispatch) => {
     let data = await web3.eth.getAccounts();
     if (data[0]) {
     dispatch(checkUserActions.getWalletId(data));
-      
-
-
       axios.post("http://localhost:8080/api/findId", {
           id: data
         })
