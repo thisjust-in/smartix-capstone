@@ -15,8 +15,19 @@ class PlatformRouter {
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
     router.post("/purchase", this.purchase.bind(this));
+<<<<<<< HEAD
+=======
+    router.post("/api/edit-email", this.editEmail.bind(this));
+>>>>>>> 2f12b1dfaf45eea6ff90cc7d7fc59f2c858ccceb
     router.post("/gettix", this.gettix.bind(this));
     return router;
+  }
+
+  async editEmail(req, res) {
+    let id = req.body.submitDetails.id;
+    let email = req.body.submitDetails.email;
+    let emailAddress = await this.Method.setEmailAddress(id, email);
+    res.end(emailAddress);
   }
 
   async addWallet(req, res) {
@@ -79,6 +90,7 @@ class PlatformRouter {
       let eventType = data.eventDetails.eventType;
       let isOnline = data.eventDetails.isOnline;
       let user_id = data.eventDetails.userId;
+      console.log(isOnline);
       await this.Method.createEvent(
         eventName,
         contractAddress,

@@ -14,17 +14,15 @@ export default function LoggedInNav() {
           <img
             src="https://avatars.githubusercontent.com/u/1309537?v=4"
             width="40px"
-            alt='avatars'
+            alt="avatars"
           />
         }
         id="collasible-nav-dropdown"
       >
-        <NavDropdown.Item href="#action/3.1" className="text-dark">
+        <NavDropdown.Item href="/user-settings" className="text-dark">
           User Settings
         </NavDropdown.Item>
         <NavDropdown.Item href="#action/3.3">My Items</NavDropdown.Item>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Disconnect</NavDropdown.Item>
       </NavDropdown>
     </div>
   );

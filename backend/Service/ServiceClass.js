@@ -189,6 +189,55 @@ class Method {
     }
     return null;
   }
+
+  async setEmailAddress(id, email) {
+    try {
+      let result = await knex("users").where("id", id).update({ email: email });
+      return result;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 }
 
 module.exports = Method;
+
+// const test = new Method(knex);
+// test.findContractAddress(4).then((data) => {
+//   console.log(data);
+// });
+// test.setEmailAddress(4, "ju@mail.com");
+// test.getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450");
+// test.getEventHost().then((data)=>{
+//   console.log(new Date())
+//   console.log(data)
+// })
+//   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
+//   .then((data) => {
+//     console.log(data);
+//   });
+// test.createEvent(
+//   "eventName",
+//   "0xd7d440f0287163fd4e0b4239bf4f601771b83450",
+//   "HK",
+//   {
+//     pc1: "https://i.pinimg.com/originals/1f/27/a4/1f27a40bfd45769b24e51321995b39d6.jpg",
+//   },
+//   "cool event world",
+//   "2021-07-19",
+//   "23:00",
+//   "23:30",
+//   100,
+//   "concert",
+//   true,
+//   1
+// );
+// test.storeWalletId(999);
+// test.getOnlineEvent().then((data) => {
+//   console.log(data);
+// });
+// test.getEventHost().then((data) => {
+//   console.log(data);
+// });
+
+// test.GetUserInfo(1);
