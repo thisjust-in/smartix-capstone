@@ -35,7 +35,7 @@ contract Event {
     
     function setPrice(address caller, uint256 _ticketId, uint256 _price) public  {
         require(caller == host);
-        TixPrice[_ticketId] = _price*10**18 ;
+        TixPrice[_ticketId] = _price ;
     }
     
     function buyTicket (address caller, uint256 _ticketId, uint256 _qty) public payable {
