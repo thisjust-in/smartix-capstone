@@ -17,8 +17,6 @@ function EventDetails(){
     const client = new SeatsioClient(Region.NA(), '886377b9-1e1a-4780-93b3-7d0b480bbad8')
     const [eventinfo, setEventinfo] = useState("")
     const [tix, setTix] = useState([])
-    console.log(eventinfo)
-    
 
     async function fetch(){
         let event_id = window.location.pathname.split('/')[2]
@@ -56,7 +54,7 @@ function EventDetails(){
 
     async function checkout() {
         let amount = tix.reduce((a, b) => {
-            return parseInt(a)+ parseInt(b.price)
+            return parseFloat(a)+ parseFloat(b.price)
         },0)
         let accounts = await web3.eth.getAccounts();
         let wei = web3.utils.toWei(`${amount}`, 'ether');
@@ -80,7 +78,7 @@ function EventDetails(){
     return (
         <div>
             <Header backgroundimage={'https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg'} content={<HeaderContent avatar={null} title={null} para={null}/>} />
-            <Container>
+            <Container className={styles.main}>
             <div className={styles.container}>
                 <h1>{eventinfo.eventName}</h1>
                 <h4>{new Date(eventinfo.eventDate).toString().slice(0, 3) + ", " + new Date(eventinfo.eventDate).toString().slice(4, 15) + ", " + new Date(eventinfo.eventDate).toString().slice(16, 21) + ". " + eventinfo.eventLocation}</h4>
@@ -96,7 +94,6 @@ function EventDetails(){
                 onObjectDeselected={deselect}
                 onChartRendered={(e)=>{console.log(e)}}
             /> : null }
-
             </Col>
             <Col lg="6">
             <Container>

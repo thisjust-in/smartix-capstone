@@ -1,7 +1,20 @@
 import React from "react";
 import styles from "./Confirmation.module.css"
+import { useEffect } from "react";
+import { useHistory } from "react-router";
 
 function Confirmation() {
+
+  const history = useHistory()
+
+  useEffect(() => {
+
+  setTimeout(() => {
+    history.push('/')
+  }, 3000);
+  }, [])
+
+
   return (
     <div className={styles.container}>
       <div className={styles.filter}>
