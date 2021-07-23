@@ -15,10 +15,7 @@ class PlatformRouter {
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
     router.post("/purchase", this.purchase.bind(this));
-<<<<<<< HEAD
-=======
     router.post("/api/edit-email", this.editEmail.bind(this));
->>>>>>> 2f12b1dfaf45eea6ff90cc7d7fc59f2c858ccceb
     router.post("/gettix", this.gettix.bind(this));
     return router;
   }
