@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
 import { useParams } from "react-router-dom";
+import EventContract from "../../EventContract";
+import web3 from "../../web3";
+import Button from "../Main-Components/PrimaryBtn";
+import { RedButton } from "../Main-Components/SecondaryButton";
 
 const socket = io.connect("http://localhost:8080");
 let rtcPeerConnections = {};
@@ -24,23 +29,20 @@ function SocketIo() {
   // let socket = io();
 
   const joinAsBroadcaster = () => {
-    if (roomNumber === "" || username === "") {
-      alert("Please type a room number and a name");
-    } else {
-      user = {
-        room: roomNumber,
-        name: username,
-      };
-      console.log("broadcasterVideo", broadcasterVideo);
-      navigator.mediaDevices
-        .getUserMedia(streamConstraints)
-        .then(function (stream) {
-          // console.log(myVideo);
-          setStream(stream);
-          broadcasterVideo.current.srcObject = stream;
-          socket.emit("register as broadcaster", user.room);
-        });
-    }
+    console.log("dsasadasdasdasfadgdsgsdgs");
+    user = {
+      room: userId,
+      name: "need to change",
+    };
+    console.log("broadcasterVideo", broadcasterVideo);
+    navigator.mediaDevices
+      .getUserMedia(streamConstraints)
+      .then(function (stream) {
+        // console.log(myVideo);
+        setStream(stream);
+        broadcasterVideo.current.srcObject = stream;
+        socket.emit("register as broadcaster", user.room);
+      });
   };
 
   const joinAsViewer = () => {
@@ -143,6 +145,8 @@ function SocketIo() {
       );
       // console.log("what is this now", rtcPeerConnections);
     });
+
+    grabCustomerIDFromWeb3();
   }, []);
 
   const handleUsername = (e) => {
@@ -153,34 +157,91 @@ function SocketIo() {
     setRoomNumber(e.target.value);
   };
 
+  //=================================================================================================================================
   const { id } = useParams();
 
-  console.log(id);
+  async function grabCustomerIDFromWeb3() {
+    let customer = await EventContract.methods
+      .TixQtyPerUser(
+        "0xb38d1e13036bf85b89512b626e0249809185434a",
+        "0x8d39602eacc3a5acd999d247310a566fe5a3e1e2",
+        0
+      )
+      .call();
+    console.log("customer", customer);
+  }
+
+  const grabEventHost = useSelector((state) => state.eventCard.eventHost);
+  const [eventHost, setEventHost] = useState(grabEventHost);
+  const [isHost, setIsHost] = useState(false);
+  const [userId, setUserId] = useState("");
+  useEffect(() => {
+    getUserAddress();
+  }, []);
+
+  useEffect(() => {
+    setEventHost(grabEventHost);
+  }, [grabEventHost]);
+
+  useEffect(() => {
+    checkIsHost();
+  });
+
+  console.log("userId", userId);
+
+  async function getUserAddress() {
+    let user_address = await web3.eth.getAccounts();
+    setUserId(user_address[0].toLowerCase());
+  }
+
+  async function checkIsHost() {
+    let filterData = await eventHost.filter((data) => {
+      return data.id == id;
+    });
+    if (filterData[0]) {
+      setIsHost(filterData[0].wallet_id == userId);
+    }
+  }
 
   return (
     <div>
-      <label htmlFor="name">Type your Name</label>
-      <input
-        type="text"
-        name=""
-        id="name"
-        value={username}
-        onChange={handleUsername}
-      />
-      <label htmlFor="roomNumber">Type the room number</label>
-      <input
-        type="text"
-        name=""
-        id="roomNumber"
-        value={roomNumber}
-        onChange={handleRoomNumber}
-      />
-      <button onClick={joinAsBroadcaster}>Join as Broadcaster</button>
-      <button onClick={joinAsViewer}>Join as Viewer</button>
-      {stream && (
-        <video controls id={SocketIoCss.video} ref={broadcasterVideo}></video>
+      {isHost ? (
+        <div>
+          <label htmlFor="name">Type your Name</label>
+          <input
+            type="text"
+            name=""
+            id="name"
+            value={username}
+            onChange={handleUsername}
+          />
+          <label htmlFor="roomNumber">Type the room number</label>
+          <input
+            type="text"
+            name=""
+            id="roomNumber"
+            value={roomNumber}
+            onChange={handleRoomNumber}
+          />
+          <button onClick={joinAsViewer}>Join as Viewer</button>
+          {stream ? (
+            <Button click={joinAsBroadcaster} text={"Streaming"} />
+          ) : (
+            <Button click={joinAsBroadcaster} text={"Start Broadcasting"} />
+          )}
+          {stream ? (
+            <video
+              controls
+              id={SocketIoCss.video}
+              ref={broadcasterVideo}
+            ></video>
+          ) : (
+            <video id={SocketIoCss.video} controls ref={userVideo}></video>
+          )}
+        </div>
+      ) : (
+        <div>Loading</div>
       )}
-      {<video id={SocketIoCss.video} controls ref={userVideo}></video>}
     </div>
   );
 }
