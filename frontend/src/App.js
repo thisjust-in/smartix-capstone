@@ -17,6 +17,7 @@ import YourEvents from "./components/settingPage/YourEvents";
 import EventFormTwo from "./Pages/EventFormTwo";
 import EventMint from "./Pages/EventMint";
 import { checkWalletIDThunk } from "./redux/CheckUserSlice";
+import Usersettings from "./Pages/UserSettings";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,11 +64,14 @@ function App() {
           <Route exact path="/yourevent">
             <YourEvents />
           </Route>
+          <Route exact path="/user-settings">
+            <Usersettings />
+          </Route>
           <Route path="*">
             <NotFound />
           </Route>
         </Switch>
-        <Footer/>
+        <Footer />
       </div>
     </Router>
   );
