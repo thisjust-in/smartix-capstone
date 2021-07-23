@@ -30,10 +30,9 @@ const YourEvents = () => {
   return (
     <div className={YourEventsCss.div}>
       {allEventWithDateFormatter ? (
-        allEventWithDateFormatter.map((event) => (
-          <div>
+        allEventWithDateFormatter.map((event, index) => (
+          <div key={index}>
             <StoredEvent
-              key={event.id}
               eventID={event.id}
               contractAddress={event.contractAddress}
               eventName={event.eventName}
