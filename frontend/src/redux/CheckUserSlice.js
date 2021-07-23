@@ -23,12 +23,11 @@ export const checkWalletIDThunk = () => async (dispatch) => {
   async function check() {
     let data = await web3.eth.getAccounts();
     if (data[0]) {
-    dispatch(checkUserActions.getWalletId(data));
-      
+      dispatch(checkUserActions.getWalletId(data));
 
-
-      axios.post("http://localhost:8080/api/findId", {
-          id: data
+      axios
+        .post(`${process.env.REACT_APP_SERVER}/api/findId`, {
+          id: data,
         })
         .then((response) => {
           dispatch(checkUserActions.setUserId(response.data));

@@ -40,7 +40,7 @@ export const EventSettings = () => {
     event.preventDefault();
     let currentAddress = [];
     await axios
-      .post("http://localhost:8080/api/findContractAddress", {
+      .post(`${process.env.REACT_APP_SERVER}/api/findContractAddress`, {
         id: currentUserId,
       })
       .then((response) => {

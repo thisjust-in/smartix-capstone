@@ -32,7 +32,7 @@ function SearchBar() {
     };
     try {
       let response = await axios.post(
-        "http://localhost:8080/api/getlist",
+        `${process.env.REACT_APP_SERVER}/api/getlist`,
         searchResult
       );
       dispatch(getEventDetails(response.data));

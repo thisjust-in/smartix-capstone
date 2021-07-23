@@ -15,6 +15,7 @@ class PlatformRouter {
     router.post("/api/getlist", this.setEventList.bind(this));
     router.get("/event/:id", this.getEventInfo.bind(this));
     router.post("/purchase", this.purchase.bind(this));
+    router.post("/gettix", this.gettix.bind(this))
     return router;
   }
 
@@ -122,6 +123,16 @@ class PlatformRouter {
     await this.Method.purchaseRecord(TixDetails, wallet_id, contractAddress)
     res.end();
   }
+
+  async gettix(req, res) {
+    let wallet_id = req.body.wallet_id
+    let event_id = req.body.event_id
+    let result = await this.Method.getPurchaseRecord(wallet_id, event_id)
+    res.send(result)
+    res.end();
+  }
+
+
 }
 
 module.exports = PlatformRouter;
