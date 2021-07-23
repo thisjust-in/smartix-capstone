@@ -93,6 +93,15 @@ class Method {
     return data;
   }
 
+  async findContractAddress(id) {
+    let contractAddress = await this.knex
+      .select("*")
+      .from("event")
+      .where("users_id", id)
+      .orderBy("event.id", "desc");
+    return contractAddress[0];
+  }
+
   async getEventInfo(id) {
     let data = await knex.select("*").from("event").where("event.id", id);
     return data;
@@ -166,50 +175,21 @@ class Method {
       event_id: event_id[0].id,
     });
   }
-  async findContractAddress(id) {
-    let contractAddress = await this.knex
-      .select("*")
-      .from("event")
-      .where("users_id", id)
-      .orderBy("event.id", "desc");
-    return contractAddress[0];
+
+  async getPurchaseRecord(wallet_id, event_id) {
+    let users_id = await knex
+      .select("id")
+      .from("users")
+      .where("wallet_id", wallet_id.toLowerCase());
+    if (users_id[0]) {
+      let data = await knex("purchase_record")
+        .select("*")
+        .where("users_id", users_id[0].id)
+        .andWhere("event_id", event_id);
+      return data;
+    }
+    return null;
   }
 }
 
 module.exports = Method;
-
-// const test = new Method(knex);
-// test.getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450");
-// test.getEventHost().then((data)=>{
-//   console.log(new Date())
-//   console.log(data)
-// })
-//   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
-//   .then((data) => {
-//     console.log(data);
-//   });
-// test.createEvent(
-//   "eventName",
-//   "0xd7d440f0287163fd4e0b4239bf4f601771b83450",
-//   "HK",
-//   {
-//     pc1: "https://i.pinimg.com/originals/1f/27/a4/1f27a40bfd45769b24e51321995b39d6.jpg",
-//   },
-//   "cool event world",
-//   "2021-07-19",
-//   "23:00",
-//   "23:30",
-//   100,
-//   "concert",
-//   true,
-//   1
-// );
-// test.storeWalletId(999);
-// test.getOnlineEvent().then((data) => {
-//   console.log(data);
-// });
-// test.getEventHost().then((data) => {
-//   console.log(data);
-// });
-
-// test.GetUserInfo(1);

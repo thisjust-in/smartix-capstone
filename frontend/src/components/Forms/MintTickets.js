@@ -10,14 +10,17 @@ import { useHistory } from "react-router-dom";
 
 export const MintTickets = () => {
   const history = useHistory();
-  const [event, setEvent] = useState("")
+  const [event, setEvent] = useState("");
   const [eventCapacity, setEventCapacity] = useState("");
-  const user = useSelector((state) => state.users)
+  const user = useSelector((state) => state.users);
 
   useEffect(async () => {
-    if (typeof user.userID !== "object"){
-      let eventDetails = await axios.post("http://localhost:8080/api/findContractAddress", {id: user.userID})
-      setEvent(eventDetails.data)
+    if (typeof user.userID !== "object") {
+      let eventDetails = await axios.post(
+        `${process.env.REACT_APP_SERVER}/api/findContractAddress`,
+        { id: user.userID }
+      );
+      setEvent(eventDetails.data);
       if (eventDetails.data.isOnline == false) {
         if (eventDetails.data.venue === "Hong Kong Coliseum") {
           setEventCapacity(562);
@@ -27,31 +30,29 @@ export const MintTickets = () => {
       } else {
         setEventCapacity(2000);
       }
-
     }
-
   }, [user.userID]);
 
   const submitPrice = async (e) => {
     e.preventDefault();
-    let user_address = await web3.eth.getAccounts()
+    let user_address = await web3.eth.getAccounts();
 
-        if (event.venue == "AsiaWorld-Expo") {
-          console.log("Expo")
-          await EventContract.methods
-          .Mint(event.contractAddress, 897)
-          .send({ from: user_address[0] });
-        } else if (event.venue === "Hong Kong Coliseum") {
-          console.log("Coliseum")
-          await EventContract.methods
-          .Mint(event.contractAddress, 562)
-          .send({ from: user_address[0] });
-        } else {
-          console.log("online")
-          await EventContract.methods
-          .Mint(event.contractAddress, 2000)
-          .send({ from: user_address[0] });
-        }
+    if (event.venue == "AsiaWorld-Expo") {
+      console.log("Expo");
+      await EventContract.methods
+        .Mint(event.contractAddress, 897)
+        .send({ from: user_address[0] });
+    } else if (event.venue === "Hong Kong Coliseum") {
+      console.log("Coliseum");
+      await EventContract.methods
+        .Mint(event.contractAddress, 562)
+        .send({ from: user_address[0] });
+    } else {
+      console.log("online");
+      await EventContract.methods
+        .Mint(event.contractAddress, 2000)
+        .send({ from: user_address[0] });
+    }
 
     history.push("/event/settings");
   };
@@ -68,9 +69,11 @@ export const MintTickets = () => {
               <h6>
                 <strong>(Step 2) Create Event Tickets</strong>
                 <div id={classes.priceConverter}>
-                  {
-                    event.isOnline ? <p>Event Location: Online</p> : <p>Event Location: {event.venue}</p>
-                  }
+                  {event.isOnline ? (
+                    <p>Event Location: Online</p>
+                  ) : (
+                    <p>Event Location: {event.venue}</p>
+                  )}
                 </div>
               </h6>
               <Form onSubmit={submitPrice} className={classes.form}>
@@ -85,7 +88,7 @@ export const MintTickets = () => {
                     disabled
                   />
                 </Form.Group>
-                { typeof user.userID !== "object" ? (
+                {typeof user.userID !== "object" ? (
                   <button
                     variant="primary"
                     type="submit"

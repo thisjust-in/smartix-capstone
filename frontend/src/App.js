@@ -17,13 +17,15 @@ import YourEvents from "./components/settingPage/YourEvents";
 import EventFormTwo from "./Pages/EventFormTwo";
 import EventMint from "./Pages/EventMint";
 import { checkWalletIDThunk } from "./redux/CheckUserSlice";
+import Etix from "./Pages/Etix";
+import CheckTix from "./Pages/CheckTix";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getEventHostThunk());
     dispatch(checkWalletIDThunk());
-  }, []);
+  }, [dispatch]);
 
   return (
     <Router>
@@ -63,11 +65,17 @@ function App() {
           <Route exact path="/yourevent">
             <YourEvents />
           </Route>
+          <Route path="/etix/:id">
+            <Etix />
+          </Route>
+          <Route path="/checktix/:id">
+            <CheckTix />
+          </Route>
           <Route path="*">
             <NotFound />
           </Route>
         </Switch>
-        <Footer/>
+        <Footer />
       </div>
     </Router>
   );

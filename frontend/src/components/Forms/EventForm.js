@@ -10,10 +10,13 @@ import web3 from "../../web3";
 import TimePicker from "react-bootstrap-time-picker";
 import { timeFromInt } from "time-number";
 import { useHistory } from "react-router-dom";
-import { SeatsioClient, Region } from 'seatsio'
+import { SeatsioClient, Region } from "seatsio";
 
 export const EventForm = () => {
-  const client = new SeatsioClient(Region.NA(), '886377b9-1e1a-4780-93b3-7d0b480bbad8')
+  const client = new SeatsioClient(
+    Region.NA(),
+    "886377b9-1e1a-4780-93b3-7d0b480bbad8"
+  );
   const history = useHistory();
   const [eventname, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
@@ -33,7 +36,7 @@ export const EventForm = () => {
     dispatch(checkWalletIDThunk());
   }, []);
 
-   console.log(isOnline)
+  console.log(isOnline);
 
   let eventSelector = null;
   if (!isOnline) {
@@ -102,16 +105,15 @@ export const EventForm = () => {
           }
         );
         eventPhoto = reader.result;
-        if (!isOnline){
-          let chartKey
+        if (!isOnline) {
+          let chartKey;
           if (venue == "Hong Kong Coliseum") {
-            chartKey = "53a822ab-a787-79e7-7e60-18e4faacfc59"
+            chartKey = "53a822ab-a787-79e7-7e60-18e4faacfc59";
           } else if (venue == "AsiaWorld-Expo") {
-            chartKey = "bdb97c1e-aa07-3742-3e07-09e99ee94a05"
+            chartKey = "bdb97c1e-aa07-3742-3e07-09e99ee94a05";
           }
           await client.events.create(chartKey, contractAddress);
         }
-
 
         eventDetails = {
           eventname: eventname,
@@ -128,14 +130,14 @@ export const EventForm = () => {
           userId: currentUserId,
         };
         // then post data to backend route with axios
-        await axios.post("http://localhost:8080/api/create-event", { eventDetails: eventDetails })
+        await axios.post(`${process.env.REACT_APP_SERVER}/api/create-event`, {
+          eventDetails: eventDetails,
+        });
         history.push("/event/mint");
       };
       reader.onerror = () => {
         console.error("AHHHHHHHH!!");
       };
-
-   
     }
     await submitform();
   };
