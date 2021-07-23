@@ -2,13 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllEventThunk } from "../../redux/EventCardSlice";
-import {
-  Container,
-  ButtonGroup,
-  Button,
-  DropdownButton,
-  Dropdown,
-} from "react-bootstrap";
+import { Container, ButtonGroup, Button } from "react-bootstrap";
 import classes from "./Cards.module.css";
 import Cards from "./Cards";
 export default function AllEvents() {
@@ -16,6 +10,7 @@ export default function AllEvents() {
   const info = useSelector((state) => {
     return state.eventCard.allEvent[0];
   });
+  console.log("infop", info);
   const [activity, setActivity] = useState(info);
   useEffect(() => {
     dispatch(getAllEventThunk());
