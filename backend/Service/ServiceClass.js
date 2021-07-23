@@ -26,10 +26,10 @@ class Method {
     return data;
   }
 
-  async getUserfromAddress(address) {
-    let data = await this.knex.select("*").from("users").where("wallet_id", address);
-    console.log(data)
-    if(data[0]) {
+  async getUserfromAddress(id) {
+    let data = await this.knex.select("*").from("users").where("wallet_id", id);
+    console.log("asdas", data);
+    if (data[0]) {
       return data[0].id;
     }
   }
@@ -179,9 +179,7 @@ class Method {
 module.exports = Method;
 
 // const test = new Method(knex);
-// test.findContractAddress(4)
-
-
+// test.getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450");
 // test.getEventHost().then((data)=>{
 //   console.log(new Date())
 //   console.log(data)

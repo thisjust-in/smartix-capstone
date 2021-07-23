@@ -8,10 +8,11 @@ const OnlineBanner = () => {
     return state.eventCard.eventHost;
   });
 
+
   let ranArr = [];
   if (onlineEvent.length >= 3) {
     for (let i = 0; ranArr.length < 3; i++) {
-      let ranNum = Math.floor(Math.random() * onlineEvent.length);
+      let ranNum = Math.floor(Math.random() * onlineEvent.length + 1);
       if (!ranArr.includes(ranNum)) {
         ranArr.push(ranNum);
       }
@@ -19,12 +20,13 @@ const OnlineBanner = () => {
   }
   if (onlineEvent.length < 3) {
     for (let i = 0; ranArr.length < onlineEvent.length; i++) {
-      let ranNum = Math.floor(Math.random() * onlineEvent.length);
+      let ranNum = Math.floor(Math.random() * onlineEvent.length + 1);
       if (!ranArr.includes(ranNum)) {
         ranArr.push(ranNum);
       }
     }
   }
+
   return (
     <div className={OnlineBannerCss.displayFlex}>
       <div className={OnlineBannerCss.background}>

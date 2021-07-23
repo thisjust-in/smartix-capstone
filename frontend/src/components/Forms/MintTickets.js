@@ -14,11 +14,8 @@ export const MintTickets = () => {
   const [eventCapacity, setEventCapacity] = useState("");
   const user = useSelector((state) => state.users)
 
-  console.log(user.userID)
-
   useEffect(async () => {
     if (typeof user.userID !== "object"){
-      
       let eventDetails = await axios.post("http://localhost:8080/api/findContractAddress", {id: user.userID})
       setEvent(eventDetails.data)
       if (eventDetails.data.isOnline == false) {

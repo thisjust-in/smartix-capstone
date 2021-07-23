@@ -66,6 +66,7 @@ export const eventCardSlice = createSlice({
 
         return allEvent;
       }, {});
+      // console.log("asdadasd", counted);
       state.eventCount = counted;
       state.loading = false;
     },
