@@ -47,8 +47,8 @@ export const EventSettings = () => {
       .then((response) => {
         currentAddress.push(response.data.contractAddress);
       });
-    console.log(currentUserId);
-    console.log(currentAddress);
+    // console.log(currentUserId);
+    // console.log(currentAddress);
     let accounts = await web3.eth.getAccounts();
     console.log(tixPrice);
     await EventContract.methods

@@ -1,10 +1,10 @@
 import { Card, Button, Row, Col, Badge } from "react-bootstrap";
 import classes from "./Cards.module.css";
+import { Link } from "react-router-dom";
 const Cards = (props) => {
   let data = props.events;
-  console.log(data);
   return (
-    <Row>
+    <Row className={classes.cardRow}>
       {data &&
         data.map((events, index) => {
           return (
@@ -27,6 +27,12 @@ const Cards = (props) => {
                     </div>
                     <Card.Text>{events.eventDescription}</Card.Text>
                     <p>{events.venue}</p>
+                    <Link
+                      className={classes.cardBtn}
+                      to={`/event/${events.id}`}
+                    >
+                      Purchase Tickets
+                    </Link>
                   </Card.Body>
                 </Card>
               </div>
