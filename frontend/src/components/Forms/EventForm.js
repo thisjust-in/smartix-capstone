@@ -36,8 +36,6 @@ export const EventForm = () => {
     dispatch(checkWalletIDThunk());
   }, []);
 
-  console.log(isOnline);
-
   let eventSelector = null;
   if (!isOnline) {
     eventSelector = (
@@ -130,7 +128,7 @@ export const EventForm = () => {
           userId: currentUserId,
         };
         // then post data to backend route with axios
-        await axios.post(`${process.env.REACT_APP_SERVER}/api/create-event`, {
+        await axios.post("http://localhost:8080/api/create-event", {
           eventDetails: eventDetails,
         });
         history.push("/event/mint");

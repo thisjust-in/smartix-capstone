@@ -4,7 +4,7 @@ exports.up = function (knex) {
     table.string("wallet_id");
     table.string("username");
     table.json("userProfile_pic");
-    table.string("userDescription");
+    table.string("email");
     table.timestamps(false, true);
   });
 };
