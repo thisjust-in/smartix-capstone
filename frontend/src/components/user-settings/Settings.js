@@ -19,6 +19,11 @@ const Settings = () => {
                   Your Events
                 </Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link className={classes.navLink} eventKey="third">
+                  Purchased Tickets
+                </Nav.Link>
+              </Nav.Item>
             </Nav>
           </Col>
           <Col sm={9}>
@@ -29,6 +34,11 @@ const Settings = () => {
                 </div>
               </Tab.Pane>
               <Tab.Pane eventKey="second">
+                <div id={classes.tabDiv}>
+                  <YourEvents />
+                </div>
+              </Tab.Pane>
+              <Tab.Pane eventKey="third">
                 <div id={classes.tabDiv}>
                   <YourEvents />
                 </div>

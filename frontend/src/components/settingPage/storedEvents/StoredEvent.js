@@ -1,5 +1,6 @@
 import YourEventsCss from "./YourEvents.module.css";
 import { Link } from "react-router-dom";
+import { Container } from "react-bootstrap";
 
 const StoredEvent = ({
   eventName,
@@ -19,7 +20,7 @@ const StoredEvent = ({
         src={eventPhoto}
         alt="event cover photo"
       />
-      <container className={YourEventsCss.container}>
+      <Container className={YourEventsCss.container}>
         <h5 className={YourEventsCss.eventName}>{eventName}</h5>
         <div className={YourEventsCss.eventDescription}>
           <div className={YourEventsCss.eventDescriptionDetail}>
@@ -35,7 +36,7 @@ const StoredEvent = ({
             End: {endTime}
           </div>
         </div>
-      </container>
+      </Container>
       <div className={YourEventsCss.buttonDiv}>
         <Link to={`/socket/${eventID}`}>
           <button className={YourEventsCss.button}>Start Broadcasting</button>

@@ -93,6 +93,15 @@ class Method {
     return data;
   }
 
+  async findContractAddress(id) {
+    let contractAddress = await this.knex
+      .select("*")
+      .from("event")
+      .where("users_id", id)
+      .orderBy("event.id", "desc");
+    return contractAddress[0];
+  }
+
   async getEventInfo(id) {
     let data = await knex.select("*").from("event").where("event.id", id);
     return data;
@@ -166,13 +175,20 @@ class Method {
       event_id: event_id[0].id,
     });
   }
-  async findContractAddress(id) {
-    let contractAddress = await this.knex
-      .select("*")
-      .from("event")
-      .where("users_id", id)
-      .orderBy("event.id", "desc");
-    return contractAddress[0];
+
+  async getPurchaseRecord(wallet_id, event_id) {
+    let users_id = await knex
+      .select("id")
+      .from("users")
+      .where("wallet_id", wallet_id.toLowerCase());
+    if (users_id[0]) {
+      let data = await knex("purchase_record")
+        .select("*")
+        .where("users_id", users_id[0].id)
+        .andWhere("event_id", event_id);
+      return data;
+    }
+    return null;
   }
 
   async setEmailAddress(id, email) {
