@@ -81,7 +81,7 @@ function EventDetails(){
             <Container className={styles.main}>
             <div className={styles.container}>
                 <h1>{eventinfo.eventName}</h1>
-                <h4>{new Date(eventinfo.eventDate).toString().slice(0, 3) + ", " + new Date(eventinfo.eventDate).toString().slice(4, 15) + ", " + new Date(eventinfo.eventDate).toString().slice(16, 21) + ". " + eventinfo.eventLocation}</h4>
+                <h4>{new Date(eventinfo.eventDate).toString().slice(0, 3) + ", " + new Date(eventinfo.eventDate).toString().slice(4, 15) + ", " + new Date(eventinfo.eventDate).toString().slice(16, 21) + ". " + eventinfo.eventLocation + ", " + eventinfo.venue}</h4>
             </div>
             <div>
             <Row>
