@@ -71,6 +71,7 @@ function App() {
           </Route>
           <Route path="/checktix/:id">
             <CheckTix />
+          </Route>
           <Route exact path="/user-settings">
             <Usersettings />
           </Route>
