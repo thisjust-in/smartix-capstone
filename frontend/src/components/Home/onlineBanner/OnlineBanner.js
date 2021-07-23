@@ -8,6 +8,7 @@ const OnlineBanner = () => {
     return state.eventCard.eventHost;
   });
 
+
   let ranArr = [];
   if (onlineEvent.length >= 3) {
     for (let i = 0; ranArr.length < 3; i++) {
@@ -25,6 +26,7 @@ const OnlineBanner = () => {
       }
     }
   }
+
   return (
     <div className={OnlineBannerCss.displayFlex}>
       <div className={OnlineBannerCss.background}>

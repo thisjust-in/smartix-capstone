@@ -6,7 +6,6 @@ import EventContract from "../../EventContract";
 import classes from "./EventSettings.module.css";
 import axios from "redaxios";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export const EventSettings = () => {
@@ -47,12 +46,11 @@ export const EventSettings = () => {
       .then((response) => {
         currentAddress.push(response.data.contractAddress);
       });
-    // console.log(currentUserId);
-    // console.log(currentAddress);
+
     let accounts = await web3.eth.getAccounts();
-    console.log(tixPrice);
+
     await EventContract.methods
-      .setPrice(currentAddress[0], 0, tixPrice)
+      .setPrice(currentAddress[0], 0, (tixPrice * Math.pow(10, 18)).toString())
       .send({ from: accounts[0] });
     history.push("/");
   };
@@ -79,8 +77,7 @@ export const EventSettings = () => {
                 >
                   <Form.Label>Ticket Price in Eth</Form.Label>
                   <Form.Control
-                    type="Number"
-                    value={tixPrice}
+                    type="text"
                     placeholder="Set Ticket Price"
                     onChange={handlePriceChange}
                   />
