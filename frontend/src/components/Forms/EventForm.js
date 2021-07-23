@@ -36,8 +36,6 @@ export const EventForm = () => {
     dispatch(checkWalletIDThunk());
   }, []);
 
-  console.log(isOnline);
-
   let eventSelector = null;
   if (!isOnline) {
     eventSelector = (

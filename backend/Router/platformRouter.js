@@ -16,14 +16,15 @@ class PlatformRouter {
     router.get("/event/:id", this.getEventInfo.bind(this));
     router.post("/purchase", this.purchase.bind(this));
     router.post("/api/edit-email", this.editEmail.bind(this));
-    router.post("/gettix", this.gettix.bind(this))
+    router.post("/gettix", this.gettix.bind(this));
     return router;
   }
 
   async editEmail(req, res) {
-    let email = req.body.email;
+    let id = req.body.submitDetails.id;
+    let email = req.body.submitDetails.email;
     let emailAddress = await this.Method.setEmailAddress(id, email);
-    res.send(emailAddress);
+    res.end(emailAddress);
   }
 
   async addWallet(req, res) {
@@ -132,14 +133,12 @@ class PlatformRouter {
   }
 
   async gettix(req, res) {
-    let wallet_id = req.body.wallet_id
-    let event_id = req.body.event_id
-    let result = await this.Method.getPurchaseRecord(wallet_id, event_id)
-    res.send(result)
+    let wallet_id = req.body.wallet_id;
+    let event_id = req.body.event_id;
+    let result = await this.Method.getPurchaseRecord(wallet_id, event_id);
+    res.send(result);
     res.end();
   }
-
-
 }
 
 module.exports = PlatformRouter;

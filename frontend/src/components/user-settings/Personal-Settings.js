@@ -4,8 +4,8 @@ import classes from "../user-settings/User-setting.module.css";
 import { checkWalletIDThunk } from "../../redux/CheckUserSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import axios from "redaxios";
 
-// /api/edit-email
 const PersonalSetting = () => {
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
@@ -14,19 +14,26 @@ const PersonalSetting = () => {
   }, []);
   let currentUserId;
   const user_id = useSelector((state) => {
-    console.log(state);
     return state.users.userID;
   });
 
-  //   if (user_id) {
-  //     currentUserId = user_id;
-  //   }
-  const handleEmailSubmit = (e) => {
+  if (user_id) {
+    currentUserId = user_id;
+  }
+
+  const handleEmailSubmit = async (e) => {
     e.preventDefault();
+    let submitDetails = {
+      id: currentUserId,
+      email: email,
+    };
+    await axios.post(`${process.env.REACT_APP_SERVER}/api/edit-email`, {
+      submitDetails: submitDetails,
+    });
   };
   return (
     <div>
-      <h5>Edit your settings</h5>
+      <h5 className="mb-5">Edit your settings</h5>
       <div>
         <Form onSubmit={handleEmailSubmit} className={classes.formContainer}>
           <Form.Group
