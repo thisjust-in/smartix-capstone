@@ -1,13 +1,12 @@
 import { Card, Button, Row, Col, Badge } from "react-bootstrap";
 import classes from "./Cards.module.css";
-import { secondaryButton } from "../Main-Components/SecondaryButton";
+import { Link } from "react-router-dom";
 const Cards = (props) => {
   let data = props.events;
   return (
-    <Row>
+    <Row className={classes.cardRow}>
       {data &&
         data.map((events, index) => {
-          console.log("eeh", events);
           return (
             <Col>
               <div className={classes.cardWrapper} key={index}>
@@ -26,9 +25,14 @@ const Cards = (props) => {
                         </Badge>
                       </div>
                     </div>
-
                     <Card.Text>{events.eventDescription}</Card.Text>
                     <p>{events.venue}</p>
+                    <Link
+                      className={classes.cardBtn}
+                      to={`/event/${events.id}`}
+                    >
+                      Purchase Tickets
+                    </Link>
                   </Card.Body>
                 </Card>
               </div>
