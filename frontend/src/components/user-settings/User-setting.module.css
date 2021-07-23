@@ -1,0 +1,78 @@
+.mainContainer {
+  background-color: #ececec;
+  height: 100%;
+}
+
+.introSection {
+  padding: 2rem 0;
+}
+
+#title {
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 50px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+
+.tabContainer {
+  background: #ffffff;
+  min-height: 50vh;
+  /* margin: 1rem 0; */
+  border-radius: 10px;
+}
+
+.navLink {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+}
+
+.tabDiv {
+  height: auto;
+  margin-bottom: 100px 0;
+}
+#tabOneDiv {
+  margin: 3rem 0;
+}
+
+.FormGroup {
+  display: inline-block;
+}
+
+.formInput {
+  width: 20rem;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.SubmitBtn {
+  border-radius: 40px;
+  color: white;
+  background-color: #0094b6;
+  border: none;
+  width: 150px;
+  height: 40px;
+  border-radius: 50px;
+}
+
+.SubmitBtn:hover {
+  border-radius: 40px;
+  color: white;
+  background-color: #12b1d4;
+  border: none;
+  width: 150px;
+  height: 40px;
+  border-radius: 50px;
+}
+
+@media only screen and (max-width: 600px) {
+  .column {
+    padding: 0 2rem;
+  }
+
+  .formInput {
+    width: 18rem;
+    margin: 1rem 0px;
+  }
+}

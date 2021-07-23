@@ -1,74 +1,83 @@
+.eventCard {
+  /* background-color: rebeccapurple; */
+  /* width: 70%; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 1rem;
+  padding-bottom: 40px;
+  padding-right: 1rem;
+  border-bottom: 1px solid rebeccapurple;
+}
+.eventName {
+  /* background-color: red; */
+  /* position: relative;
+    left: 100px; */
+  color: #4e4e4e;
+}
 
+.eventDescription {
+  /* background-color: red; */
+  display: flex;
+  flex-wrap: wrap;
+}
 
-.eventCard{
+.eventDescriptionDetail {
+  margin-right: 20px;
+  color: #dd5d01;
+}
+
+.image {
+  border-radius: 10px;
+  /* min-width: 100px; */
+  margin-top: 5px;
+  width: 100px;
+  height: 70px;
+  object-fit: cover;
+}
+
+.container {
+  width: 50vw;
+  padding-left: 50px;
+}
+
+.buttonDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  background-color: #ce3dd1;
+  color: white;
+  border: none;
+  width: 180px;
+  height: 40px;
+  border-radius: 50px;
+  margin-top: 1rem;
+}
+
+.button:hover {
+  background-color: #c910cc;
+  color: white;
+  border: none;
+  /* width: 150px;
+    height: 40px; */
+  border-radius: 50px;
+  transition: ease-in;
+}
+
+@media only screen and (max-width: 600px) {
+  .eventCard {
     /* background-color: rebeccapurple; */
     /* width: 70%; */
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    align-items:center;
+    align-items: center;
     justify-content: center;
-    margin-top: 40px;
-    margin-left: 20px;
+    margin-top: 2rem;
     padding-bottom: 40px;
     border-bottom: 1px solid rebeccapurple;
-
-}
-.eventName{
-    /* background-color: red; */
-    /* position: relative;
-    left: 100px; */
-    color: #4E4E4E;
-}
-
-.eventDescription{
-    /* background-color: red; */
-    display: flex;
-    flex-wrap: wrap;
-}
-
-
-.eventDescriptionDetail{
-    margin-right: 20px;
-    color:#FF7612;
-
-}
-
-.image{
-    border-radius: 50px;
-    /* min-width: 100px; */
-    margin-top: 5px;
-    width:100px;
-    height: 70px;
-    object-fit: cover;
-}
-
-.container{
-    width: 50vw;
-    padding-left: 50px;
-}
-
-.buttonDiv{
-    display: flex;
-    justify-content: center;
-}
-
-.button{
-    background-color: #ce3dd1;
-    color: white;
-    border: none;
-    width: 180px;
-    height: 40px;
-    border-radius: 50px;
-    margin-top:1rem;
-}
-
-.button:hover {
-    background-color: #c910cc;
-    color: white;
-    border: none;
-    /* width: 150px;
-    height: 40px; */
-    border-radius: 50px;
-    transition: ease-in;
   }
+}

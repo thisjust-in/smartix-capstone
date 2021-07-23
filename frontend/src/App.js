@@ -19,6 +19,7 @@ import EventMint from "./Pages/EventMint";
 import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 import Etix from "./Pages/Etix";
 import CheckTix from "./Pages/CheckTix";
+import Usersettings from "./Pages/UserSettings";
 
 function App() {
   const dispatch = useDispatch();
@@ -70,6 +71,8 @@ function App() {
           </Route>
           <Route path="/checktix/:id">
             <CheckTix />
+          <Route exact path="/user-settings">
+            <Usersettings />
           </Route>
           <Route path="*">
             <NotFound />
