@@ -29,7 +29,6 @@ class Method {
 
   async getUserfromAddress(id) {
     let data = await this.knex.select("*").from("users").where("wallet_id", id);
-    console.log("asdas", data);
     if (data[0]) {
       return data[0].id;
     }
