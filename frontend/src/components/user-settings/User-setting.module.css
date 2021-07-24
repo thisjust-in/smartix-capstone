@@ -46,6 +46,20 @@
   margin: 0 10px;
 }
 
+.imageUpload {
+  background-color: teal;
+  padding: 10px 10px;
+  color: white;
+  border-radius: 50px;
+}
+
+.imageUpload:hover {
+  background-color: rgb(12, 160, 160);
+  padding: 10px 10px;
+  color: white;
+  border-radius: 50px;
+}
+
 .SubmitBtn {
   border-radius: 40px;
   color: white;

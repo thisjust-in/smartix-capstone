@@ -11,6 +11,7 @@ import web3 from "../web3";
 import EventContract from "../EventContract";
 import { SeatsioClient, Region } from "seatsio";
 import { useHistory } from "react-router";
+import { useSelector } from "react-redux";
 
 function EventDetails() {
   const history = useHistory();
@@ -21,7 +22,16 @@ function EventDetails() {
   const [eventinfo, setEventinfo] = useState("");
   const [tix, setTix] = useState([]);
   const [forOnline, setForOnline] = useState("");
+  const [email, setEmail] = useState("");
+  let currentUser;
 
+  const user_id = useSelector((state) => {
+    return state.users.userID;
+  });
+
+  if (typeof user_id === "number") {
+    currentUser = user_id;
+  }
   async function fetch() {
     let event_id = window.location.pathname.split("/")[2];
     let response = await axios.get(
@@ -29,8 +39,19 @@ function EventDetails() {
     );
     setEventinfo(response.data[0]);
   }
+  // get user email address
+  async function getUser() {
+    let response = await axios.post(
+      `${process.env.REACT_APP_SERVER}/api/getInfo`,
+      {
+        id: currentUser,
+      }
+    );
+    setEmail(response.data[0].email);
+    // console.log(response.data[0].email);
+  }
 
-  console.log(eventinfo);
+  console.log(email);
 
   async function online() {
     if (eventinfo) {
@@ -57,7 +78,8 @@ function EventDetails() {
   useEffect(async () => {
     await fetch();
     await online();
-  }, []);
+    await getUser();
+  }, [user_id]);
 
   async function select(e) {
     let location = e.id;
@@ -113,6 +135,9 @@ function EventDetails() {
       tixArray.push(each.location);
     }
     await client.events.book(eventinfo.contractAddress, tixArray);
+    await axios.post(`${process.env.REACT_APP_SERVER}/api/purchase-confirmation`,{
+      email: email
+    });
     history.push("/confirmation");
   }
 

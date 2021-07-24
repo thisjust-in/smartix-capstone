@@ -1,5 +1,6 @@
 const express = require("express");
 const { cloudinary } = require("../Cloudinary/cloudinary");
+const nodemailer = require("nodemailer");
 
 class PlatformRouter {
   constructor(Method) {
@@ -7,6 +8,7 @@ class PlatformRouter {
   }
   router() {
     const router = express.Router();
+    router.post("/api/getInfo", this.getInfo.bind(this));
     router.post("/api/walletId", this.addWallet.bind(this));
     router.post("/api/create-event", this.createEvent.bind(this));
     router.get("/api/eventhost", this.getEventHost.bind(this));
@@ -16,8 +18,52 @@ class PlatformRouter {
     router.get("/event/:id", this.getEventInfo.bind(this));
     router.post("/purchase", this.purchase.bind(this));
     router.post("/api/edit-email", this.editEmail.bind(this));
+    router.post("/api/edit-username", this.editUsername.bind(this));
     router.post("/gettix", this.gettix.bind(this));
+    router.post("/api/purchase-confirmation", this.sendEmail.bind(this));
     return router;
+  }
+
+  async sendEmail(req, res) {
+    let email = req.body.email;
+
+    // node mailer syntax
+    let smtpTransport = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLEADRESS,
+        pass: process.env.GOOGLEPASSWORD,
+      },
+    });
+
+    let mailOptions = {
+      from: "smartixhk@gmail.com", // sender address
+      to: `${email}`, // list of receivers
+      subject: "Thank you for purchasing the ticket!", // Subject line
+      html: "<b>Thanks for purchasing from Smartix! You can view your tickets here : URL</b>",
+    };
+
+    smtpTransport.sendMail(mailOptions, (error, response) => {
+      if (error) {
+        res.send(error);
+      } else {
+        res.send("success");
+      }
+    });
+    smtpTransport.close();
+  }
+
+  async getInfo(req, res) {
+    let id = req.body.id;
+    let userInfo = await this.Method.getUserInfo(id);
+    res.send(userInfo);
+  }
+
+  async editUsername(req, res) {
+    let id = req.body.submitDetails.id;
+    let username = req.body.submitDetails.username;
+    let newUsername = await this.Method.setUsername(id, username);
+    res.end(newUsername);
   }
 
   async editEmail(req, res) {

@@ -10,7 +10,7 @@ export default function AllEvents() {
   const info = useSelector((state) => {
     return state.eventCard.allEvent[0];
   });
-  console.log("infop", info);
+  // console.log("infop", info);
   const [activity, setActivity] = useState(info);
   useEffect(() => {
     dispatch(getAllEventThunk());
