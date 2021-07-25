@@ -1,9 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import YourEventsCss from "./storedEvents/YourEvents.module.css";
 import StoredEvent from "./storedEvents/StoredEvent";
-import { Route, Redirect } from "react-router-dom";
-import web3 from "../../web3";
+import { Spinner } from "reactstrap";
 
 let allEventWithDateFormatter;
 const YourEvents = () => {
@@ -91,7 +89,7 @@ const YourEvents = () => {
           )}
         </div>
       ) : (
-        <div>Checking</div>
+        <Spinner color="dark" />
       )}
     </div>
   );

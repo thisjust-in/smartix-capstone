@@ -1,8 +1,12 @@
 import { useSelector } from "react-redux";
 import Carousel from "react-bootstrap/Carousel";
 import OnlineBannerCss from "./OnlineBanner.module.css";
+import React from "react";
+import { Spinner } from "reactstrap";
+import { useHistory } from "react-router-dom";
 
 const OnlineBanner = () => {
+  const history = useHistory();
   const onlineEvent = useSelector((state) => {
     return state.eventCard.eventHost;
   });
@@ -42,19 +46,19 @@ const OnlineBanner = () => {
                   alt="First slide"
                 />
               ) : (
-                <div>Loading</div>
+                <Spinner color="dark" />
               )}
               <Carousel.Caption>
                 <div className={OnlineBannerCss.information}>
                   {onlineEvent[ranArr[0]] ? (
                     <h3>{onlineEvent[ranArr[0]].eventName}</h3>
                   ) : (
-                    <div>Loading</div>
+                    <Spinner color="dark" />
                   )}
                   {onlineEvent[ranArr[0]] ? (
                     <p>{onlineEvent[ranArr[0]].eventDescription}</p>
                   ) : (
-                    <div>Loading</div>
+                    <Spinner color="dark" />
                   )}
                 </div>
               </Carousel.Caption>
@@ -70,7 +74,7 @@ const OnlineBanner = () => {
                   alt="First slide"
                 />
               ) : (
-                <div>Loading</div>
+                <Spinner color="dark" />
               )}
 
               <Carousel.Caption>
@@ -78,12 +82,12 @@ const OnlineBanner = () => {
                   {onlineEvent[ranArr[1]] ? (
                     <h3>{onlineEvent[ranArr[1]].eventName}</h3>
                   ) : (
-                    <div>Loading</div>
+                    <Spinner color="dark" />
                   )}
                   {onlineEvent[ranArr[1]] ? (
                     <p>{onlineEvent[ranArr[1]].eventDescription}</p>
                   ) : (
-                    <div>Loading</div>
+                    <Spinner color="dark" />
                   )}
                 </div>
               </Carousel.Caption>
@@ -99,7 +103,7 @@ const OnlineBanner = () => {
                   alt="First slide"
                 />
               ) : (
-                <div>Loading</div>
+                <Spinner color="dark" />
               )}
 
               <Carousel.Caption>
@@ -107,12 +111,12 @@ const OnlineBanner = () => {
                   {onlineEvent[ranArr[2]] ? (
                     <h3>{onlineEvent[ranArr[2]].eventName}</h3>
                   ) : (
-                    <div>Loading</div>
+                    <Spinner color="dark" />
                   )}
                   {onlineEvent[ranArr[2]] ? (
                     <p>{onlineEvent[ranArr[2]].eventDescription}</p>
                   ) : (
-                    <div>Loading</div>
+                    <Spinner color="dark" />
                   )}
                 </div>
               </Carousel.Caption>

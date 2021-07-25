@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import Settings from "../components/user-settings/Settings";
 import classes from "../components/user-settings/User-setting.module.css";
+
 function Usersettings() {
   return (
     <div className={classes.mainContainer}>

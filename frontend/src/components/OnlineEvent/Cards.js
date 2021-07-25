@@ -1,4 +1,4 @@
-import { Card, Button, Row, Col, Badge } from "react-bootstrap";
+import { Card, Row, Col, Badge } from "react-bootstrap";
 import classes from "./Cards.module.css";
 import { Link } from "react-router-dom";
 const Cards = (props) => {

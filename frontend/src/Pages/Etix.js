@@ -14,6 +14,7 @@ import axios from "redaxios";
 import web3 from "../web3";
 import { Col, Row } from "reactstrap";
 import QRCode from "qrcode.react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 function Etix() {
   const [eventinfo, setEventinfo] = useState("");
@@ -21,31 +22,46 @@ function Etix() {
   const [address, setAddress] = useState("");
   let event_id = window.location.pathname.split("/")[2];
 
-  console.log(address);
-
-  async function fetch() {
-    let user_address = await web3.eth.getAccounts();
-    let eventDetails = await axios.get(
-      `${process.env.REACT_APP_SERVER}/event/${event_id}`
-    );
-    let tixDetails = await axios.post(
-      `${process.env.REACT_APP_SERVER}/gettix`,
-      {
-        wallet_id: user_address[0],
-        event_id: event_id,
-      }
-    );
-    setAddress(user_address[0].toLowerCase());
-    setEventinfo(eventDetails.data[0]);
-    setTix(tixDetails.data[0]);
-  }
-
   useEffect(() => {
+    let eventid = window.location.pathname.split("/")[2];
+    async function fetch() {
+      let user_address = await web3.eth.getAccounts();
+      let eventDetails = await axios.get(
+        `${process.env.REACT_APP_SERVER}/event/${eventid}`
+      );
+      let tixDetails = await axios.post(
+        `${process.env.REACT_APP_SERVER}/gettix`,
+        {
+          wallet_id: user_address[0],
+          event_id: eventid,
+        }
+      );
+      setAddress(user_address[0].toLowerCase());
+      setEventinfo(eventDetails.data[0]);
+      setTix(tixDetails.data[0]);
+    }
     fetch();
-  }, [fetch]);
+  }, []);
 
-  let codeContent = `${process.env.REACT_APP_FRONTSERVER}/checktix/${event_id}/${address}`;
+  let codeContent = `${
+    process.env.REACT_APP_FRONTSERVER
+  }/checktix/${event_id}/${address}/${Date.now()}`;
   console.log(codeContent);
+
+  const renderTime = ({ remainingTime }) => {
+    if (remainingTime === 0) {
+      return (
+        <div className="timer">
+          <h1>Expired</h1>
+        </div>
+      );
+    }
+    return (
+      <div className="timer">
+        <QRCode value={codeContent} className={styles.qrcode} />
+      </div>
+    );
+  };
 
   return (
     <div className={styles.tixcontainer}>
@@ -89,15 +105,21 @@ function Etix() {
           {tix ? (
             tix.TixDetails.map((each) => {
               return (
-                <CardText>
-                  <Row>
-                    <Col>
-                      <p style={{ color: "grey" }}> Row: </p>{" "}
-                      <h5>{each.location.split("-")[0]}</h5>
+                <CardText key={""}>
+                  <Row key={""}>
+                    <Col key={""}>
+                      <p style={{ color: "grey" }} key={""}>
+                        {" "}
+                        Row:{" "}
+                      </p>{" "}
+                      <h5 key={""}>{each.location.split("-")[0]}</h5>
                     </Col>
-                    <Col>
-                      <p style={{ color: "grey" }}> Seat no.: </p>{" "}
-                      <h5>{each.location.split("-")[1]}</h5>
+                    <Col key={""}>
+                      <p key={""} style={{ color: "grey" }}>
+                        {" "}
+                        Seat no.:{" "}
+                      </p>{" "}
+                      <h5 key={""}>{each.location.split("-")[1]}</h5>
                     </Col>
                   </Row>
                 </CardText>
@@ -107,8 +129,18 @@ function Etix() {
             <h1>No Valid Tickets</h1>
           )}
         </CardBody>
-        <div className={styles.qrcode}>
-          {address && tix ? <QRCode value={codeContent} size="100" /> : null}
+
+        <div className={styles.qrcodecontainer}>
+          {address && tix ? (
+            <CountdownCircleTimer
+              isPlaying
+              duration={30}
+              colors={[["#0094B6"]]}
+              size={250}
+            >
+              {renderTime}
+            </CountdownCircleTimer>
+          ) : null}
         </div>
       </Card>
     </div>
