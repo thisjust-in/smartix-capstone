@@ -1,3 +1,6 @@
+import { useEffect, useState } from "react";
+import { Route, Redirect } from "react-router-dom";
+import web3 from "../../web3";
 import { useSelector } from "react-redux";
 import YourEventsCss from "./storedEvents/YourEvents.module.css";
 import StoredEvent from "./storedEvents/StoredEvent";
@@ -32,16 +35,6 @@ const YourEvents = () => {
   const userID = useSelector((state) => {
     return state.users.userID;
   });
-
-  // useEffect(() => {
-  //   setCheckedLogin(true);
-  // }, [userID]);
-
-  // useEffect(() => {
-  //   if (checkedLogin && typeof userID === "number") {
-  //     setIsLogin(true);
-  //   }
-  // }, [checkedLogin]);
 
   const allEvent = useSelector((state) => {
     if (typeof userID === "number") {
@@ -78,6 +71,7 @@ const YourEvents = () => {
                   startTime={event.startTime}
                   endTime={event.endTime}
                   theEvent={event}
+                  button={"Start Broadcasting"}
                 />
               </div>
             ))

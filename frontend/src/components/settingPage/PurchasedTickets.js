@@ -3,33 +3,60 @@ import React, { useEffect, useRef, useState } from "react";
 import YourEventsCss from "./storedEvents/YourEvents.module.css";
 import StoredEvent from "./storedEvents/StoredEvent";
 import web3 from "../../web3";
+import axios from "redaxios";
 
 const PurchasedTickets = () => {
-  const [userId, setUserId] = useState("");
-  useEffect(() => {
-    // getUserAddress();
-  }, []);
+  const [purchasedEvent, setPurchasedEvent] = useState(null);
 
   let id = useSelector((state) => {
     return state.users.userID;
   });
 
-  if (typeof id === "number") {
-    console.log("id", id);
-  }
+  useEffect(async () => {
+    if (typeof id === "number") {
+      let allPurchasedEvent = await axios.post(
+        `${process.env.REACT_APP_SERVER}/api/getallpurchasedevent`,
+        {
+          userId: id,
+        }
+      );
+      setPurchasedEvent(allPurchasedEvent.data);
+    }
+  }, [id]);
 
-  //   async function getUserAddress() {
-  //     let user_address = await web3.eth.getAccounts();
-  //     setUserId(user_address[0].toLowerCase());
-  //   }
-
-  //   console.log("userId", userId);
+  const eventDetails = useSelector((state) => {
+    if (purchasedEvent) {
+      let allEvent = purchasedEvent.map((data) => {
+        return state.eventCard.eventHost.filter((event) => {
+          return event.id === data.event_id;
+        })[0];
+      });
+      return allEvent;
+    }
+  });
 
   return (
     <div>
-      <div>
-        <StoredEvent />
-      </div>
+      {eventDetails ? (
+        eventDetails.map((event, index) => (
+          <div key={index}>
+            <StoredEvent
+              eventID={event.id}
+              contractAddress={event.contractAddress}
+              eventName={event.eventName}
+              eventLocation={event.eventLocation}
+              eventPhoto={event.eventPhoto}
+              eventDate={event.eventDate}
+              startTime={event.startTime}
+              endTime={event.endTime}
+              theEvent={event}
+              button={"Join Event"}
+            />
+          </div>
+        ))
+      ) : (
+        <div>Loading</div>
+      )}
     </div>
   );
 };
