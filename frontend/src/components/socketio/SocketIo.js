@@ -29,7 +29,6 @@ function SocketIo() {
   // let socket = io();
 
   const joinAsBroadcaster = () => {
-    console.log("dsasadasdasdasfadgdsgsdgs");
     user = {
       room: userId,
       name: "need to change",
@@ -186,8 +185,6 @@ function SocketIo() {
   useEffect(() => {
     checkIsHost();
   });
-
-  console.log("userId", userId);
 
   async function getUserAddress() {
     let user_address = await web3.eth.getAccounts();

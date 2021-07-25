@@ -1,13 +1,49 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import YourEventsCss from "./storedEvents/YourEvents.module.css";
 import StoredEvent from "./storedEvents/StoredEvent";
+import { Route, Redirect } from "react-router-dom";
+import web3 from "../../web3";
 
 let allEventWithDateFormatter;
 const YourEvents = () => {
+  const [isLogin, setIsLogin] = useState(null);
+  const [notLogin, setNotLogin] = useState(null);
+  const [checkedLogin, setCheckedLogin] = useState(false);
+
+  async function getUserAddress() {
+    let user_address = await web3.eth.getAccounts();
+    setCheckedLogin(true);
+    setIsLogin(user_address[0]);
+  }
+
+  useEffect(() => {
+    getUserAddress();
+  }, []);
+
+  useEffect(() => {
+    if (isLogin === undefined) {
+      setNotLogin(true);
+    }
+
+    if (isLogin === Array) {
+      setIsLogin(true);
+    }
+  }, [isLogin]);
+
   const userID = useSelector((state) => {
     return state.users.userID;
   });
+
+  // useEffect(() => {
+  //   setCheckedLogin(true);
+  // }, [userID]);
+
+  // useEffect(() => {
+  //   if (checkedLogin && typeof userID === "number") {
+  //     setIsLogin(true);
+  //   }
+  // }, [checkedLogin]);
 
   const allEvent = useSelector((state) => {
     if (typeof userID === "number") {
@@ -28,25 +64,34 @@ const YourEvents = () => {
   }
 
   return (
-    <div className={YourEventsCss.div}>
-      {allEventWithDateFormatter ? (
-        allEventWithDateFormatter.map((event, index) => (
-          <div key={index}>
-            <StoredEvent
-              eventID={event.id}
-              contractAddress={event.contractAddress}
-              eventName={event.eventName}
-              eventLocation={event.eventLocation}
-              eventPhoto={event.eventPhoto}
-              eventDate={event.eventDate}
-              startTime={event.startTime}
-              endTime={event.endTime}
-              theEvent={event}
-            />
-          </div>
-        ))
+    <div>
+      {checkedLogin ? (
+        <div className={YourEventsCss.div}>
+          {allEventWithDateFormatter ? (
+            allEventWithDateFormatter.map((event, index) => (
+              <div key={index}>
+                <StoredEvent
+                  eventID={event.id}
+                  contractAddress={event.contractAddress}
+                  eventName={event.eventName}
+                  eventLocation={event.eventLocation}
+                  eventPhoto={event.eventPhoto}
+                  eventDate={event.eventDate}
+                  startTime={event.startTime}
+                  endTime={event.endTime}
+                  theEvent={event}
+                />
+              </div>
+            ))
+          ) : (
+            <div>
+              <div>{isLogin && <div>Loading</div>} </div>
+              <div>{notLogin && <Redirect to="/" />} </div>
+            </div>
+          )}
+        </div>
       ) : (
-        <div>Loading</div>
+        <div>Checking</div>
       )}
     </div>
   );

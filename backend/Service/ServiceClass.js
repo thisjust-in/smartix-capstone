@@ -28,7 +28,6 @@ class Method {
 
   async getUserfromAddress(id) {
     let data = await this.knex.select("*").from("users").where("wallet_id", id);
-    console.log("asdas", data);
     if (data[0]) {
       return data[0].id;
     }
@@ -176,6 +175,7 @@ class Method {
     });
   }
 
+  //(customer user id), (event id)
   async getPurchaseRecord(wallet_id, event_id) {
     let users_id = await knex
       .select("id")
@@ -193,3 +193,11 @@ class Method {
 }
 
 module.exports = Method;
+
+let test = new Method(knex);
+
+test
+  .getPurchaseRecord("0x8d39602eacc3a5acd999d247310a566fe5a3e1e2", 5)
+  .then((data) => {
+    console.log("data", data);
+  });
