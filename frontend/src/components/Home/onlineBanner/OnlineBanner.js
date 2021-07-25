@@ -4,10 +4,8 @@ import OnlineBannerCss from "./OnlineBanner.module.css";
 
 const OnlineBanner = () => {
   const onlineEvent = useSelector((state) => {
-    // console.log("onlineEvent", state.eventCard.eventHost[0]);
     return state.eventCard.eventHost;
   });
-
 
   let ranArr = [];
   if (onlineEvent.length >= 3) {
@@ -26,6 +24,8 @@ const OnlineBanner = () => {
       }
     }
   }
+
+  console.log("onlineEvent", onlineEvent, ranArr);
 
   return (
     <div className={OnlineBannerCss.displayFlex}>

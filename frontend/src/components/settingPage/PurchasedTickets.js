@@ -14,7 +14,10 @@ const PurchasedTickets = () => {
     return state.users.userID;
   });
 
-  console.log("id", id);
+  if (typeof id === "number") {
+    console.log("id", id);
+  }
+
   //   async function getUserAddress() {
   //     let user_address = await web3.eth.getAccounts();
   //     setUserId(user_address[0].toLowerCase());
