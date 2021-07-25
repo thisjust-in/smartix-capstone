@@ -20,6 +20,7 @@ import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 import Etix from "./Pages/Etix";
 import CheckTix from "./Pages/CheckTix";
 import Usersettings from "./Pages/UserSettings";
+import Loading from "./Pages/Loading";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,9 @@ function App() {
           </Route>
           <Route exact path="/user-settings">
             <Usersettings />
+          </Route>
+          <Route path="/loading">
+            <Loading />
           </Route>
           <Route path="*">
             <NotFound />

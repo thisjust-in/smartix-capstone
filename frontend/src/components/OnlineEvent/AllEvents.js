@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllEventThunk } from "../../redux/EventCardSlice";
-import { Container, ButtonGroup, Button } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 import classes from "./Cards.module.css";
 import Cards from "./Cards";
 export default function AllEvents() {
@@ -10,16 +10,11 @@ export default function AllEvents() {
   const info = useSelector((state) => {
     return state.eventCard.allEvent[0];
   });
-  console.log("infop", info);
   const [activity, setActivity] = useState(info);
   useEffect(() => {
     dispatch(getAllEventThunk());
     setActivity(info);
-  }, [info]);
-  // useEffect(() => {
-  //   setActivity(info);
-  //   console.log("USE EFFECT");
-  // }, [info]);
+  }, [info, dispatch]);
 
   const handleAll = () => {
     setActivity(info);
@@ -27,49 +22,49 @@ export default function AllEvents() {
 
   const handleEntertainment = () => {
     let result = info.filter((each) => {
-      return each.eventType == "entertainment";
+      return each.eventType === "entertainment";
     });
     setActivity(result);
   };
 
   const handleCooking = () => {
     let result = info.filter((each) => {
-      return each.eventType == "cooking";
+      return each.eventType === "cooking";
     });
     setActivity(result);
   };
 
   const handleSeminar = () => {
     let result = info.filter((each) => {
-      return each.eventType == "seminar";
+      return each.eventType === "seminar";
     });
     setActivity(result);
   };
 
   const handleEducational = () => {
     let result = info.filter((each) => {
-      return each.eventType == "educational";
+      return each.eventType === "educational";
     });
     setActivity(result);
   };
 
   const handleFitness = () => {
     let result = info.filter((each) => {
-      return each.eventType == "fitness";
+      return each.eventType === "fitness";
     });
     setActivity(result);
   };
 
   const handleWellBeing = () => {
     let result = info.filter((each) => {
-      return each.eventType == "well-being";
+      return each.eventType === "well-being";
     });
     setActivity(result);
   };
 
   const handleHobbies = () => {
     let result = info.filter((each) => {
-      return each.eventType == "hobbies";
+      return each.eventType === "hobbies";
     });
     setActivity(result);
   };

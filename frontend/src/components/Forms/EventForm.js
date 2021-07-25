@@ -34,7 +34,7 @@ export const EventForm = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkWalletIDThunk());
-  }, []);
+  }, [dispatch]);
 
   let eventSelector = null;
   if (!isOnline) {
@@ -105,9 +105,9 @@ export const EventForm = () => {
         eventPhoto = reader.result;
         if (!isOnline) {
           let chartKey;
-          if (venue == "Hong Kong Coliseum") {
+          if (venue === "Hong Kong Coliseum") {
             chartKey = "53a822ab-a787-79e7-7e60-18e4faacfc59";
-          } else if (venue == "AsiaWorld-Expo") {
+          } else if (venue === "AsiaWorld-Expo") {
             chartKey = "bdb97c1e-aa07-3742-3e07-09e99ee94a05";
           }
           await client.events.create(chartKey, contractAddress);
@@ -166,6 +166,7 @@ export const EventForm = () => {
                 id={classes.previewImg}
                 src={preview}
                 width="400px"
+                alt=""
               />
             </div>
           </Form.Group>

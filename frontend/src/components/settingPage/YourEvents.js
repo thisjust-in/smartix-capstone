@@ -1,7 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import YourEventsCss from "./storedEvents/YourEvents.module.css";
 import StoredEvent from "./storedEvents/StoredEvent";
+import { Spinner } from "reactstrap";
 
 let allEventWithDateFormatter;
 const YourEvents = () => {
@@ -46,7 +46,7 @@ const YourEvents = () => {
           </div>
         ))
       ) : (
-        <div>Loading</div>
+        <Spinner color="dark" />
       )}
     </div>
   );

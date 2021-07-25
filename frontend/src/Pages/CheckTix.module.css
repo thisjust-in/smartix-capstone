@@ -1,0 +1,11 @@
+.textcontainer {
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo {
+  max-width: 300px;
+}
