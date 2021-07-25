@@ -5,7 +5,7 @@ import classes from "./LoggedInNav.module.css";
 export default function LoggedInNav() {
   const buttonName = "Create event";
   return (
-    <div className={classes.test}>
+    <div className={classes.rightContainer}>
       <Nav.Link href="/create-event">
         <SecondaryButton name={buttonName} />
       </Nav.Link>

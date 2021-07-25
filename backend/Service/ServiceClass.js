@@ -209,6 +209,18 @@ class Method {
       console.log("error", error);
     }
   }
+
+  async setProfilePic(id, photo) {
+    try {
+      let result = await knex("users")
+        .where("id", id)
+        .update({ userProfile_pic: photo });
+      // console.log(result);
+      return result;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 }
 
 module.exports = Method;

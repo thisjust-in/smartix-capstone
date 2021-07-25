@@ -2,7 +2,8 @@ import { Tab, Row, Col, Nav } from "react-bootstrap";
 import YourEvents from "../settingPage/YourEvents";
 import PersonalSetting from "./Personal-Settings";
 import classes from "../user-settings/User-setting.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 const Settings = () => {
   return (
     <div className={classes.tabContainer}>
@@ -12,7 +13,6 @@ const Settings = () => {
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link className={classes.navLink} eventKey="first">
-                  <FontAwesomeIcon icon="coffee" fixedWidth />
                   Personal Settings
                 </Nav.Link>
               </Nav.Item>

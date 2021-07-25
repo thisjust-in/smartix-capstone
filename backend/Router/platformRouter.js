@@ -19,9 +19,24 @@ class PlatformRouter {
     router.post("/purchase", this.purchase.bind(this));
     router.post("/api/edit-email", this.editEmail.bind(this));
     router.post("/api/edit-username", this.editUsername.bind(this));
+    router.post("/api/profile-picture", this.updateProPic.bind(this));
     router.post("/gettix", this.gettix.bind(this));
     router.post("/api/purchase-confirmation", this.sendEmail.bind(this));
     return router;
+  }
+
+  async updateProPic(req, res) {
+    let data = req.body;
+    let id = data.id;
+    let photoStream = req.body.photo;
+    const cloudUpload = await cloudinary.uploader.upload(photoStream, {
+      upload_preset: "ml_default",
+    });
+    let jsonFormat = JSON.stringify(cloudUpload.secure_url.toString());
+    let userProfile_pic = jsonFormat;
+    // console.log(profilePicture);
+    await this.Method.setProfilePic(id, userProfile_pic);
+    res.end();
   }
 
   async sendEmail(req, res) {
@@ -40,7 +55,7 @@ class PlatformRouter {
       from: "smartixhk@gmail.com", // sender address
       to: `${email}`, // list of receivers
       subject: "Thank you for purchasing the ticket!", // Subject line
-      html: "<b>Thanks for purchasing from Smartix! You can view your tickets here : URL</b>",
+      html: "<b>🎟 Thanks for purchasing from Smartix! You can view your tickets here : URL</b>",
     };
 
     smtpTransport.sendMail(mailOptions, (error, response) => {
@@ -63,7 +78,7 @@ class PlatformRouter {
     let id = req.body.submitDetails.id;
     let username = req.body.submitDetails.username;
     let newUsername = await this.Method.setUsername(id, username);
-    res.end(newUsername);
+    res.send(newUsername);
   }
 
   async editEmail(req, res) {

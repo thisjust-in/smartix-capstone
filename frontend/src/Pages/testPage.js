@@ -1,7 +1,6 @@
 import React from "react";
 import EventContract from "../EventContract";
 import web3 from "../web3";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function Test() {
   async function click() {
     let accounts = await web3.eth.getAccounts();
@@ -21,7 +20,6 @@ function Test() {
   return (
     <div>
       <button onClick={click}>Create Contract</button>
-      Your <FontAwesomeIcon icon="coffee" /> is hot and ready!
     </div>
   );
 }
