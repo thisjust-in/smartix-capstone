@@ -11,7 +11,7 @@ const PersonalSetting = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkWalletIDThunk());
-  }, []);
+  }, [dispatch]);
   let currentUserId;
   const user_id = useSelector((state) => {
     return state.users.userID;

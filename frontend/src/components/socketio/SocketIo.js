@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import EventContract from "../../EventContract";
 import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
-import { RedButton } from "../Main-Components/SecondaryButton";
+import { Spinner } from "reactstrap";
 
 const socket = io.connect("http://localhost:8080");
 let rtcPeerConnections = {};
@@ -240,7 +240,7 @@ function SocketIo() {
           )}
         </div>
       ) : (
-        <div>Loading</div>
+        <Spinner color="dark" />
       )}
     </div>
   );

@@ -15,9 +15,23 @@
   border-radius: 20px 20px 0px 0px;
 }
 
-.qrcode {
+.qrcodecontainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  padding: 3rem;
+  padding: 2rem;
+}
+
+.qrcode {
+  size: "90";
+}
+
+@media screen and (max-width: 600px) {
+  .card {
+    width: 80vw;
+  }
+
+  .qrcode {
+    size: "60";
+  }
 }

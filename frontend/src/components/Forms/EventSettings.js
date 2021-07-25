@@ -18,15 +18,14 @@ export const EventSettings = () => {
     return state.users.userID;
   });
 
-  const fetchData = async () => {
-    const res = await axios.get(
-      `https://api.cryptonator.com/api/ticker/eth-usd`
-    );
-    setEthPrice(res.data.ticker.price);
-  };
-
-  useEffect(async () => {
-    await fetchData();
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await axios.get(
+        `https://api.cryptonator.com/api/ticker/eth-usd`
+      );
+      setEthPrice(res.data.ticker.price);
+    };
+    fetchData();
   }, []);
 
   // calculate Eth to HKD
@@ -60,7 +59,7 @@ export const EventSettings = () => {
       <Container>
         <Row>
           <Col>
-            <img src={image} alt="Image" width="500px" />
+            <img src={image} alt="alt" width="500px" />
           </Col>
           <Col>
             <div className={classes.formContainer}>
