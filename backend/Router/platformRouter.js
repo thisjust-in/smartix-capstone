@@ -1,6 +1,7 @@
 const express = require("express");
 const { cloudinary } = require("../Cloudinary/cloudinary");
 const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
 
 class PlatformRouter {
   constructor(Method) {
@@ -41,7 +42,7 @@ class PlatformRouter {
 
   async sendEmail(req, res) {
     let email = req.body.email;
-
+    console.log("email", email);
     // node mailer syntax
     let smtpTransport = nodemailer.createTransport({
       service: "Gmail",
@@ -51,21 +52,42 @@ class PlatformRouter {
       },
     });
 
-    let mailOptions = {
-      from: "smartixhk@gmail.com", // sender address
-      to: `${email}`, // list of receivers
-      subject: "Thank you for purchasing the ticket!", // Subject line
-      html: "<b>🎟 Thanks for purchasing from Smartix! You can view your tickets here : URL</b>",
+    const options = {
+      viewEngine: {
+        partialsDir: __dirname + "/../views/partials",
+        layoutsDir: __dirname + "/../views/layouts",
+        extname: ".hbs",
+      },
+      extName: ".hbs",
+      viewPath: "views",
     };
 
-    smtpTransport.sendMail(mailOptions, (error, response) => {
-      if (error) {
-        res.send(error);
-      } else {
-        res.send("success");
-      }
-    });
-    smtpTransport.close();
+    smtpTransport.use("compile", hbs(options));
+
+    try {
+      let mailOptions = {
+        from: "smartixhk@gmail.com", // sender address
+        to: `${email}`, // list of receivers
+        subject: "Thank you for purchasing the ticket!", // Subject line
+        template: "orderConfirmation",
+      };
+      await smtpTransport.sendMail(mailOptions);
+      console.log("sent!");
+      res.end();
+    } catch (error) {
+      console.log("error", error);
+    }
+
+    // smtpTransport.sendMail(mailOptions, (error, response) => {
+    //   console.log("did it run?");
+    //   console.log("mailOptions", mailOptions);
+    //   if (error) {
+    //     res.send(error);
+    //   } else {
+    //     res.send("success");
+    //   }
+    // });
+    // smtpTransport.close();
   }
 
   async getInfo(req, res) {
