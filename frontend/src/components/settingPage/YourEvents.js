@@ -72,6 +72,7 @@ const YourEvents = () => {
                   endTime={event.endTime}
                   theEvent={event}
                   button={"Start Broadcasting"}
+                  theUrl={"streamer"}
                 />
               </div>
             ))

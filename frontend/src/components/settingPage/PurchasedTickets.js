@@ -51,6 +51,7 @@ const PurchasedTickets = () => {
               endTime={event.endTime}
               theEvent={event}
               button={"Join Event"}
+              theUrl={"viewer"}
             />
           </div>
         ))
