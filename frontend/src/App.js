@@ -20,6 +20,7 @@ import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 import Etix from "./Pages/Etix";
 import CheckTix from "./Pages/CheckTix";
 import Usersettings from "./Pages/UserSettings";
+import SocketIoViewer from "./components/socketio/SocketIoViewer";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,7 +50,7 @@ function App() {
             <SocketIo />
           </Route>
           <Route exact path="/viewer/:id">
-            <SocketIo />
+            <SocketIoViewer />
           </Route>
           <Route exact path="/test">
             <Test />
