@@ -120,6 +120,7 @@ function EventDetails() {
       contractAddress: eventinfo.contractAddress,
     };
     await axios.post(`${process.env.REACT_APP_SERVER}/purchase`, data);
+    history.push("/confirmation");
   }
 
   return (
