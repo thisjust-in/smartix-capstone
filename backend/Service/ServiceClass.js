@@ -192,10 +192,15 @@ class Method {
   }
 
   async getAllPurchaseRecord(userId) {
-    let purchaseRecord = await this.knex.select().from("purchase_record");
+    let purchaseRecord = await this.knex
+      .select()
+      .from("purchase_record")
+      .where("users_id", userId);
     // .where("users_id", 1);
-    console.log(purchaseRecord);
+    // console.log(purchaseRecord);
+    return purchaseRecord;
   }
+
   async setEmailAddress(id, email) {
     try {
       let result = await knex("users").where("id", id).update({ email: email });
