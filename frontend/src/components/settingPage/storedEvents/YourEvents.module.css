@@ -81,3 +81,8 @@
     border-bottom: 1px solid rebeccapurple;
   }
 }
+
+.forButtonDiv{
+  display: flex;
+  flex-direction: column;
+}

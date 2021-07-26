@@ -36,6 +36,8 @@ const PurchasedTickets = () => {
     }
   });
 
+  console.log(eventDetails);
+
   return (
     <div>
       {eventDetails ? (
@@ -53,6 +55,7 @@ const PurchasedTickets = () => {
               theEvent={event}
               button={"Join Event"}
               theUrl={"viewer"}
+              isOnline={event.isOnline}
             />
           </div>
         ))
