@@ -17,7 +17,18 @@ class PlatformRouter {
     router.post("/purchase", this.purchase.bind(this));
     router.post("/api/edit-email", this.editEmail.bind(this));
     router.post("/gettix", this.gettix.bind(this));
+    router.post(
+      "/api/getallpurchasedevent",
+      this.getAllPurchasedEvent.bind(this)
+    );
     return router;
+  }
+
+  async getAllPurchasedEvent(req, res) {
+    let userId = req.body.userId;
+    let purchasedEvent = await this.Method.getAllPurchaseRecord(userId);
+    res.send(purchasedEvent);
+    res.end();
   }
 
   async editEmail(req, res) {

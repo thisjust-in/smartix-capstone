@@ -20,6 +20,7 @@ const PurchasedTickets = () => {
           userId: id,
         }
       );
+      console.log("allPurchasedEvent", allPurchasedEvent.data);
       setPurchasedEvent(allPurchasedEvent.data);
     }
   }, [id]);
