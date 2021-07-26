@@ -29,12 +29,10 @@ const OnlineBanner = () => {
     }
   }
 
-  console.log("onlineEvent", onlineEvent, ranArr);
-
   return (
     <div className={OnlineBannerCss.displayFlex}>
       <div className={OnlineBannerCss.background}>
-        <h3>Up Coming Events</h3>
+        <h3 className="mt-5">Upcoming Events</h3>
         <Carousel>
           {onlineEvent[ranArr[0]] && (
             <Carousel.Item>
