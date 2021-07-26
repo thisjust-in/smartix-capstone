@@ -73,6 +73,7 @@ const YourEvents = () => {
                   theEvent={event}
                   button={"Start Broadcasting"}
                   theUrl={"streamer"}
+                  isOnline={true}
                 />
               </div>
             ))
