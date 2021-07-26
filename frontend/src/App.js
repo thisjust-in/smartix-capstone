@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { getEventHostThunk } from "./redux/EventCardSlice";
 import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 import SocketIo from "./components/socketio/SocketIo";
-import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
 import Footer from "./components/Footer/Footer";
 import Confirmation from "./Pages/Confirmation";
@@ -52,9 +51,6 @@ function App() {
           </Route>
           <Route exact path="/viewer/:id">
             <SocketIoViewer />
-          </Route>
-          <Route exact path="/test">
-            <Test />
           </Route>
           <Route exact path="/event/mint">
             <EventMint />

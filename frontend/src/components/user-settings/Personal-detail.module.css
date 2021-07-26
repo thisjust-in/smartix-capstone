@@ -1,0 +1,15 @@
+.flexContainer {
+  display: flex;
+}
+
+.profilePicture {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  margin-top: 1rem;
+  margin-left: 2rem;
+}
