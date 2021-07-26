@@ -20,6 +20,7 @@ import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 import Etix from "./Pages/Etix";
 import CheckTix from "./Pages/CheckTix";
 import Usersettings from "./Pages/UserSettings";
+import HowItWorks from "./Pages/HowItWorks";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,11 +67,14 @@ function App() {
           <Route exact path="/yourevent">
             <YourEvents />
           </Route>
-          <Route path="/etix/:id">
+          <Route exact path="/etix/:id">
             <Etix />
           </Route>
-          <Route path="/checktix/:id">
+          <Route exact path="/checktix/:id">
             <CheckTix />
+          </Route>
+          <Route exact path="/howitworks">
+            <HowItWorks />
           </Route>
           <Route exact path="/user-settings">
             <Usersettings />
