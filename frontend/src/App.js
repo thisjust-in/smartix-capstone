@@ -52,9 +52,6 @@ function App() {
           <Route exact path="/viewer/:id">
             <SocketIoViewer />
           </Route>
-          <Route exact path="/test">
-            <Test />
-          </Route>
           <Route exact path="/event/mint">
             <EventMint />
           </Route>
@@ -81,9 +78,6 @@ function App() {
           </Route>
           <Route exact path="/user-settings">
             <Usersettings />
-          </Route>
-          <Route exact path="/test">
-            <Test />
           </Route>
           <Route path="*">
             <NotFound />
