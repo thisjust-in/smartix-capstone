@@ -23,6 +23,7 @@ class Method {
 
   async getUserInfo(id) {
     let data = await knex("users").where("id", id);
+    // console.log(data);
     return data;
   }
 
@@ -209,6 +210,28 @@ class Method {
       console.log("error", error);
     }
   }
+  async setUsername(id, username) {
+    try {
+      let result = await knex("users")
+        .where("id", id)
+        .update({ username: username });
+      return result;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async setProfilePic(id, photo) {
+    try {
+      let result = await knex("users")
+        .where("id", id)
+        .update({ userProfile_pic: photo });
+      // console.log(result);
+      return result;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 }
 
 module.exports = Method;
@@ -223,6 +246,8 @@ let test = new Method(knex);
 
 test.getAllPurchaseRecord(2);
 // const test = new Method(knex);
+// test.getUserInfo(16);
+// test.setUsername(16, "John Wick");
 // test.findContractAddress(4).then((data) => {
 //   console.log(data);
 // });

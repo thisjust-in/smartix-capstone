@@ -131,7 +131,7 @@ export const EventForm = () => {
           userId: currentUserId,
         };
         // then post data to backend route with axios
-        await axios.post("http://localhost:8080/api/create-event", {
+        await axios.post(`${process.env.REACT_APP_SERVER}/api/create-event`, {
           eventDetails: eventDetails,
         });
         history.push("/event/mint");

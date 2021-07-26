@@ -3,6 +3,8 @@ import YourEvents from "../settingPage/YourEvents";
 import PurchasedTickets from "../settingPage/PurchasedTickets";
 import PersonalSetting from "./Personal-Settings";
 import classes from "../user-settings/User-setting.module.css";
+
+
 const Settings = () => {
   return (
     <div className={classes.tabContainer}>
