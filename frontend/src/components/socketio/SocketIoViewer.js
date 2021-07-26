@@ -8,7 +8,7 @@ import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
 
-const socket = io.connect("http://localhost:8080");
+const socket = io.connect(`${process.env.REACT_APP_SERVER}`);
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
@@ -28,34 +28,31 @@ function SocketIo() {
 
   // let socket = io();
 
-  const joinAsBroadcaster = () => {
-    user = {
-      room: eventId,
-      name: "need to change",
-    };
-    console.log("broadcasterVideo", broadcasterVideo);
-    navigator.mediaDevices
-      .getUserMedia(streamConstraints)
-      .then(function (stream) {
-        // console.log(myVideo);
-        setStream(stream);
-        broadcasterVideo.current.srcObject = stream;
-        socket.emit("register as broadcaster", user.room);
-      });
-  };
+  //   const joinAsBroadcaster = () => {
+  //     user = {
+  //       room: userId,
+  //       name: "need to change",
+  //     };
+  //     console.log("broadcasterVideo", broadcasterVideo);
+  //     navigator.mediaDevices
+  //       .getUserMedia(streamConstraints)
+  //       .then(function (stream) {
+  //         // console.log(myVideo);
+  //         setStream(stream);
+  //         broadcasterVideo.current.srcObject = stream;
+  //         socket.emit("register as broadcaster", user.room);
+  //       });
+  //   };
 
   const joinAsViewer = () => {
     console.log("clicked");
-    if (roomNumber === "" || username === "") {
-      alert("Please type a room number and a name");
-    } else {
-      user = {
-        room: roomNumber,
-        name: username,
-      };
-      socket.emit("register as viewer", user);
-      // console.log("can i get here");
-    }
+
+    user = {
+      room: eventId,
+      name: username,
+    };
+    socket.emit("register as viewer", user);
+    // console.log("can i get here");
   };
 
   useEffect(() => {
@@ -160,38 +157,46 @@ function SocketIo() {
   const grabEventHost = useSelector((state) => state.eventCard.eventHost);
   const [eventHost, setEventHost] = useState(grabEventHost);
   const [eventId, setEventId] = useState(grabEventHost);
-  const [isHost, setIsHost] = useState(false);
-  const [userId, setUserId] = useState("");
+  const [hasTix, setHasTix] = useState(false);
   useEffect(() => {
     getUserAddress();
   }, []);
 
-  useEffect(() => {
-    setEventHost(grabEventHost);
+  useEffect(async () => {
+    await setEventHost(grabEventHost);
   }, [grabEventHost]);
 
-  useEffect(() => {
-    checkIsHost();
-  });
   async function getUserAddress() {
     let user_address = await web3.eth.getAccounts();
-    setUserId(user_address[0].toLowerCase());
-  }
-
-  async function checkIsHost() {
     let filterData = await eventHost.filter((data) => {
       return data.id == id;
     });
     if (filterData[0]) {
-      setIsHost(filterData[0].wallet_id == userId);
-    }
-    if (isHost) {
       setEventId(filterData[0].contractAddress);
+      if (user_address) {
+        grabCustomerIDFromWeb3(
+          filterData[0].contractAddress,
+          user_address[0].toLowerCase()
+        );
+      }
     }
   }
+
+  async function grabCustomerIDFromWeb3(contractAddress, userId) {
+    let customer = await EventContract.methods
+      .TixQtyPerUser(contractAddress, userId, 0)
+      .call();
+    if (customer) {
+      setHasTix(true);
+      console.log("has tix");
+    }
+  }
+
+  console.log(eventId);
+
   return (
     <div>
-      {isHost ? (
+      {hasTix ? (
         <div>
           <label htmlFor="name">Type your Name</label>
           <input
@@ -211,9 +216,9 @@ function SocketIo() {
           />
           <button onClick={joinAsViewer}>Join as Viewer</button>
           {stream ? (
-            <Button click={joinAsBroadcaster} text={"Streaming"} />
+            <Button click={joinAsViewer} text={"Streaming"} />
           ) : (
-            <Button click={joinAsBroadcaster} text={"Start Broadcasting"} />
+            <Button click={joinAsViewer} text={"Join Event"} />
           )}
           {stream ? (
             <video

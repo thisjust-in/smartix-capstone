@@ -12,6 +12,8 @@ const StoredEvent = ({
   eventID,
   contractAddress,
   theEvent,
+  button,
+  theUrl,
 }) => {
   return (
     <div className={YourEventsCss.eventCard}>
@@ -34,8 +36,8 @@ const StoredEvent = ({
         </div>
       </Container>
       <div className={YourEventsCss.buttonDiv}>
-        <Link to={`/socket/${eventID}`}>
-          <button className={YourEventsCss.button}>Start Broadcasting</button>
+        <Link to={`/${theUrl}/${eventID}`}>
+          <button className={YourEventsCss.button}>{button}</button>
         </Link>
       </div>
     </div>

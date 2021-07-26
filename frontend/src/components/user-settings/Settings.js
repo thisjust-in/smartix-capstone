@@ -1,5 +1,6 @@
 import { Tab, Row, Col, Nav } from "react-bootstrap";
 import YourEvents from "../settingPage/YourEvents";
+import PurchasedTickets from "../settingPage/PurchasedTickets";
 import PersonalSetting from "./Personal-Settings";
 import classes from "../user-settings/User-setting.module.css";
 const Settings = () => {
@@ -40,7 +41,7 @@ const Settings = () => {
               </Tab.Pane>
               <Tab.Pane eventKey="third">
                 <div id={classes.tabDiv}>
-                  <YourEvents />
+                  <PurchasedTickets />
                 </div>
               </Tab.Pane>
             </Tab.Content>
