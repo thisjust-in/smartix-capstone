@@ -3,16 +3,15 @@ import classes from "./Personal-detail.module.css";
 const PersonalInfo = (props) => {
   return (
     <>
-      {/* <img
-        src="https://avatars.githubusercontent.com/u/1309537?v=4"
-        width="40px"
-        alt="profilePic"
-      /> */}
       <div className={classes.flexContainer}>
         <div>
           <img
-            src={props.profilePic}
-            alt="hello"
+            src={
+              props.profilePic
+                ? props.profilePic
+                : "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627279513/profile-pic_ovouzp.png"
+            }
+            alt="Profile Picture"
             className={classes.profilePicture}
           />
         </div>

@@ -13,6 +13,7 @@ const PersonalSetting = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userInfo, setUserInfo] = useState("");
   const [username, setUsername] = useState("");
+  const [newUpload, setNewUpload] = useState();
   const [profilePic, setProfilePic] = useState(null);
   const [fileName, setfileName] = useState("filename");
   const dispatch = useDispatch();
@@ -36,7 +37,6 @@ const PersonalSetting = () => {
           id: currentUserId,
         })
         .then((response) => {
-          console.log(response.data);
           setProfilePic(response.data[0].userProfile_pic);
           setUserEmail(response.data[0].email);
           setUserInfo(response.data[0].username);
@@ -75,28 +75,25 @@ const PersonalSetting = () => {
 
   // handle profile image change
   const handleFileChange = (event) => {
+    let reader = new FileReader();
     let file = event.target.files[0];
-    setfileName(file.name);
-    setProfilePic(file);
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      console.log();
+      setNewUpload(reader.result);
+    };
+    // setfileName(file.name);
   };
-
   // handle image submit
   const handleImageSubmit = async (event) => {
     event.preventDefault();
-    console.log("hi");
-    let photo;
-    const reader = new FileReader();
-    reader.readAsDataURL(profilePic);
-    reader.onloadend = async () => {
-      photo = reader.result;
-      let data = await axios.post(
-        `${process.env.REACT_APP_SERVER}/api/profile-picture`,
-        {
-          photo: photo,
-          id: currentUserId,
-        }
-      );
-    };
+    let data = await axios.post(
+      `${process.env.REACT_APP_SERVER}/api/profile-picture`,
+      {
+        photo: newUpload,
+        id: currentUserId,
+      }
+    );
   };
 
   return (
@@ -107,7 +104,7 @@ const PersonalSetting = () => {
         username={userInfo}
       />
       <hr></hr>
-      <h5 className="mb-5">Edit your settings</h5>
+      <h5 className="mb-4">Edit your settings</h5>
       <div>
         <div id={classes.uploadDiv}>
           <Form onSubmit={handleImageSubmit} className={classes.imageForm}>
@@ -120,7 +117,6 @@ const PersonalSetting = () => {
                 type="file"
                 size="lg"
               />
-              <p>{fileName}</p>
             </Form.Group>
             <Button className={classes.SubmitBtn} type="submit" variant="dark">
               Update

@@ -33,6 +33,17 @@ function EventDetails() {
     currentUser = user_id;
   }
 
+  // get user email address
+  async function getUser() {
+    let response = await axios.post(
+      `${process.env.REACT_APP_SERVER}/api/getInfo`,
+      {
+        id: currentUser,
+      }
+    );
+    setEmail(response.data[0].email);
+  }
+
   useEffect(() => {
     async function fetch() {
       let event_id = window.location.pathname.split("/")[2];
@@ -58,48 +69,9 @@ function EventDetails() {
         setForOnline(online);
       }
     }
-  }
-  // get user email address
-  async function getUser() {
-    let response = await axios.post(
-      `${process.env.REACT_APP_SERVER}/api/getInfo`,
-      {
-        id: currentUser,
-      }
-    );
-    setEmail(response.data[0].email);
-    // console.log(response.data[0].email);
-  }
-
-
-  // async function online() {
-  //   if (eventinfo) {
-  //     if (eventinfo.isOnline) {
-  //       let host = await EventContract.methods
-  //         .eventLog(eventinfo.contractAddress)
-  //         .call();
-  //       let qty = await EventContract.methods
-  //         .TixQtyPerUser(eventinfo.contractAddress, host, 0)
-  //         .call();
-  //       let wei = await EventContract.methods
-  //         .TixPrice(eventinfo.contractAddress, 0)
-  //         .call();
-  //       let ether = web3.utils.fromWei(wei, "ether");
-  //       let online = {
-  //         qty: qty,
-  //         price: ether,
-  //       };
-  //       setForOnline(online);
-  //     }
-  //   }
-  // }
-
-  useEffect(async () => {
-    await fetch();
-    await getUser();
-  }, [user_id]);
+    getUser();
     fetch();
-  }, []);
+  }, [user_id]);
 
   async function select(e) {
     let location = e.id;
