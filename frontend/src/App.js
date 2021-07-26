@@ -21,6 +21,7 @@ import Etix from "./Pages/Etix";
 import CheckTix from "./Pages/CheckTix";
 import Usersettings from "./Pages/UserSettings";
 import HowItWorks from "./Pages/HowItWorks";
+import SocketIoViewer from "./components/socketio/SocketIoViewer";
 
 function App() {
   const dispatch = useDispatch();
@@ -46,8 +47,11 @@ function App() {
           <Route exact path="/online-events">
             <OnlineEvents />
           </Route>
-          <Route exact path="/socket/:id">
+          <Route exact path="/streamer/:id">
             <SocketIo />
+          </Route>
+          <Route exact path="/viewer/:id">
+            <SocketIoViewer />
           </Route>
           <Route exact path="/test">
             <Test />

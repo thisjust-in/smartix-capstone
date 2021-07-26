@@ -175,13 +175,14 @@ class Method {
     });
   }
 
+  //(customer user id), (event id)
   async getPurchaseRecord(wallet_id, event_id) {
     let users_id = await knex
       .select("id")
       .from("users")
       .where("wallet_id", wallet_id.toLowerCase());
     if (users_id[0]) {
-      let data = await knex("purchase_record")
+      let data = await knex("purchase_records")
         .select("*")
         .where("users_id", users_id[0].id)
         .andWhere("event_id", event_id);
@@ -190,6 +191,11 @@ class Method {
     return null;
   }
 
+  async getAllPurchaseRecord(userId) {
+    let purchaseRecord = await this.knex.select().from("purchase_record");
+    // .where("users_id", 1);
+    console.log(purchaseRecord);
+  }
   async setEmailAddress(id, email) {
     try {
       let result = await knex("users").where("id", id).update({ email: email });
@@ -202,6 +208,15 @@ class Method {
 
 module.exports = Method;
 
+let test = new Method(knex);
+
+// test
+//   .getPurchaseRecord("0x8d39602eacc3a5acd999d247310a566fe5a3e1e2", 5)
+//   .then((data) => {
+//     console.log("data", data);
+//   });
+
+test.getAllPurchaseRecord(2);
 // const test = new Method(knex);
 // test.findContractAddress(4).then((data) => {
 //   console.log(data);
