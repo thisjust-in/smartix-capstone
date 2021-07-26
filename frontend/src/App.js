@@ -19,7 +19,8 @@ import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 import Etix from "./Pages/Etix";
 import CheckTix from "./Pages/CheckTix";
 import Usersettings from "./Pages/UserSettings";
-import Test from "./Pages/testPage";
+import HowItWorks from "./Pages/HowItWorks";
+import SocketIoViewer from "./components/socketio/SocketIoViewer";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,8 +46,14 @@ function App() {
           <Route exact path="/online-events">
             <OnlineEvents />
           </Route>
-          <Route exact path="/socket/:id">
+          <Route exact path="/streamer/:id">
             <SocketIo />
+          </Route>
+          <Route exact path="/viewer/:id">
+            <SocketIoViewer />
+          </Route>
+          <Route exact path="/test">
+            <Test />
           </Route>
           <Route exact path="/event/mint">
             <EventMint />
@@ -63,11 +70,14 @@ function App() {
           <Route exact path="/yourevent">
             <YourEvents />
           </Route>
-          <Route path="/etix/:id">
+          <Route exact path="/etix/:id">
             <Etix />
           </Route>
-          <Route path="/checktix/:id">
+          <Route exact path="/checktix/:id">
             <CheckTix />
+          </Route>
+          <Route exact path="/howitworks">
+            <HowItWorks />
           </Route>
           <Route exact path="/user-settings">
             <Usersettings />

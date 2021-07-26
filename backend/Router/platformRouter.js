@@ -23,6 +23,10 @@ class PlatformRouter {
     router.post("/api/profile-picture", this.updateProPic.bind(this));
     router.post("/gettix", this.gettix.bind(this));
     router.post("/api/purchase-confirmation", this.sendEmail.bind(this));
+    router.post(
+      "/api/getallpurchasedevent",
+      this.getAllPurchasedEvent.bind(this)
+    );
     return router;
   }
 
@@ -77,17 +81,6 @@ class PlatformRouter {
     } catch (error) {
       console.log("error", error);
     }
-
-    // smtpTransport.sendMail(mailOptions, (error, response) => {
-    //   console.log("did it run?");
-    //   console.log("mailOptions", mailOptions);
-    //   if (error) {
-    //     res.send(error);
-    //   } else {
-    //     res.send("success");
-    //   }
-    // });
-    // smtpTransport.close();
   }
 
   async getInfo(req, res) {
@@ -101,6 +94,13 @@ class PlatformRouter {
     let username = req.body.submitDetails.username;
     let newUsername = await this.Method.setUsername(id, username);
     res.send(newUsername);
+  }
+
+  async getAllPurchasedEvent(req, res) {
+    let userId = req.body.userId;
+    let purchasedEvent = await this.Method.getAllPurchaseRecord(userId);
+    res.send(purchasedEvent);
+    res.end();
   }
 
   async editEmail(req, res) {

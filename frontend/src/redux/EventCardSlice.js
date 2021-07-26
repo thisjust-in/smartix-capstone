@@ -35,14 +35,6 @@ export const getEventHostThunk = () => async (dispatch) => {
   }
 };
 
-// const initialState = {
-//   eventHost: [],
-//   eventCount: [],
-//   loading: false,
-//   allEvent: [],
-//   error: "",
-// };
-
 export const eventCardSlice = createSlice({
   name: "eventCard",
   initialState: initialState,
@@ -66,7 +58,6 @@ export const eventCardSlice = createSlice({
 
         return allEvent;
       }, {});
-      // console.log("asdadasd", counted);
       state.eventCount = counted;
       state.loading = false;
     },

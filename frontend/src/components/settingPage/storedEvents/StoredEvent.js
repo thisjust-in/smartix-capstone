@@ -12,7 +12,11 @@ const StoredEvent = ({
   eventID,
   contractAddress,
   theEvent,
+  button,
+  theUrl,
+  isOnline,
 }) => {
+  console.log("event", isOnline);
   return (
     <div className={YourEventsCss.eventCard}>
       <img className={YourEventsCss.image} src={eventPhoto} alt="" />
@@ -33,10 +37,19 @@ const StoredEvent = ({
           </div>
         </div>
       </Container>
-      <div className={YourEventsCss.buttonDiv}>
-        <Link to={`/socket/${eventID}`}>
-          <button className={YourEventsCss.button}>Start Broadcasting</button>
-        </Link>
+      <div className={YourEventsCss.forButtonDiv}>
+        <div className={YourEventsCss.buttonDiv}>
+          <Link to={`/${theUrl}/${eventID}`}>
+            <button className={YourEventsCss.button}>{button}</button>
+          </Link>
+        </div>
+        <div className={YourEventsCss.buttonDiv}>
+          {!isOnline && (
+            <Link to={`/etix/${eventID}`}>
+              <button className={YourEventsCss.button}>Ticket</button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

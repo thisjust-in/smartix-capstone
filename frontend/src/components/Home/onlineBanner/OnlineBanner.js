@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 const OnlineBanner = () => {
   const history = useHistory();
   const onlineEvent = useSelector((state) => {
-    // console.log("onlineEvent", state.eventCard.eventHost[0]);
     return state.eventCard.eventHost;
   });
 
@@ -33,7 +32,7 @@ const OnlineBanner = () => {
   return (
     <div className={OnlineBannerCss.displayFlex}>
       <div className={OnlineBannerCss.background}>
-        <h3>Up Coming Events</h3>
+        <h3 className="mt-5">Upcoming Events</h3>
         <Carousel>
           {onlineEvent[ranArr[0]] && (
             <Carousel.Item>

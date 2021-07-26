@@ -224,6 +224,7 @@ function EventDetails() {
                 ", " +
                 eventinfo.venue}
             </h4>
+            <h4 style={{ paddingTop: "1rem" }}>{eventinfo.eventDescription}</h4>
           </div>
           <div>
             <Row>
@@ -235,9 +236,6 @@ function EventDetails() {
                     region="na"
                     onObjectSelected={select}
                     onObjectDeselected={deselect}
-                    onChartRendered={(e) => {
-                      console.log(e);
-                    }}
                   />
                 ) : null}
               </Col>

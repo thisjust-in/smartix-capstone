@@ -1,0 +1,26 @@
+.textcontainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.circle {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: black solid 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rightLine {
+  border-right: black solid 5px;
+  height: 20vh;
+}
+
+.leftLine {
+  border-left: black solid 5px;
+  height: 20vh;
+}
