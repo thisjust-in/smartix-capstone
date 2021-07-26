@@ -16,7 +16,7 @@ function SearchBar() {
   function getLocation(e) {
     setLocation(e.target.value);
   }
-  console.log("hello");
+
   function getDate(e) {
     setDate(e.target.value);
   }

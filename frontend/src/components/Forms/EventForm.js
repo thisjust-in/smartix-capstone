@@ -11,6 +11,7 @@ import TimePicker from "react-bootstrap-time-picker";
 import { timeFromInt } from "time-number";
 import { useHistory } from "react-router-dom";
 import { SeatsioClient, Region } from "seatsio";
+import Loading from "../../Pages/Loading";
 
 export const EventForm = () => {
   const client = new SeatsioClient(
@@ -30,11 +31,12 @@ export const EventForm = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("0");
   const [venue, setVenue] = useState();
+  const [loading, setLoading] = useState(false);
   let currentUserId;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkWalletIDThunk());
-  }, []);
+  }, [dispatch]);
 
   let eventSelector = null;
   if (!isOnline) {
@@ -81,6 +83,7 @@ export const EventForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     // sort image upload
     let eventPhoto;
     let eventDetails;
@@ -105,9 +108,9 @@ export const EventForm = () => {
         eventPhoto = reader.result;
         if (!isOnline) {
           let chartKey;
-          if (venue == "Hong Kong Coliseum") {
+          if (venue === "Hong Kong Coliseum") {
             chartKey = "53a822ab-a787-79e7-7e60-18e4faacfc59";
-          } else if (venue == "AsiaWorld-Expo") {
+          } else if (venue === "AsiaWorld-Expo") {
             chartKey = "bdb97c1e-aa07-3742-3e07-09e99ee94a05";
           }
           await client.events.create(chartKey, contractAddress);
@@ -140,143 +143,154 @@ export const EventForm = () => {
     await submitform();
   };
 
-  return (
-    <div>
-      <div className={classes.formcontainer}>
-        <h1 className={classes.title}>Create Event</h1>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="formFileSm" className="mb-3">
-            <Form.Label className={classes.label}>Event Photo</Form.Label>
-            <div className={classes.fileUploadDiv}>
-              <h6 id={classes.formInfo}>
-                <center>JPG,PNG,GIF, Max 10mb</center>
-              </h6>
-              <center>{filename}</center>
-              <input
-                required
-                id="file"
-                type="file"
-                onChange={(event) => handleFileChange(event)}
-              />
-              <label className={classes.fileInput} for="file">
-                Upload Photo
-              </label>
-              <img
-                className="mt-5"
-                id={classes.previewImg}
-                src={preview}
-                width="400px"
-              />
-            </div>
-          </Form.Group>
-          <Form.Group controlId="formBasicEventName">
-            <Form.Label className={classes.label}>Event Name</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Event name"
-              value={eventname}
-              onChange={(event) => setEventName(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEventDescription">
-            <Form.Label className={classes.label}>Description</Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder="Tell us a bit about your event"
-              style={{ height: "100px" }}
-              value={eventDescription}
-              onChange={(event) => setEventDescription(event.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicEventCat">
-            <Form.Label className={classes.label}>Event Category</Form.Label>
-            <Form.Group controlId="formCategory">
-              <select
-                id={classes.eventType}
-                value={eventType}
-                onChange={(event) => setEventType(event.target.value)}
-              >
-                <option value="none" selected="selected">
-                  Select an Option
-                </option>
-                <option value="concert">Entertainment</option>
-                <option value="musical">Cooking</option>
-                <option value="seminar">Seminar</option>
-                <option value="fitness">Fitness</option>
-                <option value="educational">Educational</option>
-                <option value="educational">Well-being</option>
-                <option value="hobbies">Hobbies</option>
-              </select>
+  if (loading === true) {
+    return <Loading />;
+  } else {
+    return (
+      <div>
+        <div className={classes.formcontainer}>
+          <h1 className={classes.title}>Create Event</h1>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formFileSm" className="mb-3">
+              <Form.Label className={classes.label}>Event Photo</Form.Label>
+              <div className={classes.fileUploadDiv}>
+                <h6 id={classes.formInfo}>
+                  <center>JPG,PNG,GIF, Max 10mb</center>
+                </h6>
+                <center>{filename}</center>
+                <input
+                  required
+                  id="file"
+                  type="file"
+                  onChange={(event) => handleFileChange(event)}
+                />
+                <label className={classes.fileInput} for="file">
+                  Upload Photo
+                </label>
+                <img
+                  className="mt-5"
+                  id={classes.previewImg}
+                  src={preview}
+                  width="400px"
+                  alt=""
+                />
+              </div>
             </Form.Group>
-          </Form.Group>
-          <Row>
-            <Col>
-              <Form.Group controlId="formBasicDate">
-                <Form.Label className={classes.label}>Event Date</Form.Label>
-                <Form.Control
-                  required
-                  type="date"
-                  value={eventDate}
-                  onChange={(event) => setEventDate(event.target.value)}
-                />
+            <Form.Group controlId="formBasicEventName">
+              <Form.Label className={classes.label}>Event Name</Form.Label>
+              <Form.Control
+                required
+                type="text"
+                placeholder="Event name"
+                value={eventname}
+                onChange={(event) => setEventName(event.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicEventDescription">
+              <Form.Label className={classes.label}>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                placeholder="Tell us a bit about your event"
+                style={{ height: "100px" }}
+                value={eventDescription}
+                onChange={(event) => setEventDescription(event.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="formBasicEventCat">
+              <Form.Label className={classes.label}>Event Category</Form.Label>
+              <Form.Group controlId="formCategory">
+                <select
+                  id={classes.eventType}
+                  value={eventType}
+                  onChange={(event) => setEventType(event.target.value)}
+                >
+                  <option value="none" selected="selected">
+                    Select an Option
+                  </option>
+                  <option value="concert">Entertainment</option>
+                  <option value="musical">Cooking</option>
+                  <option value="seminar">Seminar</option>
+                  <option value="fitness">Fitness</option>
+                  <option value="educational">Educational</option>
+                  <option value="educational">Well-being</option>
+                  <option value="hobbies">Hobbies</option>
+                </select>
               </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="formBasicLocation">
-                <Form.Label className={classes.label}>Location</Form.Label>
-                <Form.Control
-                  required
-                  type="text"
-                  placeholder="Location"
-                  value={eventLocation}
-                  onChange={(event) => setEventLocation(event.target.value)}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Form.Group controlId="formBasicDate">
-                <Form.Label className={classes.label}>Start Time</Form.Label>
-                <TimePicker
-                  value={startTime}
-                  start="00:00"
-                  end="23:30"
-                  step={30}
-                  required
-                  onChange={(event) => handleStartTime(event)}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId="formBasicLocation">
-                <Form.Label className={classes.label}>End Time</Form.Label>
-                <TimePicker
-                  value={endTime}
-                  start="00:00"
-                  end="23:30"
-                  step={30}
-                  required
-                  onChange={(event) => handleTimeChange(event)}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Form.Group controlId="formBasicCheckbox">{eventSelector}</Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check
-              type="checkbox"
-              label="Online"
-              value={isOnline}
-              onChange={() => setIsOnline(!isOnline)}
-            />
-          </Form.Group>
-          <button variant="primary" type="submit" className={classes.submitBtn}>
-            Create Event
-          </button>
-        </Form>
+            </Form.Group>
+            <Row>
+              <Col>
+                <Form.Group controlId="formBasicDate">
+                  <Form.Label className={classes.label}>Event Date</Form.Label>
+                  <Form.Control
+                    required
+                    type="date"
+                    value={eventDate}
+                    onChange={(event) => setEventDate(event.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formBasicLocation">
+                  <Form.Label className={classes.label}>Location</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Location"
+                    value={eventLocation}
+                    onChange={(event) => setEventLocation(event.target.value)}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <Form.Group controlId="formBasicDate">
+                  <Form.Label className={classes.label}>Start Time</Form.Label>
+                  <TimePicker
+                    value={startTime}
+                    start="00:00"
+                    end="23:30"
+                    step={30}
+                    required
+                    onChange={(event) => handleStartTime(event)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formBasicLocation">
+                  <Form.Label className={classes.label}>End Time</Form.Label>
+                  <TimePicker
+                    value={endTime}
+                    start="00:00"
+                    end="23:30"
+                    step={30}
+                    required
+                    onChange={(event) => handleTimeChange(event)}
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+            <Form.Group controlId="formBasicCheckbox">
+              {eventSelector}
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+              <Form.Check
+                type="checkbox"
+                label="Online"
+                value={isOnline}
+                onChange={() => setIsOnline(!isOnline)}
+              />
+            </Form.Group>
+            <button
+              variant="primary"
+              type="submit"
+              className={classes.submitBtn}
+            >
+              Create Event
+            </button>
+          </Form>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };

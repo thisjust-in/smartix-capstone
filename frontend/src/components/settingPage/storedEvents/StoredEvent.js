@@ -15,11 +15,7 @@ const StoredEvent = ({
 }) => {
   return (
     <div className={YourEventsCss.eventCard}>
-      <img
-        className={YourEventsCss.image}
-        src={eventPhoto}
-        alt="event cover photo"
-      />
+      <img className={YourEventsCss.image} src={eventPhoto} alt="" />
       <Container className={YourEventsCss.container}>
         <h5 className={YourEventsCss.eventName}>{eventName}</h5>
         <div className={YourEventsCss.eventDescription}>

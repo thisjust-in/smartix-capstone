@@ -16,6 +16,9 @@ const PersonalSetting = () => {
   const [profilePic, setProfilePic] = useState(null);
   const [fileName, setfileName] = useState("filename");
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(checkWalletIDThunk());
+  }, [dispatch]);
   let currentUserId;
 
   const user_id = useSelector((state) => {

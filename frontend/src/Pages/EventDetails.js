@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../components/Main-Components/Header";
 import HeaderContent from "../components/EventListPage/HeaderContent";
 import { useEffect } from "react";
-import { Col, Row, Container } from "reactstrap";
+import { Col, Row, Container, Spinner } from "reactstrap";
 import { SeatsioSeatingChart } from "@seatsio/seatsio-react";
 import axios from "redaxios";
 import styles from "./EventDetails.module.css";
@@ -33,28 +33,30 @@ function EventDetails() {
     currentUser = user_id;
   }
 
-  async function fetch() {
-    let event_id = window.location.pathname.split("/")[2];
-    let response = await axios.get(
-      `${process.env.REACT_APP_SERVER}/event/${event_id}`
-    );
-    setEventinfo(response.data[0]);
-    if (response.data[0].isOnline) {
-      let host = await EventContract.methods
-        .eventLog(response.data[0].contractAddress)
-        .call();
-      let qty = await EventContract.methods
-        .TixQtyPerUser(response.data[0].contractAddress, host, 0)
-        .call();
-      let wei = await EventContract.methods
-        .TixPrice(response.data[0].contractAddress, 0)
-        .call();
-      let ether = web3.utils.fromWei(wei, "ether");
-      let online = {
-        qty: qty,
-        price: ether,
-      };
-      setForOnline(online);
+  useEffect(() => {
+    async function fetch() {
+      let event_id = window.location.pathname.split("/")[2];
+      let response = await axios.get(
+        `${process.env.REACT_APP_SERVER}/event/${event_id}`
+      );
+      setEventinfo(response.data[0]);
+      if (response.data[0].isOnline) {
+        let host = await EventContract.methods
+          .eventLog(response.data[0].contractAddress)
+          .call();
+        let qty = await EventContract.methods
+          .TixQtyPerUser(response.data[0].contractAddress, host, 0)
+          .call();
+        let wei = await EventContract.methods
+          .TixPrice(response.data[0].contractAddress, 0)
+          .call();
+        let ether = web3.utils.fromWei(wei, "ether");
+        let online = {
+          qty: qty,
+          price: ether,
+        };
+        setForOnline(online);
+      }
     }
   }
   // get user email address
@@ -96,6 +98,8 @@ function EventDetails() {
     await fetch();
     await getUser();
   }, [user_id]);
+    fetch();
+  }, []);
 
   async function select(e) {
     let location = e.id;
@@ -160,6 +164,22 @@ function EventDetails() {
     history.push("/confirmation");
   }
 
+  async function checkoutForOnline() {
+    let accounts = await web3.eth.getAccounts();
+    let wei = web3.utils.toWei(`${forOnline.price}`, "ether");
+    await EventContract.methods
+      .buyTicket(eventinfo.contractAddress, "0", "1")
+      .send({ from: accounts[0], value: wei });
+
+    let data = {
+      TixDetails: { qty: 1, price: forOnline.price },
+      wallet_id: accounts[0],
+      contractAddress: eventinfo.contractAddress,
+    };
+    await axios.post(`${process.env.REACT_APP_SERVER}/purchase`, data);
+    history.push("/confirmation");
+  }
+
   return (
     <div>
       <Header
@@ -199,18 +219,18 @@ function EventDetails() {
                       <h5>Price</h5>
                     </Col>
                   </Row>
-                  {tix.map((data) => {
-                    return (
-                      <Row className={styles.row}>
-                        <Col xs="4">
-                          <h6>{data.qty}</h6>
-                        </Col>
-                        <Col xs="4" className={styles.col2}>
-                          <h6>{data.price}</h6>
-                        </Col>
-                      </Row>
-                    );
-                  })}
+                  {forOnline ? (
+                    <Row className={styles.row}>
+                      <Col xs="4">
+                        <h6>{forOnline.qty}</h6>
+                      </Col>
+                      <Col xs="4" className={styles.col2}>
+                        <h6>{forOnline.price}</h6>
+                      </Col>
+                    </Row>
+                  ) : (
+                    <Spinner color="dark" />
+                  )}
                 </Container>
                 <PrimaryBtn text={"Checkout"} click={checkout} />
               </Col>

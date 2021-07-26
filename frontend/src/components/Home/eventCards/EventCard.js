@@ -5,14 +5,13 @@ import EventCardCSS from "./EventCard.module.css";
 
 const EventCardBackground = () => {
   const host = useSelector((state) => {
-    console.log("state", state);
     return state.eventCard.eventCount;
   });
 
   let cards = [];
   for (const [hostName, event] of Object.entries(host)) {
     cards.push(
-      <Col md={4} id={EventCardCSS.col}>
+      <Col key={event.id} md={4} id={EventCardCSS.col}>
         <OneCard
           hostName={hostName}
           eventCount={event.count}
