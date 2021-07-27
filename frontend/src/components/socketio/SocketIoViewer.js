@@ -5,6 +5,7 @@ import SocketIoCss from "./SocketIo.module.css";
 import { useParams } from "react-router-dom";
 import EventContract from "../../EventContract";
 import web3 from "../../web3";
+import { Container, Row, Col } from "react-bootstrap";
 import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
 import axios from "redaxios";
@@ -50,7 +51,7 @@ function SocketIo() {
 
     user = {
       room: eventId,
-      name: userName,
+      name: username,
     };
     socket.emit("register as viewer", user);
     // console.log("can i get here");
@@ -158,6 +159,7 @@ function SocketIo() {
   const [eventHost, setEventHost] = useState(grabEventHost);
   const [eventId, setEventId] = useState(grabEventHost);
   const [hasTix, setHasTix] = useState(false);
+  const [theEvent, setTheEvent] = useState([]);
   useEffect(() => {
     getUserAddress();
   }, []);
@@ -175,6 +177,7 @@ function SocketIo() {
     if (filterData[0]) {
       setEventId(filterData[0].contractAddress);
       if (user_address) {
+        setTheEvent(filterData[0]);
         grabCustomerIDFromWeb3(
           filterData[0].contractAddress,
           user_address[0].toLowerCase()
@@ -190,6 +193,8 @@ function SocketIo() {
     }
   }
 
+  console.log("theEvent", theEvent);
+
   async function grabCustomerIDFromWeb3(contractAddress, userId) {
     let customer = await EventContract.methods
       .TixQtyPerUser(contractAddress, userId, 0)
@@ -203,24 +208,58 @@ function SocketIo() {
   return (
     <div className={SocketIoCss.videoDiv}>
       {hasTix ? (
-        <div>
-          {stream ? (
-            <Button click={joinAsViewer} text={"Streaming"} />
-          ) : (
-            <Button click={joinAsViewer} text={"Join Event"} />
-          )}
-          {stream ? (
-            <video
-              controls
-              id={SocketIoCss.video}
-              ref={broadcasterVideo}
-            ></video>
-          ) : (
-            <video id={SocketIoCss.video} controls ref={userVideo}></video>
-          )}
+        <div
+          style={{
+            backgroundSize: "cover",
+            height: "70vh",
+
+            backgroundImage: `url(${theEvent.eventPhoto})`,
+            padding: "4rem 0rem 0rem 0rem",
+          }}
+        >
+          <Container>
+            <Row>
+              <Col sm={8}>
+                {stream ? (
+                  <video
+                    controls
+                    id={SocketIoCss.video}
+                    ref={broadcasterVideo}
+                  ></video>
+                ) : (
+                  <video
+                    id={SocketIoCss.video}
+                    controls
+                    ref={userVideo}
+                  ></video>
+                )}
+              </Col>
+              <Col sm={4}>
+                {stream ? (
+                  <Button click={joinAsViewer} text={"Streaming"} />
+                ) : (
+                  <Button click={joinAsViewer} text={"Join Event"} />
+                )}
+                <div className={SocketIoCss.chatContainer}>
+                  <div className={SocketIoCss.newUser}>
+                    {theEvent && (
+                      <div>
+                        <h4>{theEvent.eventName}</h4>
+                        <div>Description: {theEvent.eventDescription}</div>
+                        <div>Start at: {theEvent.startTime}</div>
+                        <div>End at: {theEvent.endTime}</div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </div>
       ) : (
-        <Spinner color="dark" />
+        <div style={{ height: "70vh" }} className={SocketIoCss.spinner}>
+          <Spinner color="dark" />
+        </div>
       )}
     </div>
   );

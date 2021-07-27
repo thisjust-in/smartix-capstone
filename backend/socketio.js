@@ -25,6 +25,10 @@ function socket(io) {
       // send to that particular room (broadcasters[user.room])
       // then emit: call the "new viewer" in frontend
       socket.to(broadcasters[user.room]).emit("new viewer", user);
+
+      socket.on("disconnect", () => {
+        socket.to(broadcasters[user.room]).emit("user-disconnected", user);
+      });
     });
 
     socket.on("candidate", function (id, event) {
