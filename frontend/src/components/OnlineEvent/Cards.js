@@ -18,6 +18,7 @@ const Cards = (props) => {
                         <h6 className={classes.eventName}>
                           {events.eventName}
                         </h6>
+                        <p className={classes.venue}>{events.venue}</p>
                       </Card.Title>
                       <div>
                         <Badge className={classes.pill} pill bg="success">
@@ -25,8 +26,9 @@ const Cards = (props) => {
                         </Badge>
                       </div>
                     </div>
-                    <Card.Text>{events.eventDescription}</Card.Text>
-                    <p>{events.venue}</p>
+                    <Card.Text className={classes.eventDescription}>
+                      {events.eventDescription.substring(0, 70)}...
+                    </Card.Text>
                     <Link
                       className={classes.cardBtn}
                       to={`/event/${events.id}`}
