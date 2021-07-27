@@ -4,7 +4,6 @@ import PurchasedTickets from "../settingPage/PurchasedTickets";
 import PersonalSetting from "./Personal-Settings";
 import classes from "../user-settings/User-setting.module.css";
 
-
 const Settings = () => {
   return (
     <div className={classes.tabContainer}>
@@ -14,17 +13,29 @@ const Settings = () => {
             <Nav variant="pills" className="flex-column">
               <Nav.Item>
                 <Nav.Link className={classes.navLink} eventKey="first">
-                  Personal Settings
+                  <img
+                    src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627365170/icons/Profile_fctmvy.svg"
+                    width="35px"
+                  />
+                  &nbsp;&nbsp;Personal Settings
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link className={classes.navLink} eventKey="second">
-                  Your Events
+                  <img
+                    src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627365170/icons/Info_afxivj.svg"
+                    width="35px"
+                  />
+                  &nbsp;&nbsp; My Events
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item>
                 <Nav.Link className={classes.navLink} eventKey="third">
-                  Purchased Tickets
+                  <img
+                    src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627365170/icons/Star_nm3qmo.svg"
+                    width="35px"
+                  />
+                  &nbsp;&nbsp; Purchased Tickets
                 </Nav.Link>
               </Nav.Item>
             </Nav>

@@ -124,6 +124,7 @@ function EventDetails() {
       wallet_id: accounts[0],
       contractAddress: eventinfo.contractAddress,
     };
+
     await axios.post(`${process.env.REACT_APP_SERVER}/purchase`, data);
     let tixArray = [];
     for (let each of tix) {
@@ -134,6 +135,9 @@ function EventDetails() {
       `${process.env.REACT_APP_SERVER}/api/purchase-confirmation`,
       {
         email: email,
+        amount: amount,
+        data: data[0],
+        eventinfo: eventinfo,
       }
     );
     history.push("/confirmation");
@@ -153,8 +157,18 @@ function EventDetails() {
       contractAddress: eventinfo.contractAddress,
     };
     await axios.post(`${process.env.REACT_APP_SERVER}/purchase`, data);
+    await axios.post(
+      `${process.env.REACT_APP_SERVER}/api/purchase-confirmation`,
+      {
+        email: email,
+        data: data[0],
+        forOnline: forOnline,
+      }
+    );
     history.push("/confirmation");
   }
+
+  console.log(eventinfo);
 
   if (loading) {
     return <Loading />;
@@ -162,9 +176,7 @@ function EventDetails() {
     return (
       <div>
         <Header
-          backgroundimage={
-            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg"
-          }
+          backgroundimage={eventinfo.eventPhoto}
           content={<HeaderContent avatar={null} title={null} para={null} />}
         />
         {eventinfo.isOnline ? (

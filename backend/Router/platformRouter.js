@@ -38,16 +38,38 @@ class PlatformRouter {
     const cloudUpload = await cloudinary.uploader.upload(photoStream, {
       upload_preset: "ml_default",
     });
-    let jsonFormat = JSON.stringify(cloudUpload.secure_url.toString());
+    let jsonFormat = cloudUpload.secure_url.toString();
     let userProfile_pic = jsonFormat;
-    // console.log(profilePicture);
     await this.Method.setProfilePic(id, userProfile_pic);
     res.end();
   }
 
   async sendEmail(req, res) {
     let email = req.body.email;
-    console.log("email", email);
+    const eventName = req.body.eventinfo.eventName;
+    const eventId = req.body.eventinfo.id;
+    const venue = req.body.eventinfo.venue;
+    const totalAmount = req.body.amount;
+    const eventDate = new Date(req.body.eventinfo.eventDate).toDateString();
+    const startTime = req.body.eventinfo.startTime;
+    const endTime = req.body.eventinfo.endTime;
+    const eventTicketURL = `http://localhost:3000/etix/${eventId}`;
+    const purchaseDate = new Date();
+
+    // order object
+    const order = {
+      eventId: eventId,
+      eventName: eventName,
+      purchaseDate: purchaseDate,
+      eventTicketURL: eventTicketURL,
+      venue: venue,
+      eventDate: eventDate,
+      totalAmount: totalAmount,
+      startTime: startTime,
+      endTime: endTime,
+    };
+    console.log(order);
+
     // node mailer syntax
     let smtpTransport = nodemailer.createTransport({
       service: "Gmail",
@@ -75,6 +97,7 @@ class PlatformRouter {
         to: `${email}`, // list of receivers
         subject: "Thank you for purchasing the ticket!", // Subject line
         template: "orderConfirmation",
+        context: order,
       };
       await smtpTransport.sendMail(mailOptions);
       console.log("sent!");

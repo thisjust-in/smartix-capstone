@@ -62,7 +62,6 @@ export default function LoggedInNav() {
         <NavDropdown.Item href="/user-settings" className="text-dark">
           User Settings
         </NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">My Items</NavDropdown.Item>
       </NavDropdown>
     </div>
   );
