@@ -222,6 +222,13 @@ class PlatformRouter {
     res.send(result);
     res.end();
   }
+
+  async getAllPurchasedEvent(req, res) {
+    let userId = req.body.userId;
+    let purchasedEvent = await this.Method.getAllPurchaseRecord(userId);
+    res.send(purchasedEvent);
+    res.end();
+  }
 }
 
 module.exports = PlatformRouter;

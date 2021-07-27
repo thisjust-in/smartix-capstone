@@ -8,7 +8,7 @@ import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
 
-const socket = io.connect("http://172.20.10.2:8080");
+const socket = io.connect(`${process.env.REACT_APP_SERVER}`);
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
@@ -42,20 +42,6 @@ function SocketIo() {
         broadcasterVideo.current.srcObject = stream;
         socket.emit("register as broadcaster", user.room);
       });
-  };
-
-  const joinAsViewer = () => {
-    console.log("clicked");
-    if (roomNumber === "" || username === "") {
-      alert("Please type a room number and a name");
-    } else {
-      user = {
-        room: roomNumber,
-        name: username,
-      };
-      socket.emit("register as viewer", user);
-      // console.log("can i get here");
-    }
   };
 
   useEffect(() => {
@@ -190,10 +176,10 @@ function SocketIo() {
     }
   }
   return (
-    <div>
+    <div className={SocketIoCss.videoDiv}>
       {isHost ? (
         <div>
-          <label htmlFor="name">Type your Name</label>
+          {/* <label htmlFor="name">Type your Name</label>
           <input
             type="text"
             name=""
@@ -209,7 +195,7 @@ function SocketIo() {
             value={roomNumber}
             onChange={handleRoomNumber}
           />
-          <button onClick={joinAsViewer}>Join as Viewer</button>
+          <button onClick={joinAsViewer}>Join as Viewer</button> */}
           {stream ? (
             <Button click={joinAsBroadcaster} text={"Streaming"} />
           ) : (
@@ -222,7 +208,9 @@ function SocketIo() {
               ref={broadcasterVideo}
             ></video>
           ) : (
-            <video id={SocketIoCss.video} controls ref={userVideo}></video>
+            <div>
+              <video id={SocketIoCss.video} controls ref={userVideo}></video>
+            </div>
           )}
         </div>
       ) : (
