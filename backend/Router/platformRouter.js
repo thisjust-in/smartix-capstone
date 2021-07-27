@@ -38,9 +38,8 @@ class PlatformRouter {
     const cloudUpload = await cloudinary.uploader.upload(photoStream, {
       upload_preset: "ml_default",
     });
-    let jsonFormat = JSON.stringify(cloudUpload.secure_url.toString());
+    let jsonFormat = cloudUpload.secure_url.toString();
     let userProfile_pic = jsonFormat;
-    // console.log(profilePicture);
     await this.Method.setProfilePic(id, userProfile_pic);
     res.end();
   }
