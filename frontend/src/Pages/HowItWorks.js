@@ -1,7 +1,6 @@
 import React from "react";
 import styles from "./HowItWorks.module.css";
 import Header from "../components/Main-Components/Header";
-import { Col, Row, Container } from "reactstrap";
 
 function HowItWorks() {
   return (

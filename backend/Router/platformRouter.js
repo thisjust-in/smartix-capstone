@@ -92,8 +92,8 @@ class PlatformRouter {
   async editUsername(req, res) {
     let id = req.body.submitDetails.id;
     let username = req.body.submitDetails.username;
-    let newUsername = await this.Method.setUsername(id, username);
-    res.send(newUsername);
+    await this.Method.setUsername(id, username);
+    res.send();
   }
 
   async getAllPurchasedEvent(req, res) {
@@ -106,8 +106,8 @@ class PlatformRouter {
   async editEmail(req, res) {
     let id = req.body.submitDetails.id;
     let email = req.body.submitDetails.email;
-    let emailAddress = await this.Method.setEmailAddress(id, email);
-    res.end(emailAddress);
+    await this.Method.setEmailAddress(id, email);
+    res.end();
   }
 
   async addWallet(req, res) {
