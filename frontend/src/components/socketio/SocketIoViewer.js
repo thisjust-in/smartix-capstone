@@ -153,6 +153,9 @@ function SocketIo() {
   const { id } = useParams();
 
   const grabEventHost = useSelector((state) => state.eventCard.eventHost);
+  const userName = useSelector((state) => {
+    console.log("useselector", state);
+  });
   const [eventHost, setEventHost] = useState(grabEventHost);
   const [eventId, setEventId] = useState(grabEventHost);
   const [hasTix, setHasTix] = useState(false);
@@ -173,7 +176,6 @@ function SocketIo() {
     });
     if (filterData[0]) {
       setEventId(filterData[0].contractAddress);
-
       if (user_address) {
         setTheEvent(filterData[0]);
         grabCustomerIDFromWeb3(

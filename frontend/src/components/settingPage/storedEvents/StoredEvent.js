@@ -16,7 +16,6 @@ const StoredEvent = ({
   theUrl,
   isOnline,
 }) => {
-  console.log("event", isOnline);
   return (
     <div className={YourEventsCss.eventCard}>
       <img className={YourEventsCss.image} src={eventPhoto} alt="" />
