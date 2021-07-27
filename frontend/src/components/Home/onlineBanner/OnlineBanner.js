@@ -3,10 +3,8 @@ import Carousel from "react-bootstrap/Carousel";
 import OnlineBannerCss from "./OnlineBanner.module.css";
 import React from "react";
 import { Spinner } from "reactstrap";
-import { useHistory } from "react-router-dom";
 
 const OnlineBanner = () => {
-  const history = useHistory();
   const onlineEvent = useSelector((state) => {
     return state.eventCard.eventHost;
   });

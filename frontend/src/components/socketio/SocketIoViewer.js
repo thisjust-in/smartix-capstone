@@ -7,8 +7,9 @@ import EventContract from "../../EventContract";
 import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
+import axios from "redaxios";
 
-const socket = io.connect("http://localhost:8080");
+const socket = io.connect(`${process.env.REACT_APP_SERVER}`);
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
@@ -49,7 +50,7 @@ function SocketIo() {
 
     user = {
       room: eventId,
-      name: username,
+      name: userName,
     };
     socket.emit("register as viewer", user);
     // console.log("can i get here");
@@ -143,10 +144,6 @@ function SocketIo() {
     });
   }, []);
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
   const handleRoomNumber = (e) => {
     setRoomNumber(e.target.value);
   };
@@ -155,6 +152,9 @@ function SocketIo() {
   const { id } = useParams();
 
   const grabEventHost = useSelector((state) => state.eventCard.eventHost);
+  const userName = useSelector((state) => {
+    console.log("useselector", state);
+  });
   const [eventHost, setEventHost] = useState(grabEventHost);
   const [eventId, setEventId] = useState(grabEventHost);
   const [hasTix, setHasTix] = useState(false);
@@ -168,6 +168,7 @@ function SocketIo() {
 
   async function getUserAddress() {
     let user_address = await web3.eth.getAccounts();
+
     let filterData = await eventHost.filter((data) => {
       return data.id == id;
     });
@@ -178,6 +179,13 @@ function SocketIo() {
           filterData[0].contractAddress,
           user_address[0].toLowerCase()
         );
+        let theUserName = await axios.post(
+          `${process.env.REACT_APP_SERVER}/api/findusername`,
+          {
+            userAddress: user_address,
+          }
+        );
+        setUsername(theUserName.data);
       }
     }
   }
@@ -192,29 +200,10 @@ function SocketIo() {
     }
   }
 
-  console.log(eventId);
-
   return (
-    <div>
+    <div className={SocketIoCss.videoDiv}>
       {hasTix ? (
         <div>
-          <label htmlFor="name">Type your Name</label>
-          <input
-            type="text"
-            name=""
-            id="name"
-            value={username}
-            onChange={handleUsername}
-          />
-          <label htmlFor="roomNumber">Type the room number</label>
-          <input
-            type="text"
-            name=""
-            id="roomNumber"
-            value={roomNumber}
-            onChange={handleRoomNumber}
-          />
-          <button onClick={joinAsViewer}>Join as Viewer</button>
           {stream ? (
             <Button click={joinAsViewer} text={"Streaming"} />
           ) : (

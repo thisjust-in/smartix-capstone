@@ -70,7 +70,7 @@ function App() {
           <Route exact path="/etix/:id">
             <Etix />
           </Route>
-          <Route exact path="/checktix/:id">
+          <Route path="/checktix/:id">
             <CheckTix />
           </Route>
           <Route exact path="/howitworks">

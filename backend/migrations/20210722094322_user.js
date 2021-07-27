@@ -3,7 +3,7 @@ exports.up = function (knex) {
     table.increments().primary();
     table.string("wallet_id");
     table.string("username");
-    table.json("userProfile_pic");
+    table.string("userProfile_pic");
     table.string("email");
     table.timestamps(false, true);
   });

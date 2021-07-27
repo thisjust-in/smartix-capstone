@@ -116,6 +116,7 @@ const PersonalSetting = () => {
                 name={fileName}
                 type="file"
                 size="lg"
+                required
               />
             </Form.Group>
             <Button className={classes.SubmitBtn} type="submit" variant="dark">
@@ -137,6 +138,7 @@ const PersonalSetting = () => {
               type="email"
               placeholder="name@example.com"
               onChange={(event) => setEmail(event.target.value)}
+              required
             />
           </Form.Group>
           <Button className={classes.SubmitBtn} type="submit" variant="dark">
@@ -157,6 +159,7 @@ const PersonalSetting = () => {
               type="text"
               placeholder="username"
               onChange={(event) => setUsername(event.target.value)}
+              required
             />
           </Form.Group>
           <Button className={classes.SubmitBtn} type="submit" variant="dark">

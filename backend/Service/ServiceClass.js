@@ -18,12 +18,20 @@ class Method {
       });
     }
   }
+  async findUser(wallet_id) {
+    console.log(wallet_id);
+    let exisitingUser = await knex("users").where("wallet_id", wallet_id);
+    if (!exisitingUser[0]) {
+      return knex("users").returning("id").insert({
+        wallet_id: wallet_id,
+      });
+    }
+  }
 
   //users
 
   async getUserInfo(id) {
     let data = await knex("users").where("id", id);
-    // console.log(data);
     return data;
   }
 
@@ -197,25 +205,22 @@ class Method {
       .select()
       .from("purchase_record")
       .where("users_id", userId);
-    // .where("users_id", 1);
-    // console.log(purchaseRecord);
     return purchaseRecord;
   }
 
   async setEmailAddress(id, email) {
     try {
       let result = await knex("users").where("id", id).update({ email: email });
-      return result;
     } catch (error) {
       console.log("error", error);
     }
   }
+
   async setUsername(id, username) {
     try {
       let result = await knex("users")
         .where("id", id)
         .update({ username: username });
-      return result;
     } catch (error) {
       console.log("error", error);
     }
@@ -232,57 +237,12 @@ class Method {
       console.log("error", error);
     }
   }
+
+  async findUserName(wallet_id) {
+    let walletId = wallet_id;
+    let exisitingUser = await this.knex("users").where("wallet_id", walletId);
+    return exisitingUser[0].username;
+  }
 }
 
 module.exports = Method;
-
-// let test = new Method(knex);
-
-// test
-//   .getPurchaseRecord("0x8d39602eacc3a5acd999d247310a566fe5a3e1e2", 5)
-//   .then((data) => {
-//     console.log("data", data);
-//   });
-
-// test.getAllPurchaseRecord(2);
-// const test = new Method(knex);
-// test.getUserInfo(16);
-// test.setUsername(16, "John Wick");
-// test.findContractAddress(4).then((data) => {
-//   console.log(data);
-// });
-// test.setEmailAddress(4, "ju@mail.com");
-// test.getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450");
-// test.getEventHost().then((data)=>{
-//   console.log(new Date())
-//   console.log(data)
-// })
-//   .getUserfromAddress("0xd7d440f0287163fd4e0b4239bf4f601771b83450")
-//   .then((data) => {
-//     console.log(data);
-//   });
-// test.createEvent(
-//   "eventName",
-//   "0xd7d440f0287163fd4e0b4239bf4f601771b83450",
-//   "HK",
-//   {
-//     pc1: "https://i.pinimg.com/originals/1f/27/a4/1f27a40bfd45769b24e51321995b39d6.jpg",
-//   },
-//   "cool event world",
-//   "2021-07-19",
-//   "23:00",
-//   "23:30",
-//   100,
-//   "concert",
-//   true,
-//   1
-// );
-// test.storeWalletId(999);
-// test.getOnlineEvent().then((data) => {
-//   console.log(data);
-// });
-// test.getEventHost().then((data) => {
-//   console.log(data);
-// });
-
-// test.GetUserInfo(1);
