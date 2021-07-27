@@ -1,18 +1,39 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import OneCard from "./OneCard";
 import EventCardCSS from "./EventCard.module.css";
 import { Link } from "react-router-dom";
+import axios from "redaxios";
+import { useHistory } from "react-router";
+import { getEventDetails } from "../../../redux/EventListSlice";
 
 const EventCardBackground = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const host = useSelector((state) => {
     return state.eventCard.eventCount;
   });
 
+  async function redirect(name) {
+    let searchResult = {
+      name: name,
+    };
+    try {
+      let response = await axios.post(
+        `${process.env.REACT_APP_SERVER}/api/getlist`,
+        searchResult
+      );
+      dispatch(getEventDetails(response.data));
+      history.push("/list");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   let cards = [];
   for (const [hostName, event] of Object.entries(host)) {
     cards.push(
-      <Link to={`/event/${event.id}`}>
+      <Link onClick={() => redirect(hostName)}>
         <Col key={event.id} md={4} id={EventCardCSS.col}>
           <OneCard
             hostName={hostName}
