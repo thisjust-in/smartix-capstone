@@ -11,7 +11,7 @@ const initialState = {
 
 export const getAllEventThunk = () => async (dispatch) => {
   const getAllEvents = async () => {
-    return axios.get("http://localhost:8080/api/eventHost");
+    return axios.get(`${process.env.REACT_APP_SERVER}/api/eventHost`);
   };
   try {
     let response = await getAllEvents();
@@ -24,7 +24,7 @@ export const getAllEventThunk = () => async (dispatch) => {
 export const getEventHostThunk = () => async (dispatch) => {
   dispatch(eventActions.getEventHostRequest());
   const getHost = () => {
-    return axios.get("http://localhost:8080/api/eventHost");
+    return axios.get(`${process.env.REACT_APP_SERVER}/api/eventHost`);
   };
   try {
     let response = await getHost();
