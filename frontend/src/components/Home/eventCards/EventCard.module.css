@@ -1,64 +1,63 @@
-
-
 .background {
-    /* background: url("https://wallpapercave.com/wp/wp3093556.jpg"); */
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 300px;
-    min-height: 170px;
-    border-radius: 15px;
-    /* margin:15px; */
-    margin: 10px 0px;
-    cursor: pointer;
+  /* background: url("https://wallpapercave.com/wp/wp3093556.jpg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 300px;
+  min-height: 170px;
+  border-radius: 15px;
+  /* margin:15px; */
+  margin: 10px 0px;
+  cursor: pointer;
 }
 
 .background:hover {
-    box-shadow: 0 0 11px rgba(2, 2, 2, 0.692); 
+  box-shadow: 0 0 11px rgba(2, 2, 2, 0.692);
 }
 
-.information{
-    background-color: rgba(2, 2, 2, 0.479);
-    width: 200px;
-    height: 70px;
-    position:relative;
-    left: 15px;
-    top: 90px;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    border-radius: 15px;
+.information {
+  background-color: rgba(2, 2, 2, 0.479);
+  width: 200px;
+  height: 70px;
+  position: relative;
+  left: 15px;
+  top: 90px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border-radius: 15px;
 }
 
-.text{
-    margin-left: 20px;
-    margin-bottom: 0px;
-    color: white;
+.text {
+  margin-left: 20px;
+  margin-bottom: 0px;
+  color: white;
 }
 
-.event{
-    margin:0px;
-    color: white;
-    margin-left: 20px;
+.event {
+  margin: 0px;
+  color: white;
+  margin-left: 20px;
 }
 
-.forEventCard{
-    /* background-color: teal; */
-    height: 100vh;
-    width: 100vw;
-    /* padding: ; */
-    /* display: flex; */
+.forEventCard {
+  /* background-color: teal; */
+  height: 100vh;
+  width: 100vw;
+  /* padding: ; */
+  /* display: flex; */
 }
 
-#row{
-    /* padding: 0px 20px; */
-    margin: 0px 20px;
+#row {
+  /* padding: 0px 20px; */
+  margin: 0px 20px;
+  justify-content: space-between;
 }
 
-#col{
-    margin: 0px;
-    padding: 0px 5px;
+#col {
+  margin: 0px;
+  padding: 0px 5px;
 }
 
-#string{
-    padding-left: 30px;
+#string {
+  padding-left: 30px;
 }

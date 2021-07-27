@@ -24,3 +24,14 @@
   border-left: black solid 5px;
   height: 20vh;
 }
+
+#HowItWorks {
+  margin: 2rem 0;
+  width: 50vw;
+}
+
+@media only screen and (max-width: 600px) {
+  #HowItWorks {
+    width: 100%;
+  }
+}

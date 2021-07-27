@@ -207,7 +207,7 @@ export const EventForm = () => {
                   <option value="none" selected="selected">
                     Select an Option
                   </option>
-                  <option value="concert">Entertainment</option>
+                  <option value="entertainment">Entertainment</option>
                   <option value="musical">Cooking</option>
                   <option value="seminar">Seminar</option>
                   <option value="fitness">Fitness</option>

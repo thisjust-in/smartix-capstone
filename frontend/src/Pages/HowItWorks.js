@@ -15,7 +15,8 @@ function HowItWorks() {
       />
       <div className={styles.textcontainer}>
         <img
-          alt=""
+          id={styles.HowItWorks}
+          alt="how it works"
           src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627288856/How-it-works-smartix_pbakoc.png"
         />
       </div>
