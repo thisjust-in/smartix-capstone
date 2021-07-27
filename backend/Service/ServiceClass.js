@@ -228,6 +228,16 @@ class Method {
       console.log("error", error);
     }
   }
+
+  async findUserName(wallet_id) {
+    let walletId = wallet_id;
+    let exisitingUser = await this.knex("users").where("wallet_id", walletId);
+    return exisitingUser[0].username;
+  }
 }
 
 module.exports = Method;
+// let test = new Method(knex);
+// test.findUserName("0xef56c6fa97255e8bd37a0b1ea735d7b86ceb8f1a").then((data) => {
+//   console.log(data);
+// });
