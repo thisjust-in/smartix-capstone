@@ -156,15 +156,15 @@ function EventDetails() {
     history.push("/confirmation");
   }
 
+  console.log(eventinfo);
+
   if (loading) {
     return <Loading />;
   } else {
     return (
       <div>
         <Header
-          backgroundimage={
-            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg"
-          }
+          backgroundimage={eventinfo.eventPhoto}
           content={<HeaderContent avatar={null} title={null} para={null} />}
         />
         {eventinfo.isOnline ? (

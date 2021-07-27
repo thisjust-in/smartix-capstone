@@ -9,7 +9,7 @@ import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
 import axios from "redaxios";
 
-const socket = io.connect("http://172.20.10.2:8080");
+const socket = io.connect(`${process.env.REACT_APP_SERVER}`);
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
@@ -50,7 +50,7 @@ function SocketIo() {
 
     user = {
       room: eventId,
-      name: username,
+      name: userName,
     };
     socket.emit("register as viewer", user);
     // console.log("can i get here");
@@ -152,6 +152,9 @@ function SocketIo() {
   const { id } = useParams();
 
   const grabEventHost = useSelector((state) => state.eventCard.eventHost);
+  const userName = useSelector((state) => {
+    console.log("useselector", state);
+  });
   const [eventHost, setEventHost] = useState(grabEventHost);
   const [eventId, setEventId] = useState(grabEventHost);
   const [hasTix, setHasTix] = useState(false);
@@ -171,7 +174,6 @@ function SocketIo() {
     });
     if (filterData[0]) {
       setEventId(filterData[0].contractAddress);
-
       if (user_address) {
         grabCustomerIDFromWeb3(
           filterData[0].contractAddress,
