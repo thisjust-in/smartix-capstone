@@ -9,10 +9,11 @@ import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
 import axios from "redaxios";
 
-const socket = io.connect("http://172.20.10.2:8080");
+const socket = io.connect(`${process.env.REACT_APP_SERVER}`);
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
+  const [username, setUsername] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
   const broadcasterVideo = useRef();

@@ -122,8 +122,9 @@ class PlatformRouter {
 
   async getUserfromAddress(req, res) {
     let formatAddress = req.body.id[0].toLowerCase();
+    let userID = await this.Method.getUserfromAddress(formatAddress);
     if (userID) {
-      res.send(userID.id.toString());
+      res.send(userID.toString());
       res.end();
     } else {
       let id = await this.Method.storeWalletId(formatAddress);
