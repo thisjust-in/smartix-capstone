@@ -7,7 +7,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0xff57abade2be75295468412507e98fd0fea66ff9",
           eventLocation: "Haiti",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366927/icons/christopher-gower-m_HRfLhgABo-unsplash_nxr0x0.jpg",
           eventDescription: null,
           eventDate: "2020-09-25 06:29:53",
           startTime: "6:46 PM",
@@ -22,7 +23,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0x8ad47edc4f104c79e9aab0ddd6fbe89e0d9447b2",
           eventLocation: "Kazakhstan",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366928/icons/carl-barcelo-nqUHQkuVj3c-unsplash-min_g0dfg5.jpg",
           eventDescription: null,
           eventDate: "2021-03-25 02:17:32",
           startTime: "6:52 PM",
@@ -37,7 +39,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0x7ebfc798585edc9b0b88b5a8dd86b1e1c00c0523",
           eventLocation: "Russia",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366928/icons/teemu-paananen-bzdhc5b3Bxs-unsplash-min_gn5jhw.jpg",
           eventDescription: null,
           eventDate: "2020-11-01 12:16:14",
           startTime: "6:29 PM",
@@ -52,7 +55,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0x986d602d1e1d9ebaf5ae21702c6aaaa4d4280de9",
           eventLocation: "Indonesia",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366928/icons/zachary-smith-DgBNkXB-ckI-unsplash-min_hld9bh.jpg",
           eventDescription: null,
           eventDate: "2021-03-15 17:37:53",
           startTime: "6:09 PM",
@@ -67,7 +71,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: null,
           eventLocation: "Thailand",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366928/icons/conscious-design-3D43SBDDkAc-unsplash-min_jb8tbg.jpg",
           eventDescription: null,
           eventDate: "2021-07-15 15:22:01",
           startTime: "7:46 PM",
@@ -82,7 +87,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0xa157dca33967db3abc62efb37f1683ed40eca7de",
           eventLocation: "Jordan",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366929/icons/stem-list-EVgsAbL51Rk-unsplash-min_cxjrb6.jpg",
           eventDescription: null,
           eventDate: "2020-08-19 01:26:42",
           startTime: "7:19 PM",
@@ -97,7 +103,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: null,
           eventLocation: "United Arab Emirates",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366931/icons/roman-hinex-3s-D6FZKxAc-unsplash-min_gkye2c.jpg",
           eventDescription: null,
           eventDate: "2020-09-29 10:09:30",
           startTime: "7:38 PM",
@@ -112,7 +119,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0x7ebfc798585edc9b0b88b5a8dd86b1e1c00c0523",
           eventLocation: "Japan",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627366931/icons/hanny-naibaho-aWXVxy8BSzc-unsplash-min_wlwgbv.jpg",
           eventDescription: null,
           eventDate: "2020-10-18 01:26:49",
           startTime: "6:21 PM",
@@ -127,7 +135,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0x32f8c216be5e0f71a0f4854e6da16c286f486791",
           eventLocation: "Bermuda",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627367003/icons/fabio-silva-nmTm7knUnqs-unsplash_ccyekw.jpg",
           eventDescription: null,
           eventDate: "2020-12-16 16:21:23",
           startTime: "6:24 PM",
@@ -142,7 +151,8 @@ exports.seed = function (knex) {
           eventName: null,
           contractAddress: "0x271e12b79fd174ed575cf0e971e6c1cb55b7f379",
           eventLocation: "China",
-          eventPhoto: null,
+          eventPhoto:
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627367044/icons/sam-mcghee-4siwRamtFAk-unsplash_l1k5a3.jpg",
           eventDescription: null,
           eventDate: "2021-01-30 04:30:52",
           startTime: "7:30 PM",

@@ -12,7 +12,6 @@ const socket = io.connect("http://172.20.10.2:8080");
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
-  const [username, setUsername] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
   const broadcasterVideo = useRef();
@@ -49,7 +48,7 @@ function SocketIo() {
 
     user = {
       room: eventId,
-      name: username,
+      name: userName,
     };
     socket.emit("register as viewer", user);
     // console.log("can i get here");
@@ -143,10 +142,6 @@ function SocketIo() {
     });
   }, []);
 
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
   const handleRoomNumber = (e) => {
     setRoomNumber(e.target.value);
   };
@@ -155,6 +150,9 @@ function SocketIo() {
   const { id } = useParams();
 
   const grabEventHost = useSelector((state) => state.eventCard.eventHost);
+  const userName = useSelector((state) => {
+    console.log("useselector", state);
+  });
   const [eventHost, setEventHost] = useState(grabEventHost);
   const [eventId, setEventId] = useState(grabEventHost);
   const [hasTix, setHasTix] = useState(false);
@@ -173,6 +171,7 @@ function SocketIo() {
     });
     if (filterData[0]) {
       setEventId(filterData[0].contractAddress);
+      // setUsername()
       if (user_address) {
         grabCustomerIDFromWeb3(
           filterData[0].contractAddress,
@@ -192,7 +191,8 @@ function SocketIo() {
     }
   }
 
-  console.log(eventId);
+  // console.log(eventId);
+  console.log("event host", eventHost);
 
   return (
     <div className={SocketIoCss.videoDiv}>

@@ -18,6 +18,15 @@ class Method {
       });
     }
   }
+  async findUser(wallet_id) {
+    console.log(wallet_id);
+    let exisitingUser = await knex("users").where("wallet_id", wallet_id);
+    if (!exisitingUser[0]) {
+      return knex("users").returning("id").insert({
+        wallet_id: wallet_id,
+      });
+    }
+  }
 
   //users
 
@@ -231,3 +240,9 @@ class Method {
 }
 
 module.exports = Method;
+let test = new Method(knex);
+test
+  .storeWalletId("0xEf56c6fA97255E8Bd37a0b1EA735d7b86Ceb8F1a")
+  .then((data) => {
+    console.log(data);
+  });
