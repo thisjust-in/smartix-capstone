@@ -30,7 +30,7 @@ function CheckTix() {
   if (Date.now() - timestamp > 30000) {
     return (
       <div className={styles.textcontainer}>
-        <img src={expire} className={styles.logo}></img>
+        <img alt="logo" src={expire} className={styles.logo}></img>
         <h1>The QR code has expired,</h1>
         <h1>please refresh your Smartix.</h1>
       </div>
@@ -40,12 +40,12 @@ function CheckTix() {
       <div>
         {pass > 0 ? (
           <div className={styles.textcontainer}>
-            <img src={ok} className={styles.logo}></img>
+            <img alt="logo" src={ok} className={styles.logo}></img>
             <h1>Welcome! You make it!</h1>
           </div>
         ) : (
           <div className={styles.textcontainer}>
-            <img src={sorry} className={styles.logo}></img>
+            <img alt="logo" src={sorry} className={styles.logo}></img>
             <h1>Sorry, you ticket is not valid.</h1>
           </div>
         )}

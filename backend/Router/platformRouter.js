@@ -1,5 +1,7 @@
 const express = require("express");
 const { cloudinary } = require("../Cloudinary/cloudinary");
+const nodemailer = require("nodemailer");
+const hbs = require("nodemailer-express-handlebars");
 
 class PlatformRouter {
   constructor(Method) {
@@ -7,6 +9,7 @@ class PlatformRouter {
   }
   router() {
     const router = express.Router();
+    router.post("/api/getInfo", this.getInfo.bind(this));
     router.post("/api/walletId", this.addWallet.bind(this));
     router.post("/api/create-event", this.createEvent.bind(this));
     router.get("/api/eventhost", this.getEventHost.bind(this));
@@ -16,12 +19,88 @@ class PlatformRouter {
     router.get("/event/:id", this.getEventInfo.bind(this));
     router.post("/purchase", this.purchase.bind(this));
     router.post("/api/edit-email", this.editEmail.bind(this));
+    router.post("/api/edit-username", this.editUsername.bind(this));
+    router.post("/api/profile-picture", this.updateProPic.bind(this));
     router.post("/gettix", this.gettix.bind(this));
+    router.post("/api/purchase-confirmation", this.sendEmail.bind(this));
     router.post(
       "/api/getallpurchasedevent",
       this.getAllPurchasedEvent.bind(this)
     );
     return router;
+  }
+
+  async updateProPic(req, res) {
+    let data = req.body;
+    let id = data.id;
+    let photoStream = req.body.photo;
+    const cloudUpload = await cloudinary.uploader.upload(photoStream, {
+      upload_preset: "ml_default",
+    });
+    let jsonFormat = JSON.stringify(cloudUpload.secure_url.toString());
+    let userProfile_pic = jsonFormat;
+    // console.log(profilePicture);
+    await this.Method.setProfilePic(id, userProfile_pic);
+    res.end();
+  }
+
+  async sendEmail(req, res) {
+    let email = req.body.email;
+    console.log("email", email);
+    // node mailer syntax
+    let smtpTransport = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.GOOGLEADRESS,
+        pass: process.env.GOOGLEPASSWORD,
+      },
+    });
+
+    const options = {
+      viewEngine: {
+        partialsDir: __dirname + "/../views/partials",
+        layoutsDir: __dirname + "/../views/layouts",
+        extname: ".hbs",
+      },
+      extName: ".hbs",
+      viewPath: "views",
+    };
+
+    smtpTransport.use("compile", hbs(options));
+
+    try {
+      let mailOptions = {
+        from: "smartixhk@gmail.com", // sender address
+        to: `${email}`, // list of receivers
+        subject: "Thank you for purchasing the ticket!", // Subject line
+        template: "orderConfirmation",
+      };
+      await smtpTransport.sendMail(mailOptions);
+      console.log("sent!");
+      res.end();
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
+  async getInfo(req, res) {
+    let id = req.body.id;
+    let userInfo = await this.Method.getUserInfo(id);
+    res.send(userInfo);
+  }
+
+  async editUsername(req, res) {
+    let id = req.body.submitDetails.id;
+    let username = req.body.submitDetails.username;
+    let newUsername = await this.Method.setUsername(id, username);
+    res.send(newUsername);
+  }
+
+  async getAllPurchasedEvent(req, res) {
+    let userId = req.body.userId;
+    let purchasedEvent = await this.Method.getAllPurchaseRecord(userId);
+    res.send(purchasedEvent);
+    res.end();
   }
 
   async editEmail(req, res) {

@@ -1,5 +1,12 @@
-.test {
+.rightContainer {
   display: inherit;
+}
+
+.profilePicture {
+  width: 2.3rem;
+  height: 2.3rem;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .secondaryButton {
@@ -9,7 +16,6 @@
   width: 150px;
   height: 40px;
   border-radius: 50px;
-  margin: 0 1rem;
 }
 
 .secondaryButton:hover {
@@ -20,4 +26,27 @@
   height: 40px;
   border-radius: 50px;
   transition: ease-in;
+}
+
+@media only screen and (max-width: 500px) {
+  .rightContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .profilePicture {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .secondaryButton {
+    background-color: #ce3dd1;
+    color: white;
+    border: none;
+    width: 150px;
+    height: 40px;
+    border-radius: 50px;
+  }
 }

@@ -9,7 +9,6 @@ import { useDispatch } from "react-redux";
 import { getEventHostThunk } from "./redux/EventCardSlice";
 import OnlineEvents from "./Pages/online-events-page/OnlineEvents";
 import SocketIo from "./components/socketio/SocketIo";
-import Test from "./Pages/testPage";
 import EventDetails from "./Pages/EventDetails";
 import Footer from "./components/Footer/Footer";
 import Confirmation from "./Pages/Confirmation";
@@ -20,6 +19,7 @@ import { checkWalletIDThunk } from "./redux/CheckUserSlice";
 import Etix from "./Pages/Etix";
 import CheckTix from "./Pages/CheckTix";
 import Usersettings from "./Pages/UserSettings";
+import HowItWorks from "./Pages/HowItWorks";
 import SocketIoViewer from "./components/socketio/SocketIoViewer";
 
 function App() {
@@ -52,9 +52,6 @@ function App() {
           <Route exact path="/viewer/:id">
             <SocketIoViewer />
           </Route>
-          <Route exact path="/test">
-            <Test />
-          </Route>
           <Route exact path="/event/mint">
             <EventMint />
           </Route>
@@ -70,11 +67,14 @@ function App() {
           <Route exact path="/yourevent">
             <YourEvents />
           </Route>
-          <Route path="/etix/:id">
+          <Route exact path="/etix/:id">
             <Etix />
           </Route>
-          <Route path="/checktix/:id">
+          <Route exact path="/checktix/:id">
             <CheckTix />
+          </Route>
+          <Route exact path="/howitworks">
+            <HowItWorks />
           </Route>
           <Route exact path="/user-settings">
             <Usersettings />
