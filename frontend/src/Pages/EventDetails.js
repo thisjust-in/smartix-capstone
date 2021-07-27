@@ -12,6 +12,7 @@ import EventContract from "../EventContract";
 import { SeatsioClient, Region } from "seatsio";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
+import Loading from "./Loading";
 
 function EventDetails() {
   const history = useHistory();
@@ -23,6 +24,7 @@ function EventDetails() {
   const [tix, setTix] = useState([]);
   const [forOnline, setForOnline] = useState("");
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
   let currentUser;
 
   const user_id = useSelector((state) => {
@@ -107,6 +109,7 @@ function EventDetails() {
   }
 
   async function checkout() {
+    setLoading(true);
     let amount = tix.reduce((a, b) => {
       return parseFloat(a) + parseFloat(b.price);
     }, 0);
@@ -137,6 +140,7 @@ function EventDetails() {
   }
 
   async function checkoutForOnline() {
+    setLoading(true);
     let accounts = await web3.eth.getAccounts();
     let wei = web3.utils.toWei(`${forOnline.price}`, "ether");
     await EventContract.methods
@@ -152,130 +156,136 @@ function EventDetails() {
     history.push("/confirmation");
   }
 
-  return (
-    <div>
-      <Header
-        backgroundimage={
-          "https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg"
-        }
-        content={<HeaderContent avatar={null} title={null} para={null} />}
-      />
-      {eventinfo.isOnline ? (
-        <Container className={styles.main}>
-          <div className={styles.container}>
-            <h1>{eventinfo.eventName}</h1>
-            <h4>
-              {new Date(eventinfo.eventDate).toString().slice(0, 3) +
-                ", " +
-                new Date(eventinfo.eventDate).toString().slice(4, 15) +
-                ", " +
-                new Date(eventinfo.eventDate).toString().slice(16, 21) +
-                ". " +
-                eventinfo.eventLocation +
-                ". " +
-                "(Online Event)"}
-            </h4>
-          </div>
-          <div>
-            <Row>
-              <Col lg="6">
-                <h4>{eventinfo.eventDescription}</h4>
-              </Col>
-              <Col lg="6">
-                <Container>
-                  <Row className={styles.titlerow}>
-                    <Col xs="4">
-                      <h5>Availiable</h5>
-                    </Col>
-                    <Col xs="4" className={styles.col2}>
-                      <h5>Price</h5>
-                    </Col>
-                  </Row>
-                  {forOnline ? (
-                    <Row className={styles.row}>
+  if (loading) {
+    return <Loading />;
+  } else {
+    return (
+      <div>
+        <Header
+          backgroundimage={
+            "https://res.cloudinary.com/dnq92mpxr/image/upload/v1625816868/cymlfs5xh7chlfq8znbk.jpg"
+          }
+          content={<HeaderContent avatar={null} title={null} para={null} />}
+        />
+        {eventinfo.isOnline ? (
+          <Container className={styles.main}>
+            <div className={styles.container}>
+              <h1>{eventinfo.eventName}</h1>
+              <h4>
+                {new Date(eventinfo.eventDate).toString().slice(0, 3) +
+                  ", " +
+                  new Date(eventinfo.eventDate).toString().slice(4, 15) +
+                  ", " +
+                  new Date(eventinfo.eventDate).toString().slice(16, 21) +
+                  ". " +
+                  eventinfo.eventLocation +
+                  ". " +
+                  "(Online Event)"}
+              </h4>
+            </div>
+            <div>
+              <Row>
+                <Col lg="6">
+                  <h4>{eventinfo.eventDescription}</h4>
+                </Col>
+                <Col lg="6">
+                  <Container>
+                    <Row className={styles.titlerow}>
                       <Col xs="4">
-                        <h6>{forOnline.qty}</h6>
+                        <h5>Availiable</h5>
                       </Col>
                       <Col xs="4" className={styles.col2}>
-                        <h6>{forOnline.price}</h6>
+                        <h5>Price</h5>
                       </Col>
                     </Row>
-                  ) : (
-                    <Spinner color="dark" />
-                  )}
-                </Container>
-                <PrimaryBtn text={"Checkout"} click={checkout} />
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      ) : (
-        <Container className={styles.main}>
-          <div className={styles.container}>
-            <h1>{eventinfo.eventName}</h1>
-            <h4>
-              {new Date(eventinfo.eventDate).toString().slice(0, 3) +
-                ", " +
-                new Date(eventinfo.eventDate).toString().slice(4, 15) +
-                ", " +
-                new Date(eventinfo.eventDate).toString().slice(16, 21) +
-                ". " +
-                eventinfo.eventLocation +
-                ", " +
-                eventinfo.venue}
-            </h4>
-            <h4 style={{ paddingTop: "1rem" }}>{eventinfo.eventDescription}</h4>
-          </div>
-          <div>
-            <Row>
-              <Col lg="6">
-                {eventinfo.contractAddress ? (
-                  <SeatsioSeatingChart
-                    workspaceKey="ba650b33-08ea-4845-9c03-8f74fe31c6ce"
-                    event={eventinfo.contractAddress}
-                    region="na"
-                    onObjectSelected={select}
-                    onObjectDeselected={deselect}
-                  />
-                ) : null}
-              </Col>
-              <Col lg="6">
-                <Container>
-                  <Row className={styles.titlerow}>
-                    <Col xs="4" className={styles.col}>
-                      <h5>Location</h5>
-                    </Col>
-                    <Col xs="4">
-                      <h5>Availiable</h5>
-                    </Col>
-                    <Col xs="4" className={styles.col2}>
-                      <h5>Price</h5>
-                    </Col>
-                  </Row>
-                  {tix.map((data) => {
-                    return (
+                    {forOnline ? (
                       <Row className={styles.row}>
-                        <Col xs="4" className={styles.col}>
-                          <h6>{data.location}</h6>
-                        </Col>
                         <Col xs="4">
-                          <h6>{data.qty}</h6>
+                          <h6>{forOnline.qty}</h6>
                         </Col>
                         <Col xs="4" className={styles.col2}>
-                          <h6>{data.price}</h6>
+                          <h6>{forOnline.price}</h6>
                         </Col>
                       </Row>
-                    );
-                  })}
-                </Container>
-                <PrimaryBtn text={"Checkout"} click={checkout} />
-              </Col>
-            </Row>
-          </div>
-        </Container>
-      )}
-    </div>
-  );
+                    ) : (
+                      <Spinner color="dark" />
+                    )}
+                  </Container>
+                  <PrimaryBtn text={"Checkout"} click={checkoutForOnline} />
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        ) : (
+          <Container className={styles.main}>
+            <div className={styles.container}>
+              <h1>{eventinfo.eventName}</h1>
+              <h4>
+                {new Date(eventinfo.eventDate).toString().slice(0, 3) +
+                  ", " +
+                  new Date(eventinfo.eventDate).toString().slice(4, 15) +
+                  ", " +
+                  new Date(eventinfo.eventDate).toString().slice(16, 21) +
+                  ". " +
+                  eventinfo.eventLocation +
+                  ", " +
+                  eventinfo.venue}
+              </h4>
+              <h4 style={{ paddingTop: "1rem" }}>
+                {eventinfo.eventDescription}
+              </h4>
+            </div>
+            <div>
+              <Row>
+                <Col lg="6">
+                  {eventinfo.contractAddress ? (
+                    <SeatsioSeatingChart
+                      workspaceKey="ba650b33-08ea-4845-9c03-8f74fe31c6ce"
+                      event={eventinfo.contractAddress}
+                      region="na"
+                      onObjectSelected={select}
+                      onObjectDeselected={deselect}
+                    />
+                  ) : null}
+                </Col>
+                <Col lg="6">
+                  <Container>
+                    <Row className={styles.titlerow}>
+                      <Col xs="4" className={styles.col}>
+                        <h5>Location</h5>
+                      </Col>
+                      <Col xs="4">
+                        <h5>Availiable</h5>
+                      </Col>
+                      <Col xs="4" className={styles.col2}>
+                        <h5>Price</h5>
+                      </Col>
+                    </Row>
+                    {tix.map((data) => {
+                      return (
+                        <Row className={styles.row}>
+                          <Col xs="4" className={styles.col}>
+                            <h6>{data.location}</h6>
+                          </Col>
+                          <Col xs="4">
+                            <h6>{data.qty}</h6>
+                          </Col>
+                          <Col xs="4" className={styles.col2}>
+                            <h6>{data.price}</h6>
+                          </Col>
+                        </Row>
+                      );
+                    })}
+                  </Container>
+                  <PrimaryBtn text={"Checkout"} click={checkout} />
+                </Col>
+              </Row>
+            </div>
+          </Container>
+        )}
+      </div>
+    );
+  }
 }
 
 export default EventDetails;

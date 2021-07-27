@@ -8,7 +8,7 @@ import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
 
-const socket = io.connect("http://localhost:8080");
+const socket = io.connect("http://172.20.10.2:8080");
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
