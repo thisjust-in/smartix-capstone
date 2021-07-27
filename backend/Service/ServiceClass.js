@@ -237,12 +237,12 @@ class Method {
       console.log("error", error);
     }
   }
+
+  async findUserName(wallet_id) {
+    let walletId = wallet_id;
+    let exisitingUser = await this.knex("users").where("wallet_id", walletId);
+    return exisitingUser[0].username;
+  }
 }
 
 module.exports = Method;
-let test = new Method(knex);
-test
-  .storeWalletId("0xEf56c6fA97255E8Bd37a0b1EA735d7b86Ceb8F1a")
-  .then((data) => {
-    console.log(data);
-  });

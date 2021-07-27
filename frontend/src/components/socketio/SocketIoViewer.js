@@ -7,6 +7,7 @@ import EventContract from "../../EventContract";
 import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
+import axios from "redaxios";
 
 const socket = io.connect("http://172.20.10.2:8080");
 let rtcPeerConnections = {};
@@ -166,17 +167,24 @@ function SocketIo() {
 
   async function getUserAddress() {
     let user_address = await web3.eth.getAccounts();
+
     let filterData = await eventHost.filter((data) => {
       return data.id == id;
     });
     if (filterData[0]) {
       setEventId(filterData[0].contractAddress);
-      // setUsername()
       if (user_address) {
         grabCustomerIDFromWeb3(
           filterData[0].contractAddress,
           user_address[0].toLowerCase()
         );
+        let theUserName = await axios.post(
+          `${process.env.REACT_APP_SERVER}/api/findusername`,
+          {
+            userAddress: user_address,
+          }
+        );
+        setUsername(theUserName.data);
       }
     }
   }
@@ -190,9 +198,6 @@ function SocketIo() {
       console.log("has tix");
     }
   }
-
-  // console.log(eventId);
-  console.log("event host", eventHost);
 
   return (
     <div className={SocketIoCss.videoDiv}>
