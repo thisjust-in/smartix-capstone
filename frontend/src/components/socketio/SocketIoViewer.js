@@ -195,26 +195,9 @@ function SocketIo() {
   console.log(eventId);
 
   return (
-    <div>
+    <div className={SocketIoCss.videoDiv}>
       {hasTix ? (
         <div>
-          <label htmlFor="name">Type your Name</label>
-          <input
-            type="text"
-            name=""
-            id="name"
-            value={username}
-            onChange={handleUsername}
-          />
-          <label htmlFor="roomNumber">Type the room number</label>
-          <input
-            type="text"
-            name=""
-            id="roomNumber"
-            value={roomNumber}
-            onChange={handleRoomNumber}
-          />
-          <button onClick={joinAsViewer}>Join as Viewer</button>
           {stream ? (
             <Button click={joinAsViewer} text={"Streaming"} />
           ) : (

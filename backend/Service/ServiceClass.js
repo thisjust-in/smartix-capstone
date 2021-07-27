@@ -183,7 +183,7 @@ class Method {
       .from("users")
       .where("wallet_id", wallet_id.toLowerCase());
     if (users_id[0]) {
-      let data = await knex("purchase_records")
+      let data = await knex("purchase_record")
         .select("*")
         .where("users_id", users_id[0].id)
         .andWhere("event_id", event_id);
@@ -238,13 +238,13 @@ module.exports = Method;
 
 let test = new Method(knex);
 
-// test
-//   .getPurchaseRecord("0x8d39602eacc3a5acd999d247310a566fe5a3e1e2", 5)
-//   .then((data) => {
-//     console.log("data", data);
-//   });
+test
+  .getPurchaseRecord("0xb6a3c634da20b8f186578cf4d3eed77c51e87b05", 2)
+  .then((data) => {
+    console.log("data", data);
+  });
 
-test.getAllPurchaseRecord(2);
+// test.getAllPurchaseRecord(1);
 // const test = new Method(knex);
 // test.getUserInfo(16);
 // test.setUsername(16, "John Wick");
