@@ -121,6 +121,7 @@ function EventDetails() {
       wallet_id: accounts[0],
       contractAddress: eventinfo.contractAddress,
     };
+
     await axios.post(`${process.env.REACT_APP_SERVER}/purchase`, data);
     let tixArray = [];
     for (let each of tix) {
@@ -131,6 +132,9 @@ function EventDetails() {
       `${process.env.REACT_APP_SERVER}/api/purchase-confirmation`,
       {
         email: email,
+        amount: amount,
+        data: data[0],
+        eventinfo: eventinfo,
       }
     );
     history.push("/confirmation");
@@ -149,6 +153,14 @@ function EventDetails() {
       contractAddress: eventinfo.contractAddress,
     };
     await axios.post(`${process.env.REACT_APP_SERVER}/purchase`, data);
+    await axios.post(
+      `${process.env.REACT_APP_SERVER}/api/purchase-confirmation`,
+      {
+        email: email,
+        data: data[0],
+        forOnline: forOnline,
+      }
+    );
     history.push("/confirmation");
   }
 
