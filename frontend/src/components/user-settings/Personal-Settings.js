@@ -47,7 +47,7 @@ const PersonalSetting = () => {
   useEffect(() => {
     dispatch(checkWalletIDThunk());
     getUser();
-  }, [currentUserId]);
+  }, [currentUserId][username]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +55,6 @@ const PersonalSetting = () => {
       id: currentUserId,
       email: email,
     };
-    setEmail("");
     await axios.post(`${process.env.REACT_APP_SERVER}/api/edit-email`, {
       submitDetails: submitDetails,
     });
