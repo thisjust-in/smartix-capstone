@@ -3,7 +3,7 @@
   display: flex;
 }
 .filterBtn {
-  background-color: rgba(214, 214, 214, 0.5);
+  background-color: #dadada;
   border-radius: 50px;
   border: none;
   color: black;
