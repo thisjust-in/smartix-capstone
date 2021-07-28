@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
@@ -23,9 +23,8 @@ function SocketIo() {
       { urls: "stun:stun.l.google.com:19302" },
     ],
   };
-  const streamConstraints = { audio: false, video: { height: 480 } };
+  const streamConstraints = { audio: true, video: { height: 480 } };
 
-  let history = useHistory();
   function leaveRoom() {
     // history.push(`/user-settings`);
     window.location.reload();
@@ -185,10 +184,11 @@ function SocketIo() {
 
   async function checkIsHost() {
     let filterData = await eventHost.filter((data) => {
-      return data.id == id;
+      // console.log(typeof data.id, typeof id * 1);
+      return data.id === parseInt(id);
     });
     if (filterData[0]) {
-      setIsHost(filterData[0].wallet_id == userId);
+      setIsHost(filterData[0].wallet_id === userId);
     }
     if (isHost) {
       setHostName(filterData[0].eventName);
@@ -222,7 +222,7 @@ function SocketIo() {
               </Col>
               <Col sm={4}>
                 {stream ? (
-                  <Button click={leaveRoom} text={"Streaming"} />
+                  <Button click={leaveRoom} text={"Stop Streaming"} />
                 ) : (
                   <Button
                     click={joinAsBroadcaster}

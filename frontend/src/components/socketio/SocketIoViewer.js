@@ -15,10 +15,7 @@ let rtcPeerConnections = {};
 let user;
 function SocketIo() {
   const [username, setUsername] = useState("");
-  const [roomNumber, setRoomNumber] = useState("");
-  const [stream, setStream] = useState();
   const [joinedRoom, setJoinedRoom] = useState(false);
-  const broadcasterVideo = useRef();
   const userVideo = useRef();
 
   const iceServers = {
@@ -139,9 +136,7 @@ function SocketIo() {
   const { id } = useParams();
 
   const grabEventHost = useSelector((state) => state.eventCard.eventHost);
-  const userName = useSelector((state) => {
-    console.log("useselector", state);
-  });
+
   const [eventHost, setEventHost] = useState(grabEventHost);
   const [eventId, setEventId] = useState(grabEventHost);
   const [hasTix, setHasTix] = useState(false);
@@ -150,8 +145,8 @@ function SocketIo() {
     getUserAddress();
   }, []);
 
-  useEffect(async () => {
-    await setEventHost(grabEventHost);
+  useEffect(() => {
+    setEventHost(grabEventHost);
   }, [grabEventHost]);
 
   async function getUserAddress() {
@@ -206,19 +201,12 @@ function SocketIo() {
           <Container>
             <Row>
               <Col sm={8}>
-                {stream ? (
-                  <video
-                    controls
-                    id={SocketIoCss.video}
-                    ref={broadcasterVideo}
-                  ></video>
-                ) : (
-                  <video
-                    id={SocketIoCss.video}
-                    controls
-                    ref={userVideo}
-                  ></video>
-                )}
+                <video
+                  id={SocketIoCss.video}
+                  controls
+                  autoPlay
+                  ref={userVideo}
+                ></video>
               </Col>
               <Col sm={4}>
                 {joinedRoom ? (
