@@ -46,6 +46,12 @@ class PlatformRouter {
 
   async sendEmail(req, res) {
     let email = req.body.email;
+    let seats = [];
+    for (let i of req.body.seatingDetails.TixDetails) {
+      seats.push(i.location);
+    }
+    console.log("seats", seats);
+    // console.log(req.body.seatingDetails.TixDetails);
     const eventName = req.body.eventinfo.eventName;
     const eventId = req.body.eventinfo.id;
     const venue = req.body.eventinfo.venue;
@@ -63,6 +69,7 @@ class PlatformRouter {
       purchaseDate: purchaseDate,
       eventTicketURL: eventTicketURL,
       venue: venue,
+      seats: seats,
       eventDate: eventDate,
       totalAmount: totalAmount,
       startTime: startTime,
@@ -70,7 +77,7 @@ class PlatformRouter {
     };
     console.log(order);
 
-    // node mailer syntax
+    // // node mailer syntax
     let smtpTransport = nodemailer.createTransport({
       service: "Gmail",
       auth: {
