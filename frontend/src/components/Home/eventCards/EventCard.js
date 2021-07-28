@@ -33,7 +33,7 @@ const EventCardBackground = () => {
   let cards = [];
   for (const [hostName, event] of Object.entries(host)) {
     cards.push(
-      <Link onClick={() => redirect(hostName)}>
+      <div key={event.id} onClick={() => redirect(hostName)}>
         <Col key={event.id} md={4} id={EventCardCSS.col}>
           <OneCard
             hostName={hostName}
@@ -42,7 +42,7 @@ const EventCardBackground = () => {
             key={event.id}
           />
         </Col>
-      </Link>
+      </div>
     );
   }
 

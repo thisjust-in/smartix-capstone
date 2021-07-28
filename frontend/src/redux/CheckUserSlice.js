@@ -8,8 +8,7 @@ export const usersSlice = createSlice({
     wallet_id: [],
     userID: [],
     contractAddress: [],
-    profilepic:
-      "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627279513/profile-pic_ovouzp.png",
+    profilepic: "",
   },
   reducers: {
     getWalletId(state, action) {
@@ -41,7 +40,9 @@ export const checkWalletIDThunk = () => async (dispatch) => {
           axios
             .post(`${process.env.REACT_APP_SERVER}/api/getInfo`, { id: id })
             .then((data) => {
-              dispatch(checkUserActions.setProfilepic(data));
+              dispatch(
+                checkUserActions.setProfilepic(data.data[0].userProfile_pic)
+              );
             });
         });
     }

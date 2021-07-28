@@ -6,10 +6,8 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import axios from "redaxios";
 import PersonalInfo from "./Personal-Details";
-import { useHistory } from "react-router-dom";
 
 const PersonalSetting = () => {
-  const history = useHistory();
   const [email, setEmail] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userInfo, setUserInfo] = useState("");
@@ -30,24 +28,22 @@ const PersonalSetting = () => {
     currentUserId = user_id;
   }
 
-  async function getUser() {
-    if (currentUserId) {
-      await axios
-        .post(`${process.env.REACT_APP_SERVER}/api/getInfo`, {
-          id: currentUserId,
-        })
-        .then((response) => {
-          setProfilePic(response.data[0].userProfile_pic);
-          setUserEmail(response.data[0].email);
-          setUserInfo(response.data[0].username);
-        });
-    }
-  }
-
   useEffect(() => {
-    dispatch(checkWalletIDThunk());
+    async function getUser() {
+      if (currentUserId) {
+        await axios
+          .post(`${process.env.REACT_APP_SERVER}/api/getInfo`, {
+            id: currentUserId,
+          })
+          .then((response) => {
+            setProfilePic(response.data[0].userProfile_pic);
+            setUserEmail(response.data[0].email);
+            setUserInfo(response.data[0].username);
+          });
+      }
+    }
     getUser();
-  }, [currentUserId][(username, userEmail, profilePic)]);
+  }, [currentUserId, username, email, profilePic]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();

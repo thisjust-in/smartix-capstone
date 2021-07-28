@@ -11,7 +11,7 @@ const PersonalInfo = (props) => {
                 ? props.profilePic
                 : "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627279513/profile-pic_ovouzp.png"
             }
-            alt="Profile Picture"
+            alt=""
             className={classes.profilePicture}
           />
         </div>

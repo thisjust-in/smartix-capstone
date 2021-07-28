@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
 import { useParams, useHistory } from "react-router-dom";
-import EventContract from "../../EventContract";
 import { Container, Row, Col } from "react-bootstrap";
 import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
@@ -13,8 +12,6 @@ const socket = io.connect(`${process.env.REACT_APP_SERVER}`);
 let rtcPeerConnections = {};
 let user;
 function SocketIo() {
-  const [username, setUsername] = useState("");
-  const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
   const [newUser, setNewUser] = useState([]);
   const broadcasterVideo = useRef();
@@ -147,7 +144,6 @@ function SocketIo() {
     });
 
     function removeUser(userName) {
-      console.log("before remove", username);
       setNewUser((user) => {
         console.log("user", user);
         let newArr = [...user];
