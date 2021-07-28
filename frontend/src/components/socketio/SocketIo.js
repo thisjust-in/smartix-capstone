@@ -4,6 +4,7 @@ import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
 import { useParams } from "react-router-dom";
 import EventContract from "../../EventContract";
+import { Container, Row, Col } from "react-bootstrap";
 import web3 from "../../web3";
 import Button from "../Main-Components/PrimaryBtn";
 import { Spinner } from "reactstrap";
@@ -15,6 +16,7 @@ function SocketIo() {
   const [username, setUsername] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
+  const [newUser, setNewUser] = useState([]);
   const broadcasterVideo = useRef();
   const userVideo = useRef();
 
@@ -31,7 +33,7 @@ function SocketIo() {
   const joinAsBroadcaster = () => {
     user = {
       room: eventId,
-      name: "need to change",
+      name: hostName,
     };
     console.log("broadcasterVideo", broadcasterVideo);
     navigator.mediaDevices
@@ -46,7 +48,8 @@ function SocketIo() {
 
   useEffect(() => {
     socket.on("new viewer", async function (viewer) {
-      console.log("new user comes in!", viewer);
+      // console.log("new user comes in!", viewer.name);
+      setNewUser((user) => [...user, viewer.name]);
       rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
 
       const stream = broadcasterVideo.current.srcObject;
@@ -130,15 +133,28 @@ function SocketIo() {
       );
       // console.log("what is this now", rtcPeerConnections);
     });
+
+    socket.on("user-disconnected", (user) => {
+      // if (peers[userId]) peers[userId].close();
+      console.log("disconnected", user.name);
+      removeUser(user.name);
+    });
+
+    function removeUser(userName) {
+      console.log("before remove", username);
+      setNewUser((user) => {
+        console.log("user", user);
+        let newArr = [...user];
+        let index = newArr.indexOf(userName);
+        if (index > -1) {
+          console.log("index", index);
+          newArr.splice(index);
+          console.log("after remove", newArr);
+        }
+        return newArr;
+      });
+    }
   }, []);
-
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const handleRoomNumber = (e) => {
-    setRoomNumber(e.target.value);
-  };
 
   //=================================================================================================================================
   const { id } = useParams();
@@ -148,6 +164,7 @@ function SocketIo() {
   const [eventId, setEventId] = useState(grabEventHost);
   const [isHost, setIsHost] = useState(false);
   const [userId, setUserId] = useState("");
+  const [hostName, setHostName] = useState();
   useEffect(() => {
     getUserAddress();
   }, []);
@@ -172,49 +189,59 @@ function SocketIo() {
       setIsHost(filterData[0].wallet_id == userId);
     }
     if (isHost) {
+      setHostName(filterData[0].eventName);
       setEventId(filterData[0].contractAddress);
     }
   }
   return (
     <div className={SocketIoCss.videoDiv}>
       {isHost ? (
-        <div>
-          {/* <label htmlFor="name">Type your Name</label>
-          <input
-            type="text"
-            name=""
-            id="name"
-            value={username}
-            onChange={handleUsername}
-          />
-          <label htmlFor="roomNumber">Type the room number</label>
-          <input
-            type="text"
-            name=""
-            id="roomNumber"
-            value={roomNumber}
-            onChange={handleRoomNumber}
-          />
-          <button onClick={joinAsViewer}>Join as Viewer</button> */}
-          {stream ? (
-            <Button click={joinAsBroadcaster} text={"Streaming"} />
-          ) : (
-            <Button click={joinAsBroadcaster} text={"Start Broadcasting"} />
-          )}
-          {stream ? (
-            <video
-              controls
-              id={SocketIoCss.video}
-              ref={broadcasterVideo}
-            ></video>
-          ) : (
-            <div>
-              <video id={SocketIoCss.video} controls ref={userVideo}></video>
-            </div>
-          )}
+        <div style={{ height: "70vh" }}>
+          <Container>
+            <h1 className={SocketIoCss.title}>{hostName}</h1>
+            <Row>
+              <Col sm={8}>
+                {stream ? (
+                  <video
+                    controls
+                    id={SocketIoCss.video}
+                    ref={broadcasterVideo}
+                  ></video>
+                ) : (
+                  <div>
+                    <video
+                      id={SocketIoCss.video}
+                      controls
+                      ref={userVideo}
+                    ></video>
+                  </div>
+                )}
+              </Col>
+              <Col sm={4}>
+                {stream ? (
+                  <Button click={joinAsBroadcaster} text={"Streaming"} />
+                ) : (
+                  <Button
+                    click={joinAsBroadcaster}
+                    text={"Start Broadcasting"}
+                  />
+                )}
+                <div className={SocketIoCss.chatContainer}>
+                  <div>
+                    {newUser.length} Viewer{newUser.length > 1 ? "s" : ""}
+                  </div>
+                  {newUser.map((data) => (
+                    <div className={SocketIoCss.newUser}>{data} Joined!</div>
+                  ))}
+                </div>
+              </Col>
+            </Row>
+          </Container>
         </div>
       ) : (
-        <Spinner color="dark" />
+        <div style={{ height: "70vh" }} className={SocketIoCss.spinner}>
+          <Spinner color="dark" />
+        </div>
       )}
     </div>
   );

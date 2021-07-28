@@ -5,6 +5,7 @@ import StoredEvent from "./storedEvents/StoredEvent";
 import web3 from "../../web3";
 import axios from "redaxios";
 
+let newEventDetails;
 const PurchasedTickets = () => {
   const [purchasedEvent, setPurchasedEvent] = useState(null);
 
@@ -36,12 +37,19 @@ const PurchasedTickets = () => {
     }
   });
 
-  console.log(eventDetails);
+  if (eventDetails) {
+    newEventDetails = eventDetails.map((event) => {
+      return {
+        ...event,
+        eventDate: new Date(event.eventDate).toLocaleDateString(),
+      };
+    });
+  }
 
   return (
     <div>
-      {eventDetails ? (
-        eventDetails.map((event, index) => (
+      {newEventDetails ? (
+        newEventDetails.map((event, index) => (
           <div key={index}>
             <StoredEvent
               eventID={event.id}
