@@ -91,6 +91,7 @@ const PersonalSetting = () => {
       }
     );
     setProfilePic(data);
+    window.location.reload();
   };
 
   return (
