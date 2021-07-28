@@ -51,7 +51,7 @@ class PlatformRouter {
     for (let i of req.body.seatingDetails.TixDetails) {
       seats.push(i.location);
     }
-    console.log("seats", seats);
+
     // console.log(req.body.seatingDetails.TixDetails);
     const eventName = req.body.eventinfo.eventName;
     const eventId = req.body.eventinfo.id;
@@ -76,7 +76,6 @@ class PlatformRouter {
       startTime: startTime,
       endTime: endTime,
     };
-    console.log(order);
 
     // // node mailer syntax
     let smtpTransport = nodemailer.createTransport({
@@ -108,7 +107,7 @@ class PlatformRouter {
         context: order,
       };
       await smtpTransport.sendMail(mailOptions);
-      console.log("sent!");
+
       res.end();
     } catch (error) {
       console.log("error", error);
@@ -145,10 +144,8 @@ class PlatformRouter {
 
   async addWallet(req, res) {
     let walletId = req.body.wallet_id;
-    console.log(walletId);
-    await this.Method.storeWalletId(walletId).then(() => {
-      console.log("inserted id");
-    });
+
+    await this.Method.storeWalletId(walletId).then(() => {});
     res.end();
   }
 
@@ -181,7 +178,6 @@ class PlatformRouter {
 
   async createEvent(req, res) {
     try {
-      console.log("Running");
       let data = req.body;
       // first upload to cloudinary
       let photoStream = data.eventDetails.eventPhoto;
@@ -203,7 +199,7 @@ class PlatformRouter {
       let eventType = data.eventDetails.eventType;
       let isOnline = data.eventDetails.isOnline;
       let user_id = data.eventDetails.userId;
-      console.log(isOnline);
+
       await this.Method.createEvent(
         eventName,
         contractAddress,
@@ -230,7 +226,7 @@ class PlatformRouter {
     let date = req.body.date;
     let query = req.body.name;
     let data = await this.Method.getEventList(location, date, query);
-    console.log(data);
+
     res.send(data);
     res.end();
   }
@@ -266,7 +262,7 @@ class PlatformRouter {
 
   async findTheUserName(req, res) {
     let [user_address] = req.body.userAddress;
-    console.log("user_address", user_address);
+
     let newUserAddress = user_address.toLowerCase();
     let user_name = await this.Method.findUserName(newUserAddress);
     res.send(user_name);

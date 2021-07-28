@@ -36,11 +36,9 @@ function SocketIo() {
       room: eventId,
       name: hostName,
     };
-    console.log("broadcasterVideo", broadcasterVideo);
     navigator.mediaDevices
       .getUserMedia(streamConstraints)
       .then(function (stream) {
-        // console.log(myVideo);
         setStream(stream);
         broadcasterVideo.current.srcObject = stream;
         socket.emit("register as broadcaster", user.room);
@@ -49,7 +47,6 @@ function SocketIo() {
 
   useEffect(() => {
     socket.on("new viewer", async function (viewer) {
-      // console.log("new user comes in!", viewer.name);
       setNewUser((user) => [...user, viewer.name]);
       rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
 
@@ -59,8 +56,6 @@ function SocketIo() {
       });
       rtcPeerConnections[viewer.id].onicecandidate = (event) => {
         if (event.candidate) {
-          console.log("sending ice candidate");
-          console.log("viewer.id", viewer.id);
           socket.emit("candidate", viewer.id, {
             type: "candidate",
             label: event.candidate.sdpMLineIndex,
@@ -111,14 +106,12 @@ function SocketIo() {
           });
         });
 
-      console.log(broadcasterVideo);
       rtcPeerConnections[broadcaster.id].ontrack = (event) => {
         userVideo.current.srcObject = event.streams[0];
       };
 
       rtcPeerConnections[broadcaster.id].onicecandidate = (event) => {
         if (event.candidate) {
-          console.log("sending ice candidate");
           socket.emit("candidate", broadcaster.id, {
             type: "candidate",
             label: event.candidate.sdpMLineIndex,
@@ -133,24 +126,20 @@ function SocketIo() {
       rtcPeerConnections[viewerId].setRemoteDescription(
         new RTCSessionDescription(event)
       );
-      // console.log("what is this now", rtcPeerConnections);
     });
 
     socket.on("user-disconnected", (user) => {
       // if (peers[userId]) peers[userId].close();
-      console.log("disconnected", user.id);
+
       removeUser(user.name);
     });
 
     function removeUser(userName) {
       setNewUser((user) => {
-        console.log("user", user);
         let newArr = [...user];
         let index = newArr.indexOf(userName);
         if (index > -1) {
-          console.log("index", index);
           newArr.splice(index);
-          console.log("after remove", newArr);
         }
         return newArr;
       });
@@ -184,7 +173,6 @@ function SocketIo() {
 
   async function checkIsHost() {
     let filterData = await eventHost.filter((data) => {
-      // console.log(typeof data.id, typeof id * 1);
       return data.id === parseInt(id);
     });
     if (filterData[0]) {

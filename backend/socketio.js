@@ -8,13 +8,9 @@ let broadcasters = {};
 // signaling
 function socket(io) {
   io.on("connection", function (socket) {
-    console.log("a user connected");
-
     socket.on("register as broadcaster", function (room) {
-      console.log("register as broadcaster for room", room);
-
       broadcasters[room] = socket.id;
-      console.log("broadcasters", broadcasters);
+
       socket.join(room);
     });
 
@@ -28,7 +24,6 @@ function socket(io) {
           socket.to(broadcasters[user.room]).emit("user-disconnected", user);
         });
       } else {
-        console.log("room does not ");
         socket.emit("host-not-streaming");
       }
     });

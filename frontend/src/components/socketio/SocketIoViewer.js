@@ -31,55 +31,18 @@ function SocketIo() {
   }
 
   const joinAsViewer = () => {
-    console.log("clicked");
-
     user = {
       room: eventId,
       name: username,
     };
     socket.emit("register as viewer", user);
-    // console.log("can i get here");
+
     socket.on("host-not-streaming", function () {
       alert("The event has not started yet! Please come back later!");
     });
   };
 
   useEffect(() => {
-    // socket.on("new viewer", async function (viewer) {
-    //   console.log("new user comes in!", viewer);
-    //   rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
-
-    //   const stream = broadcasterVideo.current.srcObject;
-    //   await stream.getTracks().forEach((track) => {
-    //     return rtcPeerConnections[viewer.id].addTrack(track, stream);
-    //   });
-    //   rtcPeerConnections[viewer.id].onicecandidate = (event) => {
-    //     if (event.candidate) {
-    //       console.log("sending ice candidate");
-    //       socket.emit("candidate", viewer.id, {
-    //         type: "candidate",
-    //         label: event.candidate.sdpMLineIndex,
-    //         id: event.candidate.sdpMid,
-    //         candidate: event.candidate.candidate,
-    //       });
-    //     }
-    //   };
-
-    //   rtcPeerConnections[viewer.id]
-    //     .createOffer()
-    //     .then((sessionDescription) => {
-    //       rtcPeerConnections[viewer.id].setLocalDescription(sessionDescription);
-    //       socket.emit("offer", viewer.id, {
-    //         type: "offer",
-    //         sdp: sessionDescription,
-    //         broadcaster: user,
-    //       });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // });
-
     socket.on("candidate", function (id, event) {
       let candidate = new RTCIceCandidate({
         sdpMLineIndex: event.label,
@@ -113,8 +76,6 @@ function SocketIo() {
 
       rtcPeerConnections[broadcaster.id].onicecandidate = (event) => {
         if (event.candidate) {
-          console.log("sending ice candidate");
-
           socket.emit("candidate", broadcaster.id, {
             type: "candidate",
             label: event.candidate.sdpMLineIndex,
@@ -153,7 +114,7 @@ function SocketIo() {
     let user_address = await web3.eth.getAccounts();
 
     let filterData = await eventHost.filter((data) => {
-      return data.id == id;
+      return parseInt(data.id) === parseInt(id);
     });
     if (filterData[0]) {
       setEventId(filterData[0].contractAddress);
@@ -174,15 +135,12 @@ function SocketIo() {
     }
   }
 
-  console.log("theEvent", theEvent);
-
   async function grabCustomerIDFromWeb3(contractAddress, userId) {
     let customer = await EventContract.methods
       .TixQtyPerUser(contractAddress, userId, 0)
       .call();
     if (customer) {
       setHasTix(true);
-      console.log("has tix");
     }
   }
 

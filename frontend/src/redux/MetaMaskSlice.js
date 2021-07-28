@@ -20,8 +20,6 @@ export const MetaMaskSlice = createSlice({
 });
 
 export const addWalletThunk = (data) => async (dispatch) => {
-  //   console.log("adding wallet thunk");
-  //   console.log("data", data);
   const newWalletAddress = async () => {
     await axios.post(`${process.env.REACT_APP_SERVER}/api/walletId`, {
       wallet_id: data,
