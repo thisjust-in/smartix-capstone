@@ -168,7 +168,6 @@ function EventDetails() {
     history.push("/confirmation");
   }
 
-  console.log(eventinfo);
 
   if (loading) {
     return <Loading />;
