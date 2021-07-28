@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import EventContract from "../../EventContract";
 import { Container, Row, Col } from "react-bootstrap";
 import web3 from "../../web3";
@@ -28,6 +28,11 @@ function SocketIo() {
   };
   const streamConstraints = { audio: false, video: { height: 480 } };
 
+  let history = useHistory();
+  function leaveRoom() {
+    // history.push(`/user-settings`);
+    window.location.reload();
+  }
   // let socket = io();
 
   const joinAsBroadcaster = () => {
@@ -59,6 +64,7 @@ function SocketIo() {
       rtcPeerConnections[viewer.id].onicecandidate = (event) => {
         if (event.candidate) {
           console.log("sending ice candidate");
+          console.log("viewer.id", viewer.id);
           socket.emit("candidate", viewer.id, {
             type: "candidate",
             label: event.candidate.sdpMLineIndex,
@@ -136,7 +142,7 @@ function SocketIo() {
 
     socket.on("user-disconnected", (user) => {
       // if (peers[userId]) peers[userId].close();
-      console.log("disconnected", user.name);
+      console.log("disconnected", user.id);
       removeUser(user.name);
     });
 
@@ -204,6 +210,7 @@ function SocketIo() {
                 {stream ? (
                   <video
                     controls
+                    autoPlay
                     id={SocketIoCss.video}
                     ref={broadcasterVideo}
                   ></video>
@@ -219,7 +226,7 @@ function SocketIo() {
               </Col>
               <Col sm={4}>
                 {stream ? (
-                  <Button click={joinAsBroadcaster} text={"Streaming"} />
+                  <Button click={leaveRoom} text={"Streaming"} />
                 ) : (
                   <Button
                     click={joinAsBroadcaster}

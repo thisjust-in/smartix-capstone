@@ -1,3 +1,5 @@
+const { Socket } = require("node:dgram");
+
 let broadcasters = {};
 
 // express routing
@@ -17,18 +19,18 @@ function socket(io) {
     });
 
     socket.on("register as viewer", function (user) {
-      console.log("register as viewer for room", user.room);
+      if (Object.keys(broadcasters)[0] === user.room) {
+        user.id = socket.id;
+        socket.join(user.room);
+        socket.to(broadcasters[user.room]).emit("new viewer", user);
 
-      socket.join(user.room);
-      user.id = socket.id;
-      // console.log(user.room, broadcasters[user.room]);
-      // send to that particular room (broadcasters[user.room])
-      // then emit: call the "new viewer" in frontend
-      socket.to(broadcasters[user.room]).emit("new viewer", user);
-
-      socket.on("disconnect", () => {
-        socket.to(broadcasters[user.room]).emit("user-disconnected", user);
-      });
+        socket.on("disconnect", () => {
+          socket.to(broadcasters[user.room]).emit("user-disconnected", user);
+        });
+      } else {
+        console.log("room does not ");
+        socket.emit("host-not-streaming");
+      }
     });
 
     socket.on("candidate", function (id, event) {

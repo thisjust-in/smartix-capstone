@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 import SocketIoCss from "./SocketIo.module.css";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import EventContract from "../../EventContract";
 import web3 from "../../web3";
 import { Container, Row, Col } from "react-bootstrap";
@@ -17,6 +17,7 @@ function SocketIo() {
   const [username, setUsername] = useState("");
   const [roomNumber, setRoomNumber] = useState("");
   const [stream, setStream] = useState();
+  const [joinedRoom, setJoinedRoom] = useState(false);
   const broadcasterVideo = useRef();
   const userVideo = useRef();
 
@@ -26,25 +27,11 @@ function SocketIo() {
       { urls: "stun:stun.l.google.com:19302" },
     ],
   };
-  const streamConstraints = { audio: false, video: { height: 480 } };
-
-  // let socket = io();
-
-  //   const joinAsBroadcaster = () => {
-  //     user = {
-  //       room: userId,
-  //       name: "need to change",
-  //     };
-  //     console.log("broadcasterVideo", broadcasterVideo);
-  //     navigator.mediaDevices
-  //       .getUserMedia(streamConstraints)
-  //       .then(function (stream) {
-  //         // console.log(myVideo);
-  //         setStream(stream);
-  //         broadcasterVideo.current.srcObject = stream;
-  //         socket.emit("register as broadcaster", user.room);
-  //       });
-  //   };
+  let history = useHistory();
+  function leaveRoom() {
+    history.push(`/user-settings`);
+    window.location.reload();
+  }
 
   const joinAsViewer = () => {
     console.log("clicked");
@@ -55,43 +42,46 @@ function SocketIo() {
     };
     socket.emit("register as viewer", user);
     // console.log("can i get here");
+    socket.on("host-not-streaming", function () {
+      alert("The event has not started yet! Please come back later!");
+    });
   };
 
   useEffect(() => {
-    socket.on("new viewer", async function (viewer) {
-      console.log("new user comes in!", viewer);
-      rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
+    // socket.on("new viewer", async function (viewer) {
+    //   console.log("new user comes in!", viewer);
+    //   rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
 
-      const stream = broadcasterVideo.current.srcObject;
-      await stream.getTracks().forEach((track) => {
-        return rtcPeerConnections[viewer.id].addTrack(track, stream);
-      });
-      rtcPeerConnections[viewer.id].onicecandidate = (event) => {
-        if (event.candidate) {
-          console.log("sending ice candidate");
-          socket.emit("candidate", viewer.id, {
-            type: "candidate",
-            label: event.candidate.sdpMLineIndex,
-            id: event.candidate.sdpMid,
-            candidate: event.candidate.candidate,
-          });
-        }
-      };
+    //   const stream = broadcasterVideo.current.srcObject;
+    //   await stream.getTracks().forEach((track) => {
+    //     return rtcPeerConnections[viewer.id].addTrack(track, stream);
+    //   });
+    //   rtcPeerConnections[viewer.id].onicecandidate = (event) => {
+    //     if (event.candidate) {
+    //       console.log("sending ice candidate");
+    //       socket.emit("candidate", viewer.id, {
+    //         type: "candidate",
+    //         label: event.candidate.sdpMLineIndex,
+    //         id: event.candidate.sdpMid,
+    //         candidate: event.candidate.candidate,
+    //       });
+    //     }
+    //   };
 
-      rtcPeerConnections[viewer.id]
-        .createOffer()
-        .then((sessionDescription) => {
-          rtcPeerConnections[viewer.id].setLocalDescription(sessionDescription);
-          socket.emit("offer", viewer.id, {
-            type: "offer",
-            sdp: sessionDescription,
-            broadcaster: user,
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
+    //   rtcPeerConnections[viewer.id]
+    //     .createOffer()
+    //     .then((sessionDescription) => {
+    //       rtcPeerConnections[viewer.id].setLocalDescription(sessionDescription);
+    //       socket.emit("offer", viewer.id, {
+    //         type: "offer",
+    //         sdp: sessionDescription,
+    //         broadcaster: user,
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //     });
+    // });
 
     socket.on("candidate", function (id, event) {
       let candidate = new RTCIceCandidate({
@@ -119,7 +109,7 @@ function SocketIo() {
           });
         });
 
-      console.log(broadcasterVideo);
+      setJoinedRoom(true);
       rtcPeerConnections[broadcaster.id].ontrack = (event) => {
         userVideo.current.srcObject = event.streams[0];
       };
@@ -127,6 +117,7 @@ function SocketIo() {
       rtcPeerConnections[broadcaster.id].onicecandidate = (event) => {
         if (event.candidate) {
           console.log("sending ice candidate");
+
           socket.emit("candidate", broadcaster.id, {
             type: "candidate",
             label: event.candidate.sdpMLineIndex,
@@ -141,13 +132,8 @@ function SocketIo() {
       rtcPeerConnections[viewerId].setRemoteDescription(
         new RTCSessionDescription(event)
       );
-      // console.log("what is this now", rtcPeerConnections);
     });
   }, []);
-
-  const handleRoomNumber = (e) => {
-    setRoomNumber(e.target.value);
-  };
 
   //=================================================================================================================================
   const { id } = useParams();
@@ -235,8 +221,8 @@ function SocketIo() {
                 )}
               </Col>
               <Col sm={4}>
-                {stream ? (
-                  <Button click={joinAsViewer} text={"Streaming"} />
+                {joinedRoom ? (
+                  <Button click={leaveRoom} text={"Leave Room"} />
                 ) : (
                   <Button click={joinAsViewer} text={"Join Event"} />
                 )}
