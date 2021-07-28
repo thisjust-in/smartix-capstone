@@ -15,32 +15,38 @@ export default function LoggedInNav() {
   const user_id = useSelector((state) => {
     return state.users.userID;
   });
+  const pic = useSelector((state) => {
+    if (state.users.profilepic.data) {
+      return state.users.profilepic.data[0].userProfile_pic;
+    } else {
+      return "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627279513/profile-pic_ovouzp.png";
+    }
+  });
 
   if (typeof user_id === "number") {
     currentUserId = user_id;
   }
 
-  async function getUser() {
-    if (currentUserId) {
-      await axios
-        .post(`${process.env.REACT_APP_SERVER}/api/getInfo`, {
-          id: currentUserId,
-        })
-        .then((response) => {
-          if (response.data[0].userProfile_pic === null) {
-            setProfilePic(
-              "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627279513/profile-pic_ovouzp.png"
-            );
-          } else {
-            setProfilePic(response.data[0].userProfile_pic);
-          }
-        });
-    }
-  }
+  // async function getUser() {
+  //   if (currentUserId) {
+  //     await axios
+  //       .post(`${process.env.REACT_APP_SERVER}/api/getInfo`, {
+  //         id: currentUserId,
+  //       })
+  //       .then((response) => {
+  //         if (response.data[0].userProfile_pic === null) {
+  //           setProfilePic(
+  //             "https://res.cloudinary.com/dnq92mpxr/image/upload/v1627279513/profile-pic_ovouzp.png"
+  //           );
+  //         } else {
+  //           setProfilePic(response.data[0].userProfile_pic);
+  //         }
+  //       });
+  //   }
+  // }
 
   useEffect(() => {
     dispatch(checkWalletIDThunk());
-    getUser();
   }, [currentUserId]);
 
   return (
@@ -50,12 +56,21 @@ export default function LoggedInNav() {
       </Nav.Link>
       <NavDropdown
         title={
-          <img
-            src={profilePic}
-            className={classes.profilePicture}
-            width="40px"
-            alt="avatars"
-          />
+          pic ? (
+            <img
+              src={pic}
+              className={classes.profilePicture}
+              width="40px"
+              alt="avatars"
+            />
+          ) : (
+            <img
+              src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627279513/profile-pic_ovouzp.png"
+              className={classes.profilePicture}
+              width="40px"
+              alt="avatars"
+            />
+          )
         }
         id="collasible-nav-dropdown"
       >
