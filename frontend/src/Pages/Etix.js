@@ -46,7 +46,7 @@ function Etix() {
   let codeContent = `${
     process.env.REACT_APP_FRONTSERVER
   }/checktix/${event_id}/${address}/${Date.now()}`;
-  console.log(codeContent);
+  // console.log(codeContent);
 
   const renderTime = ({ remainingTime }) => {
     if (remainingTime === 0) {

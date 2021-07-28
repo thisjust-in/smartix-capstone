@@ -1,77 +1,100 @@
-#video{
-    /* margin-top: 100px; */
-    height: 400px;
-    width: 720px;
-    border-radius: 20px;
-    background-color: white;
+#video {
+  /* margin-top: 100px; */
+  height: 400px;
+  width: 720px;
+  border-radius: 20px;
+  background-color: white;
 }
 
-.title{
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    margin: 1rem 0;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #2a2a2a;
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 1rem 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #2a2a2a;
 }
 
-
-.newUser{
-    word-wrap: break-word;
-    padding:10px 10px;
-    /* background-color: grey; */
-    /* height: 50px; */
-    font-size: 1rem;
-    font-weight: 600;
-    color: rgba(49, 68, 235, 0.9);
-    text-transform: capitalize;
+.newUser {
+  word-wrap: break-word;
+  padding: 10px 10px;
+  /* background-color: grey; */
+  /* height: 50px; */
+  font-size: 1rem;
+  font-weight: 600;
+  color: rgba(49, 68, 235, 0.9);
+  text-transform: capitalize;
 }
 
-.chatContainer{
-    background-color: rgb(255, 255, 255);
-    overflow-y: scroll;
-    padding: 10px 10px;
-    height: 39vh;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    border: 0.5px solid rgb(240, 240, 240,0.5);
+.chatContainer {
+  background-color: rgb(255, 255, 255);
+  overflow-y: scroll;
+  padding: 10px 10px;
+  height: 39vh;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 0.5px solid rgb(240, 240, 240, 0.5);
 }
 
-.spinner{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#eventName {
+  color: rgb(19, 19, 19);
+  letter-spacing: 1px;
+}
+
+#eventDescription {
+  color: rgb(19, 19, 19);
+  margin: 10px 0;
+}
+
+#eventStartTime {
+  color: rgb(19, 19, 19);
+  margin: 10px 0;
+}
+
+#eventEndTime {
+  color: rgb(19, 19, 19);
+  margin: 10px 0;
+}
+
+.eventText {
+  font-weight: 400;
 }
 
 @media only screen and (max-width: 600px) {
-    #video{
-        /* margin-top: 100px; */
-        height:200px;
-        width: 300px;
-        border-radius: 20px;
-        order: 1;
-    }
-    .flexbox{
-        display: flex;
-        /* background-color: rebeccapurple; */
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    .newUserAndButton{
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: column;
-        max-width: 250px;
-        order: 2;
-    }
-
-    .chatContainer{
-        background-color: rgb(255, 255, 255);
-        overflow-y: scroll;
-        padding: 10px 10px;
-        height: 20vh;
-        margin-bottom: 1rem;
-        border-radius: 5px;
-        border: 0.5px solid rgb(240, 240, 240,0.5);
-    }
+  #video {
+    /* margin-top: 100px; */
+    height: 200px;
+    width: 300px;
+    border-radius: 20px;
+    order: 1;
   }
+  .flexbox {
+    display: flex;
+    /* background-color: rebeccapurple; */
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .newUserAndButton {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    max-width: 250px;
+    order: 2;
+  }
+
+  .chatContainer {
+    background-color: rgb(255, 255, 255);
+    overflow-y: scroll;
+    padding: 10px 10px;
+    height: 20vh;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+    border: 0.5px solid rgb(240, 240, 240, 0.5);
+  }
+}

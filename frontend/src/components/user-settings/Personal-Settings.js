@@ -75,7 +75,6 @@ const PersonalSetting = () => {
     let file = event.target.files[0];
     reader.readAsDataURL(file);
     reader.onload = function () {
-      console.log();
       setNewUpload(reader.result);
     };
     // setfileName(file.name);
@@ -91,6 +90,7 @@ const PersonalSetting = () => {
       }
     );
     setProfilePic(data);
+    window.location.reload();
   };
 
   return (

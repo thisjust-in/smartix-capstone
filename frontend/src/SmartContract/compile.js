@@ -30,7 +30,7 @@ const output = JSON.parse(solc.compile(JSON.stringify(input)));
 let bytecode = output.contracts['CreateEvent.sol'].CreateEvent.evm.bytecode.object
 let abi = output.contracts['CreateEvent.sol'].CreateEvent.abi
 let JSONabi = JSON.stringify(output.contracts['CreateEvent.sol'].CreateEvent.abi)
-console.log(JSONabi)
+// console.log(JSONabi)
 
 module.exports = {bytecode, abi}
 
