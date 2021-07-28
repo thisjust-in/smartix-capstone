@@ -36,15 +36,6 @@ function EventDetails() {
   }
 
   // get user email address
-  async function getUser() {
-    let response = await axios.post(
-      `${process.env.REACT_APP_SERVER}/api/getInfo`,
-      {
-        id: currentUser,
-      }
-    );
-    setEmail(response.data[0].email);
-  }
 
   useEffect(() => {
     async function fetch() {
@@ -71,9 +62,18 @@ function EventDetails() {
         setForOnline(online);
       }
     }
+    async function getUser() {
+      let response = await axios.post(
+        `${process.env.REACT_APP_SERVER}/api/getInfo`,
+        {
+          id: currentUser,
+        }
+      );
+      setEmail(response.data[0].email);
+    }
     getUser();
     fetch();
-  }, [user_id]);
+  }, [user_id, currentUser]);
 
   async function select(e) {
     let location = e.id;

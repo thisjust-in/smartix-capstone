@@ -41,6 +41,7 @@ class PlatformRouter {
     let jsonFormat = cloudUpload.secure_url.toString();
     let userProfile_pic = jsonFormat;
     await this.Method.setProfilePic(id, userProfile_pic);
+    res.send(userProfile_pic);
     res.end();
   }
 
@@ -118,6 +119,7 @@ class PlatformRouter {
     let id = req.body.id;
     let userInfo = await this.Method.getUserInfo(id);
     res.send(userInfo);
+    res.end();
   }
 
   async editUsername(req, res) {
@@ -158,7 +160,7 @@ class PlatformRouter {
       res.end();
     } else {
       let id = await this.Method.storeWalletId(formatAddress);
-      res.send(id[0].toString());
+      res.send(id[0]);
       res.end();
     }
   }
@@ -228,6 +230,7 @@ class PlatformRouter {
     let date = req.body.date;
     let query = req.body.name;
     let data = await this.Method.getEventList(location, date, query);
+    console.log(data);
     res.send(data);
     res.end();
   }

@@ -84,7 +84,6 @@ export const EventForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    // sort image upload
     let eventPhoto;
     let eventDetails;
     const reader = new FileReader();
@@ -95,14 +94,11 @@ export const EventForm = () => {
         let accounts = await web3.eth.getAccounts();
         await EventContract.methods.newEvent().send({ from: accounts[0] });
         await EventContract.getPastEvents(
-          "allEvents",
-          { fromBlock: "latest", toBlock: "latest" },
+          "GetAddress",
+          { fromBlock: "latest" },
           (err, events) => {
-            let info = events[0].raw.data;
-            console.log(info);
-            let addressarray = info.split("");
-            addressarray.splice(2, 24);
-            contractAddress = addressarray.join("");
+            contractAddress =
+              events[0].returnValues._eventaddress.toLowerCase();
           }
         );
         eventPhoto = reader.result;

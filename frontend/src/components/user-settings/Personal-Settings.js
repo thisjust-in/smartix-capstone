@@ -4,7 +4,6 @@ import classes from "../user-settings/User-setting.module.css";
 import { checkWalletIDThunk } from "../../redux/CheckUserSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import web3 from "../../web3";
 import axios from "redaxios";
 import PersonalInfo from "./Personal-Details";
 
@@ -15,7 +14,6 @@ const PersonalSetting = () => {
   const [username, setUsername] = useState("");
   const [newUpload, setNewUpload] = useState();
   const [profilePic, setProfilePic] = useState(null);
-  const [fileName, setfileName] = useState("filename");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkWalletIDThunk());
@@ -30,24 +28,22 @@ const PersonalSetting = () => {
     currentUserId = user_id;
   }
 
-  async function getUser() {
-    if (currentUserId) {
-      await axios
-        .post(`${process.env.REACT_APP_SERVER}/api/getInfo`, {
-          id: currentUserId,
-        })
-        .then((response) => {
-          setProfilePic(response.data[0].userProfile_pic);
-          setUserEmail(response.data[0].email);
-          setUserInfo(response.data[0].username);
-        });
-    }
-  }
-
   useEffect(() => {
-    dispatch(checkWalletIDThunk());
+    async function getUser() {
+      if (currentUserId) {
+        await axios
+          .post(`${process.env.REACT_APP_SERVER}/api/getInfo`, {
+            id: currentUserId,
+          })
+          .then((response) => {
+            setProfilePic(response.data[0].userProfile_pic);
+            setUserEmail(response.data[0].email);
+            setUserInfo(response.data[0].username);
+          });
+      }
+    }
     getUser();
-  }, [currentUserId][(username, userEmail)]);
+  }, [currentUserId, username, email, profilePic]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -93,6 +89,8 @@ const PersonalSetting = () => {
         id: currentUserId,
       }
     );
+    setProfilePic(data);
+    window.location.reload();
   };
 
   return (
@@ -112,7 +110,6 @@ const PersonalSetting = () => {
               <Form.Label>Upload Profile Picture</Form.Label>
               <Form.Control
                 onChange={(event) => handleFileChange(event)}
-                name={fileName}
                 type="file"
                 size="lg"
                 required

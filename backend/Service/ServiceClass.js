@@ -10,7 +10,6 @@ class Method {
   }
 
   async storeWalletId(wallet_id) {
-    console.log(wallet_id);
     let exisitingUser = await knex("users").where("wallet_id", wallet_id);
     if (!exisitingUser[0]) {
       return knex("users").returning("id").insert({
@@ -19,7 +18,6 @@ class Method {
     }
   }
   async findUser(wallet_id) {
-    console.log(wallet_id);
     let exisitingUser = await knex("users").where("wallet_id", wallet_id);
     if (!exisitingUser[0]) {
       return knex("users").returning("id").insert({
@@ -130,7 +128,6 @@ class Method {
     isOnline,
     users_id
   ) {
-    console.log("inserting now from service class");
     let newEvent = {
       eventName: eventName,
       eventLocation: eventLocation,
@@ -148,9 +145,6 @@ class Method {
     };
     let insertEvent = await knex("event")
       .insert(newEvent)
-      .then(() => {
-        console.log("inserted new Event");
-      })
       .catch((error) => {
         console.log("error", error);
       });
@@ -231,7 +225,6 @@ class Method {
       let result = await knex("users")
         .where("id", id)
         .update({ userProfile_pic: photo });
-      // console.log(result);
       return result;
     } catch (error) {
       console.log("error", error);
