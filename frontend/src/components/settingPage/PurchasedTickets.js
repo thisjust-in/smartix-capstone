@@ -45,10 +45,6 @@ const PurchasedTickets = () => {
       };
     });
   }
-  console.log(purchasedEvent);
-  console.log(eventDetails);
-  console.log(newEventDetails);
-
   return (
     <div>
       {newEventDetails ? (
