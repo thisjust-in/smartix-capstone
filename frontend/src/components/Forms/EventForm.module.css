@@ -9,6 +9,9 @@
   margin: 0px auto;
   width: 40vw;
   text-align: left;
+  background: white;
+  margin-bottom: 3rem;
+  padding: 2px 25px;
 }
 
 /* form styling */
