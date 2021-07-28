@@ -9,10 +9,8 @@ function Test() {
       "allEvents",
       { fromBlock: "latest", toBlock: "latest" },
       (err, events) => {
-        console.log(events[0].raw.data);
         let addressarray = events[0].raw.data.split("");
         addressarray.splice(2, 24);
-        console.log(addressarray.join(""));
       }
     );
   }

@@ -23,8 +23,12 @@ function SocketIo() {
       { urls: "stun:stun.l.google.com:19302" },
     ],
   };
-  const streamConstraints = { audio: false, video: { height: 480 } };
+  const streamConstraints = { audio: true, video: { height: 480 } };
 
+  function leaveRoom() {
+    // history.push(`/user-settings`);
+    window.location.reload();
+  }
   // let socket = io();
 
   const joinAsBroadcaster = () => {
@@ -32,11 +36,9 @@ function SocketIo() {
       room: eventId,
       name: hostName,
     };
-    console.log("broadcasterVideo", broadcasterVideo);
     navigator.mediaDevices
       .getUserMedia(streamConstraints)
       .then(function (stream) {
-        // console.log(myVideo);
         setStream(stream);
         broadcasterVideo.current.srcObject = stream;
         socket.emit("register as broadcaster", user.room);
@@ -45,7 +47,6 @@ function SocketIo() {
 
   useEffect(() => {
     socket.on("new viewer", async function (viewer) {
-      // console.log("new user comes in!", viewer.name);
       setNewUser((user) => [...user, viewer.name]);
       rtcPeerConnections[viewer.id] = new RTCPeerConnection(iceServers);
 
@@ -55,7 +56,6 @@ function SocketIo() {
       });
       rtcPeerConnections[viewer.id].onicecandidate = (event) => {
         if (event.candidate) {
-          console.log("sending ice candidate");
           socket.emit("candidate", viewer.id, {
             type: "candidate",
             label: event.candidate.sdpMLineIndex,
@@ -106,14 +106,12 @@ function SocketIo() {
           });
         });
 
-      console.log(broadcasterVideo);
       rtcPeerConnections[broadcaster.id].ontrack = (event) => {
         userVideo.current.srcObject = event.streams[0];
       };
 
       rtcPeerConnections[broadcaster.id].onicecandidate = (event) => {
         if (event.candidate) {
-          console.log("sending ice candidate");
           socket.emit("candidate", broadcaster.id, {
             type: "candidate",
             label: event.candidate.sdpMLineIndex,
@@ -128,24 +126,20 @@ function SocketIo() {
       rtcPeerConnections[viewerId].setRemoteDescription(
         new RTCSessionDescription(event)
       );
-      // console.log("what is this now", rtcPeerConnections);
     });
 
     socket.on("user-disconnected", (user) => {
       // if (peers[userId]) peers[userId].close();
-      console.log("disconnected", user.name);
+
       removeUser(user.name);
     });
 
     function removeUser(userName) {
       setNewUser((user) => {
-        console.log("user", user);
         let newArr = [...user];
         let index = newArr.indexOf(userName);
         if (index > -1) {
-          console.log("index", index);
           newArr.splice(index);
-          console.log("after remove", newArr);
         }
         return newArr;
       });
@@ -179,10 +173,10 @@ function SocketIo() {
 
   async function checkIsHost() {
     let filterData = await eventHost.filter((data) => {
-      return data.id == id;
+      return data.id === parseInt(id);
     });
     if (filterData[0]) {
-      setIsHost(filterData[0].wallet_id == userId);
+      setIsHost(filterData[0].wallet_id === userId);
     }
     if (isHost) {
       setHostName(filterData[0].eventName);
@@ -200,6 +194,7 @@ function SocketIo() {
                 {stream ? (
                   <video
                     controls
+                    autoPlay
                     id={SocketIoCss.video}
                     ref={broadcasterVideo}
                   ></video>
@@ -215,7 +210,7 @@ function SocketIo() {
               </Col>
               <Col sm={4}>
                 {stream ? (
-                  <Button click={joinAsBroadcaster} text={"Streaming"} />
+                  <Button click={leaveRoom} text={"Stop Streaming"} />
                 ) : (
                   <Button
                     click={joinAsBroadcaster}
