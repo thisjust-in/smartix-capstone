@@ -61,7 +61,7 @@ export const EventSettings = () => {
   } else {
     return (
       <div className={classes.generalContainer}>
-        <Container>
+        <Container className={classes.FormDiv}>
           <Row>
             <Col>
               <img src={image} alt="alt" width="500px" />

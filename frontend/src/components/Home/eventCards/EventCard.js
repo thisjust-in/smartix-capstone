@@ -2,7 +2,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { Container, Row, Col } from "react-bootstrap";
 import OneCard from "./OneCard";
 import EventCardCSS from "./EventCard.module.css";
-import { Link } from "react-router-dom";
 import axios from "redaxios";
 import { useHistory } from "react-router";
 import { getEventDetails } from "../../../redux/EventListSlice";

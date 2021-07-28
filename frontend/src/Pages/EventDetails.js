@@ -118,13 +118,15 @@ function EventDetails() {
     await EventContract.methods
       .buyTicket(eventinfo.contractAddress, tix[0].category, tix.length)
       .send({ from: accounts[0], value: wei });
-
     let data = {
       TixDetails: tix,
       wallet_id: accounts[0],
       contractAddress: eventinfo.contractAddress,
     };
 
+    let seatingDetails = {
+      TixDetails: tix,
+    };
     await axios.post(`${process.env.REACT_APP_SERVER}/purchase`, data);
     let tixArray = [];
     for (let each of tix) {
@@ -136,7 +138,7 @@ function EventDetails() {
       {
         email: email,
         amount: amount,
-        data: data[0],
+        seatingDetails: seatingDetails,
         eventinfo: eventinfo,
       }
     );
@@ -167,8 +169,6 @@ function EventDetails() {
     );
     history.push("/confirmation");
   }
-
-  console.log(eventinfo);
 
   if (loading) {
     return <Loading />;
