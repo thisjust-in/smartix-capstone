@@ -35,6 +35,7 @@ function SearchBar() {
         `${process.env.REACT_APP_SERVER}/api/getlist`,
         searchResult
       );
+      console.log(response.data);
       dispatch(getEventDetails(response.data));
       history.push("/list");
     } catch (err) {

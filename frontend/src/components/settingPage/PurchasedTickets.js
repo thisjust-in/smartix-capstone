@@ -1,8 +1,6 @@
-import { useSelector, useDispatch } from "react-redux";
-import React, { useEffect, useRef, useState } from "react";
-import YourEventsCss from "./storedEvents/YourEvents.module.css";
+import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
 import StoredEvent from "./storedEvents/StoredEvent";
-import web3 from "../../web3";
 import axios from "redaxios";
 
 let newEventDetails;
@@ -13,17 +11,19 @@ const PurchasedTickets = () => {
     return state.users.userID;
   });
 
-  useEffect(async () => {
-    if (typeof id === "number") {
-      let allPurchasedEvent = await axios.post(
-        `${process.env.REACT_APP_SERVER}/api/getallpurchasedevent`,
-        {
-          userId: id,
-        }
-      );
-      console.log("allPurchasedEvent", allPurchasedEvent.data);
-      setPurchasedEvent(allPurchasedEvent.data);
+  useEffect(() => {
+    async function fetch() {
+      if (typeof id === "number") {
+        let allPurchasedEvent = await axios.post(
+          `${process.env.REACT_APP_SERVER}/api/getallpurchasedevent`,
+          {
+            userId: id,
+          }
+        );
+        setPurchasedEvent(allPurchasedEvent.data);
+      }
     }
+    fetch();
   }, [id]);
 
   const eventDetails = useSelector((state) => {
@@ -45,6 +45,9 @@ const PurchasedTickets = () => {
       };
     });
   }
+  console.log(purchasedEvent);
+  console.log(eventDetails);
+  console.log(newEventDetails);
 
   return (
     <div>
@@ -68,7 +71,9 @@ const PurchasedTickets = () => {
           </div>
         ))
       ) : (
-        <div>Loading</div>
+        <div>
+          <h2 className="mt-5">You have no tickets</h2>
+        </div>
       )}
     </div>
   );

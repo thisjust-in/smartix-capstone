@@ -153,7 +153,7 @@ class PlatformRouter {
       res.end();
     } else {
       let id = await this.Method.storeWalletId(formatAddress);
-      res.send(id[0].toString());
+      res.send(id[0]);
       res.end();
     }
   }
@@ -223,6 +223,7 @@ class PlatformRouter {
     let date = req.body.date;
     let query = req.body.name;
     let data = await this.Method.getEventList(location, date, query);
+    console.log(data);
     res.send(data);
     res.end();
   }

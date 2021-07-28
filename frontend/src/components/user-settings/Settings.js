@@ -16,6 +16,7 @@ const Settings = () => {
                   <img
                     src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627365170/icons/Profile_fctmvy.svg"
                     width="35px"
+                    alt=""
                   />
                   &nbsp;&nbsp;Personal Settings
                 </Nav.Link>
@@ -25,6 +26,7 @@ const Settings = () => {
                   <img
                     src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627365170/icons/Info_afxivj.svg"
                     width="35px"
+                    alt=""
                   />
                   &nbsp;&nbsp; My Events
                 </Nav.Link>
@@ -34,6 +36,7 @@ const Settings = () => {
                   <img
                     src="https://res.cloudinary.com/dnq92mpxr/image/upload/v1627365170/icons/Star_nm3qmo.svg"
                     width="35px"
+                    alt=""
                   />
                   &nbsp;&nbsp; Purchased Tickets
                 </Nav.Link>
