@@ -47,7 +47,7 @@ const PersonalSetting = () => {
   useEffect(() => {
     dispatch(checkWalletIDThunk());
     getUser();
-  }, [currentUserId][username]);
+  }, [currentUserId][(username, userEmail)]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -55,6 +55,7 @@ const PersonalSetting = () => {
       id: currentUserId,
       email: email,
     };
+    setEmail("");
     await axios.post(`${process.env.REACT_APP_SERVER}/api/edit-email`, {
       submitDetails: submitDetails,
     });
@@ -78,7 +79,6 @@ const PersonalSetting = () => {
     let file = event.target.files[0];
     reader.readAsDataURL(file);
     reader.onload = function () {
-      console.log();
       setNewUpload(reader.result);
     };
     // setfileName(file.name);
