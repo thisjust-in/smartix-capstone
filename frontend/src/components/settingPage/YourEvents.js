@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import web3 from "../../web3";
 import { useSelector } from "react-redux";
 import YourEventsCss from "./storedEvents/YourEvents.module.css";

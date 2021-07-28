@@ -44,17 +44,14 @@ export const MintTickets = () => {
     let user_address = await web3.eth.getAccounts();
 
     if (event.venue === "AsiaWorld-Expo") {
-      console.log("Expo");
       await EventContract.methods
         .Mint(event.contractAddress, 897)
         .send({ from: user_address[0] });
     } else if (event.venue === "Hong Kong Coliseum") {
-      console.log("Coliseum");
       await EventContract.methods
         .Mint(event.contractAddress, 562)
         .send({ from: user_address[0] });
     } else {
-      console.log("online");
       await EventContract.methods
         .Mint(event.contractAddress, 2000)
         .send({ from: user_address[0] });
