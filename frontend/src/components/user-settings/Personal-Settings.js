@@ -4,18 +4,18 @@ import classes from "../user-settings/User-setting.module.css";
 import { checkWalletIDThunk } from "../../redux/CheckUserSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import web3 from "../../web3";
 import axios from "redaxios";
 import PersonalInfo from "./Personal-Details";
+import { useHistory } from "react-router-dom";
 
 const PersonalSetting = () => {
+  const history = useHistory();
   const [email, setEmail] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userInfo, setUserInfo] = useState("");
   const [username, setUsername] = useState("");
   const [newUpload, setNewUpload] = useState();
   const [profilePic, setProfilePic] = useState(null);
-  const [fileName, setfileName] = useState("filename");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(checkWalletIDThunk());
@@ -47,7 +47,7 @@ const PersonalSetting = () => {
   useEffect(() => {
     dispatch(checkWalletIDThunk());
     getUser();
-  }, [currentUserId][username]);
+  }, [currentUserId][(username, userEmail, profilePic)]);
 
   const handleEmailSubmit = async (e) => {
     e.preventDefault();
@@ -55,6 +55,7 @@ const PersonalSetting = () => {
       id: currentUserId,
       email: email,
     };
+    setEmail("");
     await axios.post(`${process.env.REACT_APP_SERVER}/api/edit-email`, {
       submitDetails: submitDetails,
     });
@@ -93,6 +94,7 @@ const PersonalSetting = () => {
         id: currentUserId,
       }
     );
+    setProfilePic(data);
   };
 
   return (
@@ -112,7 +114,6 @@ const PersonalSetting = () => {
               <Form.Label>Upload Profile Picture</Form.Label>
               <Form.Control
                 onChange={(event) => handleFileChange(event)}
-                name={fileName}
                 type="file"
                 size="lg"
                 required

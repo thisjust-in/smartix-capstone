@@ -41,6 +41,7 @@ class PlatformRouter {
     let jsonFormat = cloudUpload.secure_url.toString();
     let userProfile_pic = jsonFormat;
     await this.Method.setProfilePic(id, userProfile_pic);
+    res.send(userProfile_pic);
     res.end();
   }
 
@@ -111,6 +112,7 @@ class PlatformRouter {
     let id = req.body.id;
     let userInfo = await this.Method.getUserInfo(id);
     res.send(userInfo);
+    res.end();
   }
 
   async editUsername(req, res) {
