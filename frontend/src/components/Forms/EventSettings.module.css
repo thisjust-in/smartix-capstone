@@ -2,6 +2,11 @@
   margin: 10rem 0;
 }
 
+.FormDiv {
+  background-color: rgb(255, 255, 255);
+  padding: 30px 10px;
+  border-radius: 8px;
+}
 .formContainer {
   padding: 3rem 2rem;
   border: 1px solid rgb(59, 59, 59);

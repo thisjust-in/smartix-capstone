@@ -244,10 +244,25 @@ function SocketIo() {
                   <div className={SocketIoCss.newUser}>
                     {theEvent && (
                       <div>
-                        <h4>{theEvent.eventName}</h4>
-                        <div>Description: {theEvent.eventDescription}</div>
-                        <div>Start at: {theEvent.startTime}</div>
-                        <div>End at: {theEvent.endTime}</div>
+                        <h4 id={SocketIoCss.eventName}>{theEvent.eventName}</h4>
+                        <div id={SocketIoCss.eventDescription}>
+                          Description:{" "}
+                          <span className={SocketIoCss.eventText}>
+                            {theEvent.eventDescription}
+                          </span>
+                        </div>
+                        <div id={SocketIoCss.eventStartTime}>
+                          Start at:{" "}
+                          <span className={SocketIoCss.eventText}>
+                            {theEvent.startTime}
+                          </span>
+                        </div>
+                        <div id={SocketIoCss.eventEndTime}>
+                          End at:{" "}
+                          <span className={SocketIoCss.eventText}>
+                            {theEvent.endTime}
+                          </span>
+                        </div>
                       </div>
                     )}
                   </div>
