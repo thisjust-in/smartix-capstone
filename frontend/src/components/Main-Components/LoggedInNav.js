@@ -1,10 +1,11 @@
-import { Nav, NavDropdown } from "react-bootstrap";
+import { NavDropdown } from "react-bootstrap";
 import React, { useEffect } from "react";
 import { checkWalletIDThunk } from "../../redux/CheckUserSlice";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { SecondaryButton } from "./SecondaryButton";
 import classes from "./LoggedInNav.module.css";
+import { Link } from "react-router-dom";
 
 export default function LoggedInNav() {
   const dispatch = useDispatch();
@@ -23,9 +24,9 @@ export default function LoggedInNav() {
 
   return (
     <div className={classes.rightContainer}>
-      <Nav.Link href="/create-event">
+      <Link to="/create-event">
         <SecondaryButton name={buttonName} />
-      </Nav.Link>
+      </Link>
       <NavDropdown
         title={
           pic ? (
@@ -46,8 +47,8 @@ export default function LoggedInNav() {
         }
         id="collasible-nav-dropdown"
       >
-        <NavDropdown.Item href="/user-settings" className="text-dark">
-          User Settings
+        <NavDropdown.Item className="text-dark">
+          <Link to="/user-settings">User Settings</Link>
         </NavDropdown.Item>
       </NavDropdown>
     </div>

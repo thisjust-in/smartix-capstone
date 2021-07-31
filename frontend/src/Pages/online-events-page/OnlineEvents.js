@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import LpHeading from "../../components/OnlineEvent/LpHeading";
 import LpImage from "../../components/OnlineEvent/LpImage";
 import { Container, Row, Col } from "react-bootstrap";
@@ -7,6 +7,11 @@ import AllEvents from "../../components/OnlineEvent/AllEvents";
 function OnlineEvents() {
   const title = "All Events";
   const text = "Check out all our unique events";
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div>
       <Container className="mt-5">

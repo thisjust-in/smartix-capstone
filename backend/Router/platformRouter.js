@@ -60,7 +60,7 @@ class PlatformRouter {
     const eventDate = new Date(req.body.eventinfo.eventDate).toDateString();
     const startTime = req.body.eventinfo.startTime;
     const endTime = req.body.eventinfo.endTime;
-    const eventTicketURL = `http://localhost:3000/etix/${eventId}`;
+    const eventTicketURL = `https://hksmartix.co:3000/etix/${eventId}`;
     const purchaseDate = new Date();
 
     // order object

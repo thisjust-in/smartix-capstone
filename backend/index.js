@@ -12,7 +12,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 const http = require("http").Server(app);
 const io = require("socket.io")(http, {
   cors: {
-    origin: process.env.SEVER,
+    origin: process.env.SERVER,
     methods: ["GET", "POST"],
   },
 });
