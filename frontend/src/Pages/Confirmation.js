@@ -7,10 +7,11 @@ function Confirmation() {
   const history = useHistory();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     setTimeout(() => {
       history.push("/");
     }, 3000);
-  });
+  }, []);
 
   return (
     <div className={styles.container}>

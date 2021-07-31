@@ -4,6 +4,7 @@ import LoggedInNav from "./LoggedInNav";
 import classes from "./NavBar.module.css";
 import MetaMaskBtn from "./MetaMaskBtn";
 import web3 from "../../web3";
+import { Link } from "react-router-dom";
 
 export default function NavBar() {
   const [ac, setAC] = useState(null);
@@ -33,9 +34,9 @@ export default function NavBar() {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link href="/online-events" className={classes.tabs}>
+              <Link to="/online-events" className={classes.tabs}>
                 Events
-              </Nav.Link>
+              </Link>
             </Nav>
             {loginBtn ? null : <MetaMaskBtn />}
             <Nav>{ac ? <LoggedInNav /> : null}</Nav>

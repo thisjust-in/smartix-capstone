@@ -59,5 +59,6 @@
   "devDependencies": {
     "npm": "^7.20.1",
     "react-app-env": "^1.2.3"
-  }
+  },
+  "homepage": "https://hksmartix.co"
 }
